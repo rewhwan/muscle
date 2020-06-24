@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.beans.value.ChangeListener;
+
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +36,8 @@ import java.util.ResourceBundle;
 
 public class MemberMainController implements Initializable {
 	private final File DIR = new File("C:/images");
+	
+	//커밋테스트
 	
 	// 관리자문의 관련 id
 	@FXML private Button btnQuestionWrite;
