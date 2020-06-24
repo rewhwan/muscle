@@ -20,6 +20,14 @@ public class Notice {
         this.contents = contents;
     }
 
+    public Notice(int no, String title, String contents, String created_by, String created_at) {
+        this.no = no;
+        this.title = title;
+        this.contents = contents;
+        this.created_by = created_by;
+        this.created_at = created_at;
+    }
+
     public String getCreated_by() {
         return created_by;
     }

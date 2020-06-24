@@ -461,27 +461,27 @@ public class MemberMainController implements Initializable {
 
 		TableColumn colNo = new TableColumn("번호");
 		colNo.setPrefWidth(100);
-		colNo.setStyle("-fx-allignment: CENTER");
+		colNo.setStyle("-fx-alignment: CENTER");
 		colNo.setCellValueFactory(new PropertyValueFactory("no"));
 
 		TableColumn colTitle = new TableColumn("제목");
 		colTitle.setPrefWidth(350);
-		colTitle.setStyle("-fx-allignment: CENTER");
+		colTitle.setStyle("-fx-alignment: CENTER");
 		colTitle.setCellValueFactory(new PropertyValueFactory("title"));
 
 		TableColumn colContents = new TableColumn("내용");
 		colContents.setPrefWidth(200);
-		colContents.setStyle("-fx-allignment: CENTER");
+		colContents.setStyle("-fx-alignment: CENTER");
 		colContents.setCellValueFactory(new PropertyValueFactory("contents"));
 
 		TableColumn colCreateBy = new TableColumn("작성자");
 		colCreateBy.setPrefWidth(200);
-		colCreateBy.setStyle("-fx-allignment: CENTER");
+		colCreateBy.setStyle("-fx-alignment: CENTER");
 		colCreateBy.setCellValueFactory(new PropertyValueFactory("created_by"));
 
 		TableColumn colCreateAt = new TableColumn("작성일");
 		colCreateAt.setPrefWidth(200);
-		colCreateAt.setStyle("-fx-allignment: CENTER");
+		colCreateAt.setStyle("-fx-alignment: CENTER");
 		colCreateAt.setCellValueFactory(new PropertyValueFactory("created_at"));
 
 		tableQuestion.getColumns().addAll(colNo, colTitle, colContents,

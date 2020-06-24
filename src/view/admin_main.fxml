@@ -26,10 +26,10 @@
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="txtNoticeTitle" layoutX="225.0" layoutY="83.0" promptText="제목" />
-                        <TextArea fx:id="txtNoticeContents" layoutX="225.0" layoutY="142.0" prefHeight="200.0" prefWidth="200.0" promptText="내용" />
-                        <Button fx:id="btnNoticeRegist" layoutX="370.0" layoutY="363.0" mnemonicParsing="false" text="등록" />
-                        <TableView fx:id="noticeTableView" layoutX="863.0" layoutY="110.0" prefHeight="200.0" prefWidth="200.0" />
+                        <TextField fx:id="txtNoticeTitle" layoutX="63.0" layoutY="119.0" promptText="제목" />
+                        <TextArea fx:id="txtNoticeContents" layoutX="63.0" layoutY="178.0" prefHeight="200.0" prefWidth="200.0" promptText="내용" />
+                        <Button fx:id="btnNoticeRegist" layoutX="208.0" layoutY="399.0" mnemonicParsing="false" text="등록" />
+                        <TableView fx:id="tableNotice" layoutX="418.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="580.0" prefWidth="760.0" />
                      </children></AnchorPane>
 					</content>
 				</Tab>

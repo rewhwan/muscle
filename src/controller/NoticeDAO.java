@@ -33,9 +33,9 @@ public class NoticeDAO {
 			 //DBUtill에 있는 정보로 DB에 접속합니다.
 			con = DBUtill.getConnection();
 			if(con !=null) {
-				System.out.println("RootController.NoticeDAO: DB 연결성공");
+				System.out.println("controller.NoticeDAO: DB 연결성공");
 			} else {
-				System.out.println("RootController.NoticeDAO: DB 연결 실패");
+				System.out.println("controller.NoticeDAO: DB 연결 실패");
 			}
 			String query = "select * from notice";
 			pstmt= con.prepareStatement(query);
@@ -43,7 +43,7 @@ public class NoticeDAO {
 			
 			arrayList = new ArrayList<Notice>();
 			while(rs.next()) {
-				Notice nt = new Notice(rs.getInt(1),rs.getString(2), rs.getString(3));
+				Notice nt = new Notice(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
 				arrayList.add(nt);
 			}
 			
