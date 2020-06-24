@@ -1,0 +1,16 @@
+#anchorMemBack{
+  -fx-background-color : linear-gradient( #FFFFFF , #222020 );
+  
+}
+
+#anchorPtApp {
+  -fx-background-color : linear-gradient(#FFFFFF,#2F696C);
+	
+}
+
+#anchorMemInfo{
+  -fx-background-color : linear-gradient(#FFFFFF,#FFFFFF);
+}
+#anchorMemQues{
+	-fx-background-color : linear-gradient(#FFFFFF,#FFFFFF);
+}

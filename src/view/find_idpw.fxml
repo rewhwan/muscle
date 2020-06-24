@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FindIdPwController">
+   <children>
+      <TabPane minHeight="300.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="아이디 찾기">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="267.0" prefWidth="300.0" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox fx:id="vboxFindIdTxt" maxHeight="-Infinity" maxWidth="-Infinity" spacing="8.0">
+                                 <children>
+                                    <HBox fx:id="hboxFindIdName" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="hboxInit">
+                                       <children>
+                                          <TextField fx:id="findIdName" prefHeight="35.0" prefWidth="222.0" promptText="이름">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="hboxFindIdPhone" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="hboxInit">
+                                       <children>
+                                          <TextField fx:id="findIdPhone" prefHeight="35.0" prefWidth="222.0" promptText="핸드폰번호">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="findIdLabel" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="btnFindId" mnemonicParsing="false" text="찾기" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="비밀번호 찾기">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="267.0" prefWidth="300.0" spacing="8.0">
+                           <children>
+                              <VBox fx:id="vboxFindPwTxt" maxHeight="-Infinity" maxWidth="-Infinity" spacing="8.0" styleClass="vboxInit">
+                                 <children>
+                                    <HBox fx:id="hboxFindPwId" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="hboxInit">
+                                       <children>
+                                          <TextField fx:id="findPwId" prefHeight="35.0" prefWidth="222.0" promptText="아이디">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="hboxFindPwName" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="hboxInit">
+                                       <children>
+                                          <TextField fx:id="findPwName" prefHeight="35.0" prefWidth="222.0" promptText="이름">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="hboxFindPwPhone" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="hboxInit">
+                                       <children>
+                                          <TextField fx:id="findPwPhone" prefHeight="35.0" prefWidth="222.0" promptText="핸드폰번호">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="findPwLabel" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="btnFindPw" mnemonicParsing="false" text="찾기" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

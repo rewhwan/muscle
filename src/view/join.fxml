@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="750.0" prefWidth="800.0" styleClass="anchorInvisible" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.JoinController">
+   <children>
+      <AnchorPane prefHeight="700.0" prefWidth="400.0" styleClass="anchorInvisible" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <AnchorPane layoutX="377.0" layoutY="33.0" prefHeight="634.0" prefWidth="373.0" style="-fx-background-color: white;">
+               <children>
+                  <Label layoutX="38.0" layoutY="72.0" text="회원가입">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <HBox fx:id="hboxId" alignment="CENTER" layoutX="48.0" layoutY="128.0" prefHeight="50.0" prefWidth="300.0" styleClass="hboxtxt">
+                     <children>
+                        <TextField fx:id="txtId" prefHeight="50.0" prefWidth="300.0" promptText="아이디" />
+                        <Button fx:id="btnIdChk" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" styleClass="btnidchk" text="중복체크" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label fx:id="labelId" layoutX="57.0" layoutY="186.0" />
+                  <VBox fx:id="vboxPw" layoutX="48.0" layoutY="209.0" prefHeight="50.0" prefWidth="300.0" styleClass="vboxtxt">
+                     <children>
+                        <PasswordField fx:id="txtPassword" prefHeight="50.0" prefWidth="300.0" promptText="비밀번호" />
+                     </children>
+                  </VBox>
+                  <Label fx:id="labelPw" layoutX="60.0" layoutY="261.0" />
+                  <VBox fx:id="vboxName" layoutX="48.0" layoutY="278.0" prefHeight="50.0" prefWidth="300.0" styleClass="vboxtxt">
+                     <children>
+                        <TextField fx:id="txtName" prefHeight="50.0" prefWidth="300.0" promptText="이름" />
+                     </children>
+                  </VBox>
+                  <Label fx:id="labelName" layoutX="63.0" layoutY="330.0" />
+                  <VBox fx:id="vboxPhone" layoutX="48.0" layoutY="347.0" prefHeight="50.0" prefWidth="300.0" styleClass="vboxtxt">
+                     <children>
+                        <TextField fx:id="txtPhone" prefHeight="50.0" prefWidth="300.0" promptText="핸드폰 번호" />
+                     </children>
+                  </VBox>
+                  <Label layoutX="38.0" layoutY="443.0" text="성별">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="rdoMale" layoutX="87.0" layoutY="484.0" mnemonicParsing="false" text="남">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/male.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="rdoFemale" layoutX="217.0" layoutY="484.0" mnemonicParsing="false" text="여">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/female.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </RadioButton>
+                  <Button fx:id="btnJoin" layoutX="138.0" layoutY="553.0" mnemonicParsing="false" text="가입하기" />
+                  <Label fx:id="labelPhone" layoutX="62.0" layoutY="400.0" />
+                  <Button fx:id="btnClose" layoutX="316.0" layoutY="14.0" mnemonicParsing="false" styleClass="btnclose">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" styleClass="btncloseimg">
+                           <image>
+                              <Image url="@../image/btnClose1.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <rotationAxis>
+                  <Point3D />
+               </rotationAxis>
+            </AnchorPane>
+            <AnchorPane prefHeight="664.0" prefWidth="390.0" styleClass="anchorBackground" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="18.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" layoutX="52.0" prefHeight="664.0" prefWidth="338.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" styleClass="titleLabel" text="#1" textAlignment="RIGHT">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label styleClass="titleLabel" text="Personal Training">
+                           <font>
+                              <Font size="40.0" />
+                           </font>
+                        </Label>
+                        <Label styleClass="titleLabel" text="회원가입">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Button fx:id="btnBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" styleClass="btnback" text="&lt;   Login" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

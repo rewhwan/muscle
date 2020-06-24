@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MemberMainController">
+   <children>
+      <TabPane layoutX="27.0" layoutY="20.0" prefHeight="681.0" prefWidth="1226.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="회원권 신청">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane fx:id="anchorMemBack" prefHeight="646.0" prefWidth="1226.0" stylesheets="@member_main.css">
+                           <children>
+                              <ImageView fitHeight="351.0" fitWidth="491.0" layoutX="41.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/MemFirst.png" />
+                                 </image>
+                              </ImageView>
+                           </children></AnchorPane>
+                        <HBox alignment="CENTER_LEFT" layoutX="555.0" layoutY="197.0" prefHeight="268.0" prefWidth="629.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" prefHeight="268.0" prefWidth="197.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="42.0" prefWidth="228.0" text="회원권 선택" textFill="#060017">
+                                       <font>
+                                          <Font name="NanumSquare ExtraBold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="225.0" prefWidth="120.0" spacing="15.0">
+                                 <children>
+                                    <Label text="1개월 " />
+                                    <Button fx:id="btnOne" mnemonicParsing="false" text="8만원" />
+                                    <Label text="12개월" />
+                                    <Button fx:id="btnTwelve" mnemonicParsing="false" text="24만원" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="45.0" prefWidth="120.0" spacing="15.0">
+                                 <children>
+                                    <Label text="3개월 " />
+                                    <Button fx:id="btnThree" mnemonicParsing="false" text="9만원" />
+                                    <Label text="18개월" />
+                                    <Button fx:id="btnEight" mnemonicParsing="false" text="30만원" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="45.0" prefWidth="120.0" spacing="15.0">
+                                 <children>
+                                    <Label text="6개월 " />
+                                    <Button fx:id="btnSix" mnemonicParsing="false" text="15만원" />
+                                    <Label text="24개월" />
+                                    <Button fx:id="btnTwFour" mnemonicParsing="false" text="42만원" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <VBox alignment="CENTER" prefHeight="193.0" prefWidth="1226.0">
+                           <children>
+                              <Label fx:id="lblMemApp" alignment="CENTER" prefHeight="84.0" prefWidth="369.0" text="Join Us Now" textFill="#3a4243">
+                                 <font>
+                                    <Font name="NanumSquare ExtraBold" size="49.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefHeight="33.0" prefWidth="1233.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="PT 신청">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane fx:id="anchorPtApp" prefHeight="646.0" prefWidth="1226.0" stylesheets="@member_main.css">
+                           <children>
+                              <TableView fx:id="tablePT" layoutX="468.0" layoutY="154.0" prefHeight="296.0" prefWidth="730.0" />
+                              <HBox alignment="CENTER" layoutX="744.0" layoutY="467.0" prefHeight="62.0" prefWidth="200.0" spacing="20.0">
+                                 <children>
+                                    <Button fx:id="btnPTDelete" mnemonicParsing="false" text="삭제">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnPTApply" mnemonicParsing="false" text="신청">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <ImageView fx:id="imgPt" fitHeight="434.0" fitWidth="390.0" layoutX="44.0" layoutY="154.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../image/trainer1.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <VBox alignment="CENTER" prefHeight="193.0" prefWidth="1226.0">
+                           <children>
+                              <Label fx:id="lblMemApp1" alignment="CENTER" prefHeight="84.0" prefWidth="424.0" text="Personal Training">
+                                 <font>
+                                    <Font name="NanumSquare ExtraBold" size="49.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefHeight="33.0" prefWidth="922.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="memberInfo" text="회원 정보">
+              <content>
+                <AnchorPane fx:id="anchorMemInfo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane prefHeight="646.0" prefWidth="1226.0" stylesheets="@member_main.css" />
+                        <TableView layoutX="447.0" layoutY="237.0" prefHeight="200.0" prefWidth="681.0">
+                          <columns>
+                            <TableColumn prefWidth="88.0" text="등록일" />
+                            <TableColumn prefWidth="94.0" text="만료일" />
+                              <TableColumn prefWidth="95.0" text="기간(개월)" />
+                              <TableColumn prefWidth="113.0" text="등록PT횟수" />
+                              <TableColumn prefWidth="116.0" text="잔여PT횟수" />
+                              <TableColumn prefWidth="173.0" text="결제금액(원)" />
+                          </columns>
+                        </TableView>
+                        <GridPane layoutX="99.0" layoutY="231.0" prefHeight="246.0" prefWidth="302.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="110.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="243.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="아이디  :">
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="txtMemId" GridPane.columnIndex="1" />
+                              <Label text="비밀번호 :" GridPane.rowIndex="1">
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="이름 :" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="txtMemName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="성별 :" GridPane.rowIndex="3">
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="txtMemGender" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label text="전화번호 :" GridPane.rowIndex="4">
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="txtMemPhoneNo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="생년월일 :" GridPane.rowIndex="5">
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="txtMemBirth" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label text="주소 :" GridPane.rowIndex="6">
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="txtMemAddr" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Label text="메일  :" GridPane.rowIndex="7">
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="txtMemMail" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <PasswordField fx:id="pwfMemPW" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Button fx:id="btnMemChange" layoutX="250.0" layoutY="501.0" mnemonicParsing="false" text="회원정보 수정" />
+                        <VBox alignment="CENTER" prefHeight="193.0" prefWidth="1226.0">
+                           <children>
+                              <Label fx:id="lblMemApp11" alignment="CENTER" prefHeight="84.0" prefWidth="624.0" text="Membership Information">
+                                 <font>
+                                    <Font name="NanumSquare ExtraBold" size="49.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefHeight="33.0" prefWidth="922.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="관리자 문의">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="386.0" prefWidth="922.0">
+                     <children>
+                        <AnchorPane fx:id="anchorMemQues" prefHeight="646.0" prefWidth="1226.0" stylesheets="@member_main.css" />
+                        <HBox alignment="CENTER" layoutX="457.0" layoutY="466.0" prefHeight="73.0" prefWidth="314.0">
+                           <children>
+                              <TextField fx:id="txtSearch" />
+                              <Button fx:id="btnSearch" mnemonicParsing="false" text="검색" />
+                              <Button fx:id="btnQuestionWrite" mnemonicParsing="false" text="글쓰기" />
+                           </children>
+                        </HBox>
+                        <TableView fx:id="tableQuestion" layoutX="168.0" layoutY="193.0" prefHeight="273.0" prefWidth="895.0" />
+                        <VBox alignment="CENTER" prefHeight="193.0" prefWidth="1226.0">
+                           <children>
+                              <Label fx:id="lblMemApp111" alignment="CENTER" prefHeight="84.0" prefWidth="624.0" text="Contract Manager">
+                                 <font>
+                                    <Font name="NanumSquare ExtraBold" size="49.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefHeight="33.0" prefWidth="922.0" />
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="공지사항 ">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableNotice" layoutX="219.0" layoutY="174.0" prefHeight="268.0" prefWidth="794.0" />
+                        <HBox alignment="CENTER" layoutX="397.0" layoutY="450.0" prefHeight="56.0" prefWidth="438.0" spacing="10.0">
+                           <children>
+                              <TextField fx:id="txtNoSearch" />
+                              <Button fx:id="btnNoSearch" mnemonicParsing="false" text="검색" />
+                              <Button fx:id="btnNoRegist" mnemonicParsing="false" text="등록" />
+                           </children>
+                        </HBox>
+                        <VBox alignment="CENTER" prefHeight="193.0" prefWidth="1226.0">
+                           <children>
+                              <Label fx:id="lblMemApp112" alignment="CENTER" prefHeight="84.0" prefWidth="624.0" text="Notice">
+                                 <font>
+                                    <Font name="NanumSquare ExtraBold" size="49.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefHeight="33.0" prefWidth="922.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="운동정보">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane alignment="CENTER" layoutX="149.0" layoutY="171.0" prefHeight="432.0" prefWidth="929.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="216.0" prefWidth="233.0">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/ChestPress.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Button fx:id="btnChestPress" mnemonicParsing="false" text="[가슴] 체스트 프레스" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/SeatedDip.jpg" />
+                                       </image></ImageView>
+                                    <TextField alignment="CENTER" text="[가슴/삼두] 시티드 딥" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="193.0" prefWidth="237.0" GridPane.columnIndex="2">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/PecDeckFly.jpg" />
+                                       </image></ImageView>
+                                    <TextField alignment="CENTER" text="[가슴] 펙 덱 플라이" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/InclineChestPress.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <TextField alignment="CENTER" text="[가슴] 인클라인 체스트 프레스" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/SeatedChestPress.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <TextField alignment="CENTER" text="[가슴] 시티드 체스트 프레스" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/CableCrossover.jpg" />
+                                       </image></ImageView>
+                                    <TextField alignment="CENTER" text="[가슴] 케이블 크로스오버" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/Dips.jpg" />
+                                       </image></ImageView>
+                                    <TextField alignment="CENTER" text="[가슴/삼두] 딥스" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/InclineBenchPress.jpg" />
+                                       </image></ImageView>
+                                    <TextField alignment="CENTER" text="[가슴] 인클라인 벤치 프레스" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <VBox alignment="CENTER" prefHeight="193.0" prefWidth="1226.0">
+                           <children>
+                              <Label fx:id="lblMemApp1121" alignment="CENTER" prefHeight="84.0" prefWidth="624.0" text="Tip For Workout">
+                                 <font>
+                                    <Font name="NanumSquare ExtraBold" size="49.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefHeight="33.0" prefWidth="922.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

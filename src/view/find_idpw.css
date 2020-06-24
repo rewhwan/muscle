@@ -1,0 +1,87 @@
+/*텍스트 필드*/
+TextField {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: gray;
+}
+
+.tab, .tab-label{
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+}
+
+.tab{
+    -fx-background-color: #FFFFFF;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-padding: 0 30 0 30;
+    -fx-border-width: 0 1 0 1 ;
+    -fx-border-color: lightgrey;
+}
+
+.tab:selected {
+    -fx-background-color: #FAFCFB;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-border-width: 5 0 0 0;
+    -fx-border-color: #3FE387;
+}
+
+.tab:focused {
+    -fx-focus-color : transparent;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: #6e7f7f;
+    -fx-opacity: 0.5;
+}
+
+.tab-pane:left *.tab-header-area {
+    -fx-background-insets: 0, 0 0 10;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em;
+}
+
+.tab:selected .focus-indicator {
+    -fx-focus-color:transparent;
+    -fx-border-color: transparent;
+}
+
+/*정보 입력에 따른 테두리 설정 UI*/
+.hboxInit {
+    -fx-border-color: black;
+    -fx-border-width: 0 0 2 0;
+}
+
+.hboxBorderOff {
+    -fx-border-width: 0;
+}
+
+.hboxBorderGrey {
+    -fx-border-color: rgba(128,128,128,0.7);
+    -fx-border-width: 0 0 1 0;
+}
+
+/*정보 입력 오류시 처리할 UI*/
+.vboxInit {
+    -fx-border-width: 2px;
+    -fx-border-color: transparent;
+}
+
+.vboxRed {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+}
+
+.vboxGreen {
+    -fx-border-color: green;
+    -fx-border-width: 2px;
+}
+
+Button {
+    -fx-text-fill: rgba(30, 22, 54, 0.6);
+    -fx-box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+Button:hover {
+    -fx-text-fill: rgba(255, 255, 255, 0.85);
+    -fx-box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
+}

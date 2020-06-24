@@ -1,0 +1,59 @@
+/*왼쪽컨테이너 배경화면 설정*/
+.anchorBackground{
+    -fx-background-color: linear-gradient(to left, #B06AB3, #4568dc);
+    -fx-background-radius: 1em;
+}
+
+/*왼쪽컨테이너 제목 UI*/
+.titleLabel {
+    -fx-text-fill: white;
+}
+
+/*배경 컨테이너 배경색 없애기*/
+.anchorInvisible {
+    -fx-background-color: transparent;
+}
+
+/*닫기 버튼 UI*/
+.btnclose {
+    -fx-background-color: transparent;
+}
+
+/*닫기 버튼 이미지뷰*/
+.btncloseimg {
+    -fx-background-image: url("/image/btnClose2.png");
+    -fx-background-size: cover;
+}
+
+/*중복체크 버튼 UI*/
+.btnidchk {
+    -fx-background-color: transparent;
+    -fx-border-color: gray;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10;
+}
+
+/*ID Vbox UI*/
+.vboxtxt , .hboxtxt {
+    -fx-border-color: black;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+/*뒤로가기 버튼*/
+.btnback {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 1.5em;
+}
+
+/*텍스트 필드*/
+TextField {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: gray;
+}
+
+/*패스워드 필드*/
+PasswordField {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: gray;
+}
