@@ -78,7 +78,7 @@ public class NoticeDAO {
 			}
 
 			//쿼리문
-			String query = "INSERT INTO notice VALUES (null,?,?,?,now())";
+			String query = "INSERT INTO notice VALUES (null,,now())";
 
 			//쿼리문 준비
 			pstmt = con.prepareStatement(query);

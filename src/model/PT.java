@@ -13,6 +13,12 @@ public class PT {
     public PT() {
     }
 
+    public PT(String date, String created_at, String trainer_id) {
+    	this.date=date;
+    	this.created_at=created_at;
+    	this.trainer_id= trainer_id;
+    }
+    
     public PT(int no, String member_id, String trainer_id, String date) {
         super();
         this.no = no;

@@ -240,4 +240,67 @@ public class MemberDAO {
 
         return member;
     }
+    
+    //회원 정보를 수정하면 수정한 내용이 memberTBL에 바뀌게 
+   public  int updateMemInfo(Member member) {
+    
+    	
+    	 try {
+
+             con = DBUtill.getConnection();
+
+             if(con != null) {
+                 System.out.println("MemberDAO.Join : DB 연결 성공");
+             }else {
+                 System.out.println("MemberDAO.Join : DB 연결 실패");
+             }
+
+             //쿼리문
+             String query = "update member set id =?, pw=?, name=?, phone=?, birth=?, address=?,"
+             		+ "mail=? where id=?" ;
+
+             //쿼리문 실행 준비
+             pstmt = con.prepareStatement(query);
+
+             pstmt.setString(1,member.getId());
+             pstmt.setString(2,member.getPw());
+             pstmt.setString(3,member.getName());
+             pstmt.setString(4,member.getPhone());
+             pstmt.setString(5,member.getBirth());
+             pstmt.setString(6,member.getAddress());
+             pstmt.setString(7,member.getMail());
+             pstmt.setString(8, MemberMainController.memberLogin.getId());
+             //쿼리문을 실행하고 결과값을 반환
+             returnValue = pstmt.executeUpdate();
+
+             if(returnValue != 0) {
+                 AlertUtill.showInformationAlert("정보변경 성공","정보변경 성공하였습니다.","정보변경 누르면 로그인 화면으로 돌아갑니다.");
+             }else {
+                 throw new Exception(member.getName()+"번 삽입 문제 있음");
+             }
+
+         } catch (Exception e) {
+             // 경고창이 만들어짐
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setTitle("정보변경 점검요망");
+             alert.setHeaderText("정보변경 문제발생!\n MemberDAO.updateMemInfo" + e.getMessage());
+             alert.setContentText("문제사항 : "+e.getMessage());
+             alert.showAndWait();
+         } finally {
+             try {
+                 if(pstmt != null)pstmt.close();
+                 if(con != null)con.close();
+
+             } catch (SQLException e) {
+                 System.out.println("MemberDAO.updateMemInfo"+e.getMessage());
+             }
+         }
+
+         return returnValue;
+
+    }
+    
+    
+    
+    
 }

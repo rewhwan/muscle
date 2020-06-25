@@ -31,7 +31,9 @@ import model.QuestionMember;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class MemberMainController implements Initializable {
@@ -49,20 +51,25 @@ public class MemberMainController implements Initializable {
 	@FXML private TextField txtNoSearch;
 	@FXML private Button btnNoSearch;
 	@FXML private Button btnNoRegist;
-	@FXML private Button btnOne;
 	@FXML private TableView tableNotice;
 	
+	//회원권 신청 버튼
+	@FXML private Button btnOne; //1개월 밑의 8만원 버튼
 	
 	//pt 관련
 	@FXML private TableView <PT>tablePT;
 	@FXML private ImageView imgPt;
 	@FXML private Button btnPTDelete;
 	@FXML private Button btnPTApply;
-	
-	
-	
+
 	//회원정보 관련
-	@FXML private TextField txtMemId;
+	@FXML private Label lblId;
+	@FXML private Label lblName;
+	@FXML private Label lblPhoneNo;
+	@FXML private Label lblBirth;
+	@FXML private Label lblAddress;
+	@FXML private Label lblMail;
+
 	@FXML private PasswordField pwfMemPW;
 	@FXML private TextField txtMemName;
 	@FXML private TextField txtMemGender;
@@ -73,10 +80,12 @@ public class MemberMainController implements Initializable {
 	@FXML private Button btnMemChange;
 	@FXML private Tab memberInfo;
 	
+	@FXML private TableView tableMemInfo;
+	
 	
 	//운동정보 관련 
 	@FXML private Button btnChestPress;
-	
+	@FXML private Button btnSeatedDip;
 	
 	
 	
@@ -90,7 +99,7 @@ public class MemberMainController implements Initializable {
 	private File selectFile;
 	private File directorySave;
 
-	public Member memberLogin;
+	public static Member memberLogin;
 
 	public Stage primarystage = null;
 
@@ -116,13 +125,15 @@ public class MemberMainController implements Initializable {
 		//회원정보 데이터 초기화 
 		memberInfoInitialize();
 		
+		//DB의 question테이블에서 데이터를 가져와 관리자 문의 테이블에 넣음 
+		questionTotalList();
 
 		//관리자 문의 검색 버튼 이벤트 등록 및 핸들러
 		btnSearch.setOnAction( event-> { handleBtnSearchAction(event);});
 
 		//관리자 문의 테이블을 더블 클릭하면 창이 나오게하는 이벤트 및 핸들러
 		tableQuestion.setOnMouseClicked( event-> {handleQuestionDoubleClick( event);});
-		
+//--------------------------------------------------------------------------------------------		
 		//공지사항의 테이블 뷰 컬럼 초기화 Notice 필드와 연결
 		tableNoticeColumnInitialize();
 
@@ -134,39 +145,111 @@ public class MemberMainController implements Initializable {
 
 		//공지사항 테이블 뷰 마우스 클릭 시 이벤트 처리 
 		tableQuestion.setOnMousePressed(event-> {handleTableViewQuestionPressAction(event);});
-		
-		
-		
+
+		//공지사항 내용 가져오기	
+		noticeTotalList();
+//---------------------------------------------------------------------------------------------		
 		//PT의 테이블 뷰 컬럼 초기화 PT필드와 연결
 		tablePTColumnInitialize();
 		
 		// db의 pt 테이블의 데이터에서 데이터를 가져와서 PT 테이블에 넣음 
 		ptTotalList();
-	
 		
-		//공지사항 내용 가져오기	
-		noticeTotalList();
+		//pt테이블에서 트레이너를 선택하고 신청을 누르면 창이 뜨고 그 트레이너의 그 날짜의 일정을 보여줌
+		btnPTApply.setOnMouseClicked( event-> {	handleBtnPtApplyAction(event);	});
 		
+		//PT날짜 고르는 창의 테이블 뷰 컬럼 초기화
+		//tablePtDatePicInitialize();
+//---------------------------------------------------------------------------------------------	
+		
+		//회원권 신청에서 1개월의 8만원 버튼을 눌렀을 때의 이벤트 처리
 		btnOne.setOnAction(event -> {System.out.println(memberLogin);});
-
+//---------------------------------------------------------------------------------------------
+		
 		//회원정보 회원정보 수정 버튼 이벤트 등록 및 핸들러
 		btnMemChange.setOnAction( event-> {	handleBtnMemChangeAction(event);});
-
 		
+		//회원정보 회원권,pt잔여 횟수 금액 테이블
+		tableMemInfoInitialize();
+//---------------------------------------------------------------------------------------------		
+
 		//운동정보에서 버튼을 누르면 팝업창이 뜨고 그 운동의 동영상이 나오게 이벤트 처리
 		btnChestPress.setOnAction( event-> { handleBtnChestPressAction(event);});
-		
+		//btnSeatedDip.setOnAction(event -> an	);
 	}// end of initialize
 	
 	
+	//회원정보 회원권,pt잔여 횟수 금액 테이블
+	private void tableMemInfoInitialize() {
+		
+		/*TableColumn colRegDay = new TableColumn("등록일");
+		colRegDay.setPrefWidth(100);
+		colRegDay.setStyle("-fx-allignment: CENTER");
+		colRegDay.setCellValueFactory(new PropertyValueFactory<>("created_at"));
 
+		TableColumn colTitle = new TableColumn("만료일");
+		colTitle.setPrefWidth(250);
+		colTitle.setStyle("-fx-allignment: CENTER");
+		colTitle.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+		TableColumn colContents = new TableColumn("내용");
+		colContents.setPrefWidth(250);
+		colContents.setStyle("-fx-allignment: CENTER");
+		colContents.setCellValueFactory(new PropertyValueFactory<>("contents"));
+
+		tableMemInfo.getColumns().addAll(colRegDay, colTitle, colContents);
+		tableMemInfo.setItems(obsListNo);*/
+		
+	}
+
+
+	//pt테이블에서 트레이너를 선택하고 신청을 누르면 창이 뜨고 그 트레이너의 그 날짜의 일정을 보여줌
+	private void handleBtnPtApplyAction(Event event) {
+		Parent root;
+		ObservableList<PT>obsPTdate = FXCollections.observableArrayList();
+		
+		try {
+			root=FXMLLoader.load(getClass().getResource("/view/ptDatePick.fxml"));
+			Scene scene = new Scene(root);
+			Stage ptDate = new Stage(StageStyle.UTILITY);
 	
+			ptDate.initModality(Modality.WINDOW_MODAL);
+			ptDate.initOwner(stage);
+			ptDate.setScene(scene);
+			ptDate.setResizable(false);
+			ptDate.setTitle("PT 날짜 선택창");
+			ptDate.showAndWait();
+		} catch (IOException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("PT 날짜 선택창에 문제 발생");
+			alert.setHeaderText("PT 날짜 선택창 점검 하세요");
+			alert.setContentText("다음에는 주의하세요"+e.getMessage());
+			alert.showAndWait();
+		}
 
+	}
+
+	//DB의 question테이블에서 데이터를 가져와 관리자 문의 테이블에 넣음 
+	private void questionTotalList() {
+		QuestionDAO qDAO = new QuestionDAO();
+		ArrayList<QuestionMember> arrayListQM = qDAO.getTotalList();
+		if(arrayListQM ==null) {
+			return;
+		}
+ 		for(int i=0; i<arrayListQM.size(); i++) {
+ 			QuestionMember qm = arrayListQM.get(i);
+ 			obsList.add(qm);
+ 		}
+
+	}
+
+	//관리자 문의 테이블을 더블 클릭하면 창이 나오게하는 이벤트 및 핸들러
 	private void handleTableViewQuestionPressAction(Event event) {
 		tableViewQuestionSelectedIndex=tableQuestion.getSelectionModel().getSelectedIndex();
 		
 	}
-
+	
+	//db에서 공지사항 내용을 가져옴 
 	private void noticeTotalList() {
 		NoticeDAO ntDAO = new NoticeDAO();
 		ArrayList<Notice> arrayList = ntDAO.getTotalList();
@@ -177,23 +260,8 @@ public class MemberMainController implements Initializable {
  			Notice nt = arrayList.get(i);
  			obsListNo.add(nt);
  		}
-		
-		
 	}
-
-	private void memberInfoInitialize() {
-
-		txtMemId.setText(LoginController.memberLogin.getId());
-		pwfMemPW.setText(LoginController.memberLogin.getPw());
-		txtMemName.setText(LoginController.memberLogin.getName());
-		txtMemGender.setText(LoginController.memberLogin.getGender());
-		txtMemPhoneNo.setText(LoginController.memberLogin.getPhone());
-		txtMemBirth.setText(LoginController.memberLogin.getBirth());
-		txtMemAddr.setText(LoginController.memberLogin.getAddress());
-		txtMemMail.setText(LoginController.memberLogin.getMail());
-		
-	}
-
+	
 	//운동정보에서 버튼을 누르면 팝업창이 뜨고 그 운동의 동영상이 나오게 이벤트 처리
 	private void handleBtnChestPressAction(ActionEvent event) {
 		Parent root;
@@ -219,9 +287,7 @@ public class MemberMainController implements Initializable {
 				alert.setContentText("다음에는 주의하세요"+e.getMessage());
 				alert.showAndWait();
 			}
-			
 
-		
 	}
 	//db pt테이블의 데이터를 가져와서 화면에 띄운다
 	private void ptTotalList() {
@@ -252,29 +318,37 @@ public class MemberMainController implements Initializable {
 			TextField txtChaPopId = (TextField) scene.lookup("#txtChaPopId");
 			PasswordField pwfChaPopPw = (PasswordField) scene.lookup("#pwfChaPopPw");
 			TextField txtChaPopName = (TextField) scene.lookup("#txtChaPopName");
-			TextField txtChaPopGender = (TextField) scene.lookup("#txtChaPopGender");
 			TextField txtChaPopPhoneNo = (TextField) scene.lookup("#txtChaPopPhoneNo");
 			TextField txtChaPopBirth = (TextField) scene.lookup("#txtChaPopBirth");
 			TextField txtChaPopAddr = (TextField) scene.lookup("#txtChaPopAddr");
 			TextField txtChaPopMail = (TextField) scene.lookup("#txtChaPopMail");
 			
-			
-			
-
+			//텍스트 필드 기본값 세팅
+			txtChaPopId.setText(lblId.getText());
+			pwfChaPopPw.setText(memberLogin.getPw().toString());
+			txtChaPopName.setText(lblName.getText());
+			txtChaPopPhoneNo.setText(lblPhoneNo.getText());
+			txtChaPopBirth.setText(lblBirth.getText());
+			txtChaPopAddr.setText(lblAddress.getText());
+			txtChaPopMail.setText(lblMail.getText());
+			//변경된 내용을 등록하는 버튼 이벤트 
 			btnChaPopRegi.setOnAction( e-> {
-						
-				
-				
+		
 					chPopStage.close();
-
-					txtMemId.setText(memberLogin.getId());
-					pwfMemPW.setText(memberLogin.getPw());
-					txtMemName.setText(memberLogin.getName());
-					txtMemGender.setText(memberLogin.getGender());
-					txtMemPhoneNo.setText(memberLogin.getPhone());
-					txtMemBirth.setText(memberLogin.getBirth());
-					txtMemAddr.setText(memberLogin.getAddress());
-					txtMemMail.setText(memberLogin.getMail());
+	
+					lblId.setText(txtChaPopId.getText());
+					lblName.setText(txtChaPopName.getText());
+					lblPhoneNo.setText(txtChaPopPhoneNo.getText());
+					lblBirth.setText(txtChaPopBirth.getText());
+					lblAddress.setText(txtChaPopAddr.getText());
+					lblMail.setText(txtChaPopMail.getText());
+					
+				Member member = new Member(txtChaPopId.getText(), pwfChaPopPw.getText(),txtChaPopName.getText(),
+						txtChaPopPhoneNo.getText(), txtChaPopBirth.getText(), txtChaPopAddr.getText()
+						,txtChaPopMail.getText());
+				MemberDAO mD = new MemberDAO();
+				int count = mD.updateMemInfo(member);
+	
 			});
 
 			btnChaPopCancel.setOnAction( e-> {chPopStage.close();});
@@ -293,6 +367,18 @@ public class MemberMainController implements Initializable {
 			alert.showAndWait();
 		}
 
+	}
+	
+	//회원정보를 회원정보 창에 띄우는 것 
+	private void memberInfoInitialize() {
+
+		lblId.setText(LoginController.memberLogin.getId());
+		lblName.setText(LoginController.memberLogin.getName());
+		lblPhoneNo.setText(LoginController.memberLogin.getPhone());
+		lblBirth.setText(LoginController.memberLogin.getBirth());
+		lblAddress.setText(LoginController.memberLogin.getAddress());
+		lblMail.setText(LoginController.memberLogin.getMail());
+		
 	}
 
 	//PT의 테이블 뷰 컬럼 초기화 PT필드와 연결
@@ -340,11 +426,10 @@ public class MemberMainController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends PT> observable, PT oldValue, PT newValue) {
 				int imgName= newValue.getNo();
-				imgPt.setImage(new Image(getClass().getResource("image/"+imgName).toString()));
-			}
+				imgPt.setImage(new Image(getClass().getResource("/image/trainer"+imgName+".jpg").toString()));
+			}//
 		});
-		
-		
+	
 	}
 
 	//공지사항의 등록버튼 이벤트 등록 및 핸들러
@@ -358,16 +443,13 @@ public class MemberMainController implements Initializable {
 			Button btnNoRegi = (Button) scene.lookup("#btnNoRegi");
 			Button btnNoCancel = (Button) scene.lookup("#btnNoCancel");
 
-
 			TextField txtNoTitle = (TextField) scene.lookup("#txtNoTitle");
 			TextArea txtNoContents = (TextArea) scene.lookup("#txtNoContents");
 
 			btnNoRegi.setOnAction( e-> {
-				
-				
+						
 				Notice notice = new Notice(txtNoTitle.getText().trim(),txtNoContents.getText().trim());
-				
-			
+
 					noticeStage.close();
 					System.out.println(notice);
 //					obsListNo.add(notice);
@@ -456,16 +538,16 @@ public class MemberMainController implements Initializable {
 		}
 	}
 
-	//관리자문의 테이블
+	//관리자문의 테이블 설정
 	private void tableQuestionColumnInitialize() {
 
 		TableColumn colNo = new TableColumn("번호");
-		colNo.setPrefWidth(100);
+		colNo.setPrefWidth(50);
 		colNo.setStyle("-fx-alignment: CENTER");
 		colNo.setCellValueFactory(new PropertyValueFactory("no"));
 
 		TableColumn colTitle = new TableColumn("제목");
-		colTitle.setPrefWidth(350);
+		colTitle.setPrefWidth(200);
 		colTitle.setStyle("-fx-alignment: CENTER");
 		colTitle.setCellValueFactory(new PropertyValueFactory("title"));
 

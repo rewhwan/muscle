@@ -191,7 +191,7 @@ public class LoginController implements Initializable {
             stage.setTitle("PT 시스템 (ver.T)");
         }else {
             //유저 전용 화면 세팅 -> 용천이형 화면으로 넘어가면 됨
-            fxmlLoader = new FXMLLoader(getClass().getResource("/view/member_main.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/member_main2.fxml"));
             stage.setTitle("PT 시스템 (ver.C)");
         }
 

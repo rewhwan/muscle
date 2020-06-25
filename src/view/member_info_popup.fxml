@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="69.0" layoutY="32.0" prefHeight="391.0" prefWidth="362.0">
         <columnConstraints>
@@ -15,8 +14,7 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -26,20 +24,18 @@
          <children>
             <Label text="아이디 :" />
             <TextField id="txtChaPopId" GridPane.columnIndex="1" />
-            <Label text="비밀번호 :" GridPane.rowIndex="1" />
+            <Label text="비말번호 :" GridPane.rowIndex="1" />
+            <PasswordField id="pwfChaPopPw" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="이름 :" GridPane.rowIndex="2" />
             <TextField id="txtChaPopName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="성별 :" GridPane.rowIndex="3" />
-            <TextField id="txtChaPopGender" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="전화번호 :" GridPane.rowIndex="4" />
-            <TextField id="txtChaPopPhoneNo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="생년월일 :" GridPane.rowIndex="5" />
-            <TextField id="txtChaPopBirth" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label text="주소 :" GridPane.rowIndex="6" />
-            <TextField id="txtChaPopAddr" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="메일  :" GridPane.rowIndex="7" />
-            <TextField id="txtChaPopMail" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <PasswordField id="pwfChaPopPw" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="전화번호 :" GridPane.rowIndex="3" />
+            <TextField id="txtChaPopPhoneNo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="생년월일 :" GridPane.rowIndex="4" />
+            <TextField id="txtChaPopBirth" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="주소 :" GridPane.rowIndex="5" />
+            <TextField id="txtChaPopAddr" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="메일 :" GridPane.rowIndex="6" />
+            <TextField id="txtChaPopMail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <Button id="btnChaPopCancel" layoutX="250.0" layoutY="445.0" mnemonicParsing="false" text="취소" />

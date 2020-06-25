@@ -83,11 +83,6 @@
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="193.0" prefWidth="1226.0">
                            <children>
-                              <Label fx:id="lblMemApp" alignment="CENTER" prefHeight="84.0" prefWidth="369.0" text="Join Us Now" textFill="#3a4243">
-                                 <font>
-                                    <Font name="NanumSquare ExtraBold" size="49.0" />
-                                 </font>
-                              </Label>
                               <Separator prefHeight="33.0" prefWidth="1233.0" />
                            </children>
                         </VBox>
@@ -142,16 +137,7 @@
                 <AnchorPane fx:id="anchorMemInfo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <AnchorPane prefHeight="646.0" prefWidth="1226.0" stylesheets="@member_main.css" />
-                        <TableView layoutX="447.0" layoutY="237.0" prefHeight="200.0" prefWidth="681.0">
-                          <columns>
-                            <TableColumn prefWidth="88.0" text="등록일" />
-                            <TableColumn prefWidth="94.0" text="만료일" />
-                              <TableColumn prefWidth="95.0" text="기간(개월)" />
-                              <TableColumn prefWidth="113.0" text="등록PT횟수" />
-                              <TableColumn prefWidth="116.0" text="잔여PT횟수" />
-                              <TableColumn prefWidth="173.0" text="결제금액(원)" />
-                          </columns>
-                        </TableView>
+                        <TableView fx:id="tableMemInfo" layoutX="447.0" layoutY="237.0" prefHeight="200.0" prefWidth="681.0" />
                         <GridPane layoutX="99.0" layoutY="231.0" prefHeight="246.0" prefWidth="302.0">
                           <columnConstraints>
                             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="110.0" />
@@ -160,8 +146,6 @@
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -173,49 +157,37 @@
                                     <Insets right="10.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="txtMemId" GridPane.columnIndex="1" />
-                              <Label text="비밀번호 :" GridPane.rowIndex="1">
-                                 <padding>
-                                    <Insets right="10.0" />
-                                 </padding>
-                              </Label>
-                              <Label text="이름 :" GridPane.rowIndex="2">
+                              <Label text="이름 :" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="txtMemName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label text="성별 :" GridPane.rowIndex="3">
+                              <Label text="전화번호 :" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets right="10.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="txtMemGender" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label text="전화번호 :" GridPane.rowIndex="4">
+                              <Label text="생년월일 :" GridPane.rowIndex="3">
                                  <padding>
                                     <Insets right="10.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="txtMemPhoneNo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label text="생년월일 :" GridPane.rowIndex="5">
+                              <Label text="주소 :" GridPane.rowIndex="4">
                                  <padding>
                                     <Insets right="10.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="txtMemBirth" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <Label text="주소 :" GridPane.rowIndex="6">
+                              <Label text="메일  :" GridPane.rowIndex="5">
                                  <padding>
                                     <Insets right="10.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="txtMemAddr" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <Label text="메일  :" GridPane.rowIndex="7">
-                                 <padding>
-                                    <Insets right="10.0" />
-                                 </padding>
-                              </Label>
-                              <TextField fx:id="txtMemMail" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <PasswordField fx:id="pwfMemPW" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="lblId" GridPane.columnIndex="1" />
+                              <Label fx:id="lblName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="lblPhoneNo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label fx:id="lblBirth" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label fx:id="lblAddress" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label fx:id="lblMail" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                         </GridPane>
                         <Button fx:id="btnMemChange" layoutX="250.0" layoutY="501.0" mnemonicParsing="false" text="회원정보 수정" />
@@ -317,7 +289,7 @@
                                        <image>
                                           <Image url="@../image/SeatedDip.jpg" />
                                        </image></ImageView>
-                                    <TextField alignment="CENTER" text="[가슴/삼두] 시티드 딥" />
+                                    <Button fx:id="btnSeatedDip" mnemonicParsing="false" text="[가슴/삼두] 시티드 딥" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="193.0" prefWidth="237.0" GridPane.columnIndex="2">

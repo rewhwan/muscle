@@ -1,7 +1,7 @@
 package model;
 
 public class QuestionMember {
-	
+	private int no;
 	private String title;
 	private String contents;
 	private String created_by;
@@ -18,12 +18,19 @@ public class QuestionMember {
 		this.created_at = null;
 	}
 
-	public QuestionMember(String title, String contents, String created_by, String created_at) {
+	public QuestionMember(int no, String title, String contents, String created_by, String created_at) {
 		super();
+		this.no = no;
 		this.title = title;
 		this.contents = contents;
 		this.created_by = created_by;
 		this.created_at = created_at;
+	}
+	public int getNo () {
+		return no;
+	}
+	public void setNo (int no) {
+		this.no=no;
 	}
 
 	public String getTitle() {

@@ -6,15 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.PT;
 import model.PTMember;
+
 
 public class PtDAO {
 
     //전역변수
-    Connection con = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
+    static Connection con = null;
+    static PreparedStatement pstmt = null;
+    static ResultSet rs = null;
 
     //PT 신청 정보를 전부 가져와줍니다.
     public ArrayList<PT> getTotalList() {
@@ -93,4 +96,60 @@ public class PtDAO {
 
         return PTMemberArrayList;
     }
+    
+    
+    
+    public static ObservableList<PT> selectClassDataByDate(String date) {
+		ObservableList<PT> dbClsByDateList = FXCollections.observableArrayList();
+		
+
+		ResultSet rs = null;
+		try {
+			try {
+				con = DBUtill.getConnection();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(con !=null) {
+				System.out.println("controller.PtDAO: DB 연결성공");
+			} else {
+				System.out.println("controller.PtDAO: DB 연결 실패");
+			}
+			String query = "select date, created_at, trainer_id from personaltraining where date like ?";
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "%"+date+"%");
+			
+			rs = pstmt.executeQuery();
+
+			int resultCount = 0;
+			while (rs.next()) {
+				PT pt = new PT(rs.getString(1), rs.getString(2), rs.getString(3));
+				dbClsByDateList.add(pt);
+			}
+			if (resultCount == 0) {
+				//AdminController.callAlert("[Search Classes By Date] : 선택된 날짜 '" + selectedDate + "'에는 수업목록이 존재하지 않습니다. \r\n 날짜를 한 번 더 확인해주세요.");
+			}
+		} catch (SQLException e) {
+			//AdminController.callAlert("[Search Selected Class] ID찾기 실패 : 데이터 실행에 문제가 발생했어요.");
+			e.printStackTrace();
+		} finally {
+			try {
+				// .6 CLOSE DataBase psmt object
+				// 제일 먼저 불렀던 것을 제일 나중에 닫는다.
+				// 반드시 있으면 닫아라.
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				System.out.println("RootController.PtDAO.selectClassDataByDate:" + e.getMessage());
+			}
+		}
+		return dbClsByDateList;
+	}
+    
+    
+    
+    
 }

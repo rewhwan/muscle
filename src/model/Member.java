@@ -27,6 +27,8 @@ public class Member {
         this.phone = phone;
     }
 
+    
+    
     public Member(String id, String pw, String name, String gender, String phone) {
         this.id = id;
         this.pw = pw;
@@ -40,7 +42,19 @@ public class Member {
         this.trainer_flag = "f";
     }
 
-    public Member(String id, String pw, String name, String gender, String phone, String birth, String address, String mail, String position, String ment, String trainer_flag) {
+  
+
+	public Member(String id, String pw, String name, String phone, String birth, String address, String mail) {
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.phone = phone;
+		this.birth = birth;
+		this.address = address;
+		this.mail = mail;
+	}
+
+	public Member(String id, String pw, String name, String gender, String phone, String birth, String address, String mail, String position, String ment, String trainer_flag) {
         this.id = id;
         this.pw = pw;
         this.name = name;

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import model.Member;
 
 import model.QuestionMember;
@@ -24,8 +25,47 @@ public class QuestionDAO {
 	ArrayList<Member> arrayList = null;
 	int returnValue = 0;
 
+	//DB에서 질문 내용을 가져오는 함수 
+	public ArrayList<QuestionMember> getTotalList(){
+		ArrayList<QuestionMember> arrayListQM =null;
 	
-	//DB에 공지를 등록하는 함수
+		try {
+			con = DBUtill.getConnection();
+			if(con!=null) {
+				System.out.println("QuestionDAO.questionRegist : DB 연결 성공");
+			}else {
+				System.out.println("QuestionDAO.questionRegist : DB 연결 실패");
+			}
+			String query = "select * from question";
+			pstmt= con.prepareStatement(query);
+			rs= pstmt.executeQuery();
+			
+			arrayListQM = new ArrayList<QuestionMember>();
+			while(rs.next()) {
+				QuestionMember qm = new QuestionMember(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5));
+				arrayListQM.add(qm);
+			}
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("QuestionDAO getTotalList 점검요망");
+			alert.setHeaderText("QuestionDAO getTotalList에 문제 발생");
+			alert.setContentText("문제사항" + e.getMessage());
+			alert.showAndWait();
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if (pstmt != null) 	pstmt.close();
+				if (con != null) con.close();
+			} catch (SQLException e) {
+				System.out.println("RootController.DAOTotalLoadList:" + e.getMessage());
+			}
+		}
+		return arrayListQM;
+	}
+	
+	
+	
+	//DB에 질문을 등록하는 함수
 	public int questionRegist(QuestionMember questionMember, Member member) {
 		
 		try {
