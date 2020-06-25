@@ -97,7 +97,7 @@ public class LoginController implements Initializable {
 
 
         //로그인창을 닫고 회원가입창을 열어줌
-//        primarystage.close();
+        primarystage.close();
         findModal.show();
 
     }

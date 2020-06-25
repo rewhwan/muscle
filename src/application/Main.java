@@ -17,14 +17,14 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/log.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
 		Parent view = fxmlLoader.load();
 		LoginController loginController = fxmlLoader.getController();
 
 		//컨트롤러에 스테이지를 넘겨줌
 		loginController.primarystage = primaryStage;
 		Scene scene = new Scene(view);
-		scene.getStylesheets().add("/view/log.css");
+		scene.getStylesheets().add("/view/login.css");
 		primaryStage.setTitle("PT 시스템");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);

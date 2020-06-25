@@ -11,8 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
 import model.Member;
 import model.Notice;
+import model.PT;
+import model.PTMember;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,21 +36,31 @@ public class AdminMainController implements Initializable {
     //공지사항을 저장해서 받아오는 변수
     private ObservableList<Notice> noticeObsList = FXCollections.observableArrayList();
 
+    //PT 테이블
+    @FXML TableView tablePT;
+    //PT신청정보를 저장해서 받아오는 변수
+    private ObservableList<PTMember> PTMemberObsList = FXCollections.observableArrayList();
+
     public Stage primarystage;
 
     //로그인 정보
-    public Member memberlogin = null;
+    public static Member memberlogin = null;
 
     //DB처리를 도와주는 객체들
     NoticeDAO noticeDAO = new NoticeDAO();
+    PtDAO ptDAO = new PtDAO();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         //공지사항 테이블값 초기화
-        tableViewColumnInitiallize();
+        noticeTableViewColumnInitiallize();
         //DB에서 공지사항을 전부 가져와 줍니다.
         noticeGetTotalList();
+
+        //PT신청정보 테이블값 초기화
+        PTTableViewColumnInitiallize();
+        PTGetTotalList(LoginController.memberLogin);
 
         //회원정보 테스트
         btnTest.setOnAction(e->System.out.println(memberlogin));
@@ -58,6 +71,60 @@ public class AdminMainController implements Initializable {
         //공지사항 등록
         btnNoticeRegist.setOnAction(e->handleBtnNoticeRegist(e));
 
+    }
+
+    private void PTGetTotalList(Member memberlogin) {
+        PTMemberObsList.clear();
+
+        //DB에서 공지사항에 대한 정보를 가져옵니다.
+        ArrayList<PTMember> PTMemberArrayList = ptDAO.getTrainerPTList(memberlogin.getId());
+        //공지사항이 없을때 예외처리
+        if(PTMemberArrayList == null) {
+            return;
+        }
+
+        for(int i=0; i<PTMemberArrayList.size(); i++) {
+            PTMember PTMember = PTMemberArrayList.get(i);
+            System.out.println(PTMember);
+            PTMemberObsList.add(PTMember);
+        }
+    }
+
+    private void PTTableViewColumnInitiallize() {
+
+        //테이블뷰 UI객체 컬럼 초기화
+        TableColumn colNo = new TableColumn("No");
+        colNo.setPrefWidth(52);
+        colNo.setStyle("-fx-alignment: CENTER");
+        colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
+
+        TableColumn colDate = new TableColumn("날짜");
+        colDate.setPrefWidth(170);
+        colDate.setStyle("-fx-alignment: CENTER");
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        TableColumn colName = new TableColumn("신청자 이름");
+        colName.setPrefWidth(100);
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn colPhone = new TableColumn("핸드폰");
+        colPhone.setPrefWidth(100);
+        colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        TableColumn colCreatedBy = new TableColumn("작성자");
+        colCreatedBy.setStyle("-fx-alignment: CENTER");
+        colCreatedBy.setPrefWidth(80);
+        colCreatedBy.setCellValueFactory(new PropertyValueFactory<>("created_by"));
+
+        TableColumn colCreatedAt = new TableColumn("작성일");
+        colCreatedAt.setStyle("-fx-alignment: CENTER");
+        colCreatedAt.setPrefWidth(150);
+        colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("created_at"));
+
+        tablePT.setFixedCellSize(45);
+
+        tablePT.getColumns().addAll(colNo, colDate, colName, colPhone, colCreatedBy, colCreatedAt);
+        tablePT.setItems(PTMemberObsList);
     }
 
     private void noticeGetTotalList() {
@@ -76,7 +143,7 @@ public class AdminMainController implements Initializable {
         }
     }
 
-    private void tableViewColumnInitiallize() {
+    private void noticeTableViewColumnInitiallize() {
 
         //테이블뷰 UI객체 컬럼 초기화
         TableColumn colNo = new TableColumn("No");
@@ -103,6 +170,8 @@ public class AdminMainController implements Initializable {
         colCreatedAt.setPrefWidth(150);
         colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("created_at"));
 
+        tableNotice.setFixedCellSize(45);
+
         tableNotice.getColumns().addAll(colNo, colTitle, colContents, colCreatedBy, colCreatedAt);
         tableNotice.setItems(noticeObsList);
 
@@ -117,6 +186,8 @@ public class AdminMainController implements Initializable {
         if (result != 0) {
             noticeGetTotalList();
             AlertUtill.showInformationAlert("공지사항 등록 성공","공지사항 등록에 성공하셨습니다.","");
+            txtNoticeTitle.clear();
+            txtNoticeContents.clear();
         }
 
     }

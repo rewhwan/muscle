@@ -1,80 +1,110 @@
 package model;
 
 public class PT {
-	private int no;
-	private String member_id;
-	private String trainer_id;
-	private String date;
-	private String created_by;
-	private String created_at; 
-	
-	public PT() {}
-	
-	public PT(int no, String member_id, String trainer_id, String date) {
-		super();
-		this.no = no; 
-		this.member_id= member_id;
-		this.trainer_id = trainer_id;
-		this.date=date;
-	}
-	
-	
-	public PT(int no, String member_id, String trainer_id, String date, String created_by, String created_at) {
-		super();
-		this.no = no;
-		this.member_id = member_id;
-		this.trainer_id = trainer_id;
-		this.date = date;
-		this.created_by = created_by;
-		this.created_at = created_at;
-	}
+    private int no;
+    private String member_id;
+    private String trainer_id;
+    private String date;
+    private String created_by;
+    private String created_at;
+    private String deleted_by;
+    private String deleted_at;
 
-	public int getNo() {
-		return no;
-	}
+    public PT() {
+    }
 
-	public void setNo(int no) {
-		this.no = no;
-	}
+    public PT(int no, String member_id, String trainer_id, String date) {
+        super();
+        this.no = no;
+        this.member_id = member_id;
+        this.trainer_id = trainer_id;
+        this.date = date;
+    }
 
-	public String getMember_id() {
-		return member_id;
-	}
+    public PT(int no, String member_id, String trainer_id, String date, String created_by, String created_at, String deleted_by, String deleted_at) {
+        this.no = no;
+        this.member_id = member_id;
+        this.trainer_id = trainer_id;
+        this.date = date;
+        this.created_by = created_by;
+        this.created_at = created_at;
+        this.deleted_by = deleted_by;
+        this.deleted_at = deleted_at;
+    }
 
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
-	}
+    public int getNo() {
+        return no;
+    }
 
-	public String getTrainer_id() {
-		return trainer_id;
-	}
+    public void setNo(int no) {
+        this.no = no;
+    }
 
-	public void setTrainer_id(String tainer_id) {
-		this.trainer_id = tainer_id;
-	}
+    public String getMember_id() {
+        return member_id;
+    }
 
-	public String getDate() {
-		return date;
-	}
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    public String getTrainer_id() {
+        return trainer_id;
+    }
 
-	public String getCreated_by() {
-		return created_by;
-	}
+    public void setTrainer_id(String trainer_id) {
+        this.trainer_id = trainer_id;
+    }
 
-	public void setCreated_by(String created_by) {
-		this.created_by = created_by;
-	}
+    public String getDate() {
+        return date;
+    }
 
-	public String getCreated_at() {
-		return created_at;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	public void setCreated_at(String created_at) {
-		this.created_at = created_at;
-	}
+    public String getCreated_by() {
+        return created_by;
+    }
 
+    public void setCreated_by(String created_by) {
+        this.created_by = created_by;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getDeleted_by() {
+        return deleted_by;
+    }
+
+    public void setDeleted_by(String deleted_by) {
+        this.deleted_by = deleted_by;
+    }
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(String deleted_at) {
+        this.deleted_at = deleted_at;
+    }
+
+    @Override
+    public String toString() {
+        return "PT{" +
+                "no=" + no +
+                ", member_id='" + member_id + '\'' +
+                ", trainer_id='" + trainer_id + '\'' +
+                ", date='" + date + '\'' +
+                ", created_by='" + created_by + '\'' +
+                ", created_at='" + created_at + '\'' +
+                '}';
+    }
 }

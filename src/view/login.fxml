@@ -52,7 +52,7 @@
                               <Insets bottom="4.0" />
                            </padding>
                         </HBox>
-                        <HBox id="pw-hbox" fx:id="hboxPw" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="300.0">
+                        <HBox id="pw-hbox" fx:id="hboxPw" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="300.0">
                            <children>
                               <ImageView fitHeight="40.0" fitWidth="40.0">
                                  <image>
