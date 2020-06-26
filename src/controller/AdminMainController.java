@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 
 import model.Member;
 import model.Notice;
-import model.PT;
 import model.PTMember;
 
 import java.io.IOException;
@@ -40,6 +39,9 @@ public class AdminMainController implements Initializable {
     @FXML TableView tablePT;
     //PT신청정보를 저장해서 받아오는 변수
     private ObservableList<PTMember> PTMemberObsList = FXCollections.observableArrayList();
+    //테스트 콤보박스
+    @FXML ComboBox comboTime;
+    private ObservableList<PTMember> PTTime = FXCollections.observableArrayList();
 
     public Stage primarystage;
 
@@ -60,7 +62,9 @@ public class AdminMainController implements Initializable {
 
         //PT신청정보 테이블값 초기화
         PTTableViewColumnInitiallize();
+        //DB에서 PT신청 내용을 가져옵니다.
         PTGetTotalList(LoginController.memberLogin);
+        comboTimeInitiallize();
 
         //회원정보 테스트
         btnTest.setOnAction(e->System.out.println(memberlogin));
@@ -70,6 +74,26 @@ public class AdminMainController implements Initializable {
 
         //공지사항 등록
         btnNoticeRegist.setOnAction(e->handleBtnNoticeRegist(e));
+
+    }
+
+    private void comboTimeInitiallize() {
+        comboTime.getItems().add("10:00");
+        comboTime.getItems().add("11:00");
+        comboTime.getItems().add("13:00");
+        comboTime.getItems().add("14:00");
+        comboTime.getItems().add("15:00");
+        comboTime.getItems().add("16:00");
+        comboTime.getItems().add("17:00");
+        comboTime.getItems().add("18:00");
+
+        PTTime = PtDAO.getPTTimeCombo();
+
+        for(int i= 0;i < PTTime.size();i++) {
+            System.out.println(PTTime.get(i).getTime());
+            comboTime.getItems().remove(PTTime.get(i).getTime());
+        }
+
 
     }
 
@@ -93,37 +117,39 @@ public class AdminMainController implements Initializable {
     private void PTTableViewColumnInitiallize() {
 
         //테이블뷰 UI객체 컬럼 초기화
-        TableColumn colNo = new TableColumn("No");
-        colNo.setPrefWidth(52);
-        colNo.setStyle("-fx-alignment: CENTER");
-        colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
-
         TableColumn colDate = new TableColumn("날짜");
-        colDate.setPrefWidth(170);
-        colDate.setStyle("-fx-alignment: CENTER");
+        colDate.setPrefWidth(130);
+        colDate.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
+        TableColumn colTime = new TableColumn("시간");
+        colTime.setPrefWidth(110);
+        colTime.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+
         TableColumn colName = new TableColumn("신청자 이름");
-        colName.setPrefWidth(100);
+        colName.setPrefWidth(110);
+        colName.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn colPhone = new TableColumn("핸드폰");
-        colPhone.setPrefWidth(100);
+        colPhone.setPrefWidth(160);
+        colPhone.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
         TableColumn colCreatedBy = new TableColumn("작성자");
-        colCreatedBy.setStyle("-fx-alignment: CENTER");
-        colCreatedBy.setPrefWidth(80);
+        colCreatedBy.setPrefWidth(100);
+        colCreatedBy.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
         colCreatedBy.setCellValueFactory(new PropertyValueFactory<>("created_by"));
 
         TableColumn colCreatedAt = new TableColumn("작성일");
-        colCreatedAt.setStyle("-fx-alignment: CENTER");
-        colCreatedAt.setPrefWidth(150);
+        colCreatedAt.setPrefWidth(210);
+        colCreatedAt.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
         colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("created_at"));
 
         tablePT.setFixedCellSize(45);
 
-        tablePT.getColumns().addAll(colNo, colDate, colName, colPhone, colCreatedBy, colCreatedAt);
+        tablePT.getColumns().addAll(colDate, colTime, colName, colPhone, colCreatedBy, colCreatedAt);
         tablePT.setItems(PTMemberObsList);
     }
 

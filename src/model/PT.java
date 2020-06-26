@@ -5,6 +5,7 @@ public class PT {
     private String member_id;
     private String trainer_id;
     private String date;
+    private String time;
     private String created_by;
     private String created_at;
     private String deleted_by;
@@ -13,8 +14,9 @@ public class PT {
     public PT() {
     }
 
-    public PT(String date, String created_at, String trainer_id) {
+    public PT(String date, String time, String created_at, String trainer_id) {
     	this.date=date;
+    	this.time=time;
     	this.created_at=created_at;
     	this.trainer_id= trainer_id;
     }
@@ -27,11 +29,12 @@ public class PT {
         this.date = date;
     }
 
-    public PT(int no, String member_id, String trainer_id, String date, String created_by, String created_at, String deleted_by, String deleted_at) {
+    public PT(int no, String member_id, String trainer_id, String date,String time, String created_by, String created_at, String deleted_by, String deleted_at) {
         this.no = no;
         this.member_id = member_id;
         this.trainer_id = trainer_id;
         this.date = date;
+        this.time = time;
         this.created_by = created_by;
         this.created_at = created_at;
         this.deleted_by = deleted_by;
@@ -68,6 +71,14 @@ public class PT {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getCreated_by() {
@@ -109,8 +120,11 @@ public class PT {
                 ", member_id='" + member_id + '\'' +
                 ", trainer_id='" + trainer_id + '\'' +
                 ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
                 ", created_by='" + created_by + '\'' +
                 ", created_at='" + created_at + '\'' +
+                ", deleted_by='" + deleted_by + '\'' +
+                ", deleted_at='" + deleted_at + '\'' +
                 '}';
     }
 }

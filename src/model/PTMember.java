@@ -7,6 +7,7 @@ public class PTMember {
     private String member_id;
     private String trainer_id;
     private String date;
+    private String time;
     private String created_by;
     private String created_at;
     private String deleted_by;
@@ -25,20 +26,26 @@ public class PTMember {
     private String ment;
     private String trainer_flag;
 
-    public PTMember(int no, String date, String name, String phone,String created_by, String created_at) {
+    public PTMember(String time) {
+        this.time = time;
+    }
+
+    public PTMember(int no, String date, String time, String name, String phone, String created_by, String created_at) {
         this.no = no;
         this.date = date;
+        this.time = time;
         this.created_by = created_by;
         this.created_at = created_at;
         this.name = name;
         this.phone = phone;
     }
 
-    public PTMember(int no, String member_id, String trainer_id, String date, String created_by, String created_at, String deleted_by, String deleted_at, String id, String pw, String name, String gender, String phone, String birth, String address, String mail, String position, String ment, String trainer_flag) {
+    public PTMember(int no, String member_id, String trainer_id, String date, String time, String created_by, String created_at, String deleted_by, String deleted_at, String id, String pw, String name, String gender, String phone, String birth, String address, String mail, String position, String ment, String trainer_flag) {
         this.no = no;
         this.member_id = member_id;
         this.trainer_id = trainer_id;
         this.date = date;
+        this.time = time;
         this.created_by = created_by;
         this.created_at = created_at;
         this.deleted_by = deleted_by;
@@ -86,6 +93,14 @@ public class PTMember {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getCreated_by() {
@@ -206,5 +221,31 @@ public class PTMember {
 
     public void setTrainer_flag(String trainer_flag) {
         this.trainer_flag = trainer_flag;
+    }
+
+    @Override
+    public String toString() {
+        return "PTMember{" +
+                "no=" + no +
+                ", member_id='" + member_id + '\'' +
+                ", trainer_id='" + trainer_id + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", created_by='" + created_by + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", deleted_by='" + deleted_by + '\'' +
+                ", deleted_at='" + deleted_at + '\'' +
+                ", id='" + id + '\'' +
+                ", pw='" + pw + '\'' +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", phone='" + phone + '\'' +
+                ", birth='" + birth + '\'' +
+                ", address='" + address + '\'' +
+                ", mail='" + mail + '\'' +
+                ", position='" + position + '\'' +
+                ", ment='" + ment + '\'' +
+                ", trainer_flag='" + trainer_flag + '\'' +
+                '}';
     }
 }
