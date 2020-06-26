@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
+import com.sun.webkit.ContextMenu.ShowContext;
+
 public class MemberMainController implements Initializable {
 	private final File DIR = new File("C:/images");
 	
@@ -57,7 +59,7 @@ public class MemberMainController implements Initializable {
 	@FXML private Button btnOne; //1개월 밑의 8만원 버튼
 	
 	//pt 관련
-	@FXML private TableView <PT>tablePT;
+	@FXML private TableView tablePT;
 	@FXML private ImageView imgPt;
 	@FXML private Button btnPTDelete;
 	@FXML private Button btnPTApply;
@@ -92,7 +94,7 @@ public class MemberMainController implements Initializable {
 	public Stage stage;
 	private ObservableList<QuestionMember> obsList;
 	private ObservableList<Notice> obsListNo;
-	private ObservableList<PT> obsListPT;
+	private ObservableList<Member> obsListPT;
 	private ObservableList<Member> obsListMember;
 	private ToggleGroup group;
 	private int tableViewQuestionSelectedIndex;
@@ -205,26 +207,35 @@ public class MemberMainController implements Initializable {
 
 	//pt테이블에서 트레이너를 선택하고 신청을 누르면 창이 뜨고 그 트레이너의 그 날짜의 일정을 보여줌
 	private void handleBtnPtApplyAction(Event event) {
-		Parent root;
-		ObservableList<PT>obsPTdate = FXCollections.observableArrayList();
+		int trainerSelect =0;
 		
-		try {
-			root=FXMLLoader.load(getClass().getResource("/view/ptDatePick.fxml"));
-			Scene scene = new Scene(root);
-			Stage ptDate = new Stage(StageStyle.UTILITY);
-	
-			ptDate.initModality(Modality.WINDOW_MODAL);
-			ptDate.initOwner(stage);
-			ptDate.setScene(scene);
-			ptDate.setResizable(false);
-			ptDate.setTitle("PT 날짜 선택창");
-			ptDate.showAndWait();
-		} catch (IOException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("PT 날짜 선택창에 문제 발생");
-			alert.setHeaderText("PT 날짜 선택창 점검 하세요");
-			alert.setContentText("다음에는 주의하세요"+e.getMessage());
-			alert.showAndWait();
+		trainerSelect=tablePT.getSelectionModel().getSelectedIndex();
+		if(trainerSelect>=0) {
+			Parent root;
+			ObservableList<PT> obsPTdate = FXCollections.observableArrayList();
+			
+			try {
+		
+				root=FXMLLoader.load(getClass().getResource("/view/ptDatePick.fxml"));
+				Scene scene = new Scene(root);
+				Stage ptDate = new Stage(StageStyle.UTILITY);
+		
+				ptDate.initModality(Modality.WINDOW_MODAL);
+				ptDate.initOwner(stage);
+				ptDate.setScene(scene);
+				ptDate.setResizable(false);
+				ptDate.setTitle("PT 날짜 선택창");
+				ptDate.showAndWait();
+			} catch (IOException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("PT 날짜 선택창에 문제 발생");
+				alert.setHeaderText("PT 날짜 선택창 점검 하세요");
+				alert.setContentText("다음에는 주의하세요"+e.getMessage());
+				alert.showAndWait();
+			} 
+			
+		}else {
+			AlertUtill.showInformationAlert("트레이너선택", "트레이너를 선택하세요", "트레이너를 선택하세요");
 		}
 
 	}
@@ -289,16 +300,17 @@ public class MemberMainController implements Initializable {
 			}
 
 	}
-	//db pt테이블의 데이터를 가져와서 화면에 띄운다
+	//db 멤버에서 트레이너의 데이터를 가져와서 화면에 띄운다 
 	private void ptTotalList() {
-		PtDAO ptDAO = new PtDAO();
-		ArrayList<PT> arrayList = ptDAO.getTotalList();
+		MemberDAO memberDAO = new MemberDAO();
+		ArrayList<Member> arrayList = memberDAO.findTrainer();
+
 		if(arrayList ==null) {
 			return;
 		}
  		for(int i=0; i<arrayList.size(); i++) {
- 			PT p = arrayList.get(i);
- 			obsListPT.add(p);
+ 			Member m = arrayList.get(i);
+ 			obsListPT.add(m);
  		}
 		
 	}
@@ -381,52 +393,41 @@ public class MemberMainController implements Initializable {
 		
 	}
 
-	//PT의 테이블 뷰 컬럼 초기화 PT필드와 연결
+	//memeber 테이블에서 트레이너의 이름과 성별 멘트를 가져와서 테이블에 띄운다 
 	private void tablePTColumnInitialize() {
-		
+		//멤버에서 트레이너의 이름 성별 멘트 직책을 가져온다 
 		obsListPT = FXCollections.observableArrayList();
 		
 		tablePT.setItems(obsListPT);
 		
-		TableColumn colNo =  new TableColumn("번호");
-		colNo.setPrefWidth(50);
-		colNo.setStyle("-fx-allignment: CENTER");
-		colNo.setCellValueFactory(new PropertyValueFactory("no"));
+		TableColumn colName =  new TableColumn("이름");
+		colName.setPrefWidth(80);
+		colName.setStyle("-fx-allignment: CENTER");
+		colName.setCellValueFactory(new PropertyValueFactory("name"));
 
-		TableColumn colMemId= new TableColumn("회원아이디");
-		colMemId.setPrefWidth(110);
-		colMemId.setStyle("-fx-allignment: CENTER");
-		colMemId.setCellValueFactory(new PropertyValueFactory("member_id"));
+		TableColumn colGend= new TableColumn("성별");
+		colGend.setPrefWidth(110);
+		colGend.setStyle("-fx-allignment: CENTER");
+		colGend.setCellValueFactory(new PropertyValueFactory("gender"));
 
-	    TableColumn colTraId= new TableColumn("트레이너 아아디");
-		colTraId.setPrefWidth(120);
-		colTraId.setStyle("-fx-allignment: CENTER");
-		colTraId.setCellValueFactory(new PropertyValueFactory("trainer_id"));
-
-		TableColumn colDate= new TableColumn("날짜");
-		colDate.setPrefWidth(140);
-		colDate.setStyle("-fx-allignment: CENTER");
-		colDate.setCellValueFactory(new PropertyValueFactory("date"));
-
-		TableColumn colCrBy= new TableColumn("신청인");
-		colCrBy.setPrefWidth(130);
-		colCrBy.setStyle("-fx-allignment: CENTER");
-		colCrBy.setCellValueFactory(new PropertyValueFactory("created_by"));
-
-		TableColumn colCrAt= new TableColumn("신청일");
-		colCrAt.setPrefWidth(140);
-		colCrAt.setStyle("-fx-allignment: CENTER");
-		colCrAt.setCellValueFactory(new PropertyValueFactory("created_at"));
-
-
-		tablePT.getColumns().addAll(colNo, colMemId, colTraId, colDate, colCrBy, colCrAt);
+		TableColumn colPositon= new TableColumn("직책");
+		colPositon.setPrefWidth(140);
+		colPositon.setStyle("-fx-allignment: CENTER");
+		colPositon.setCellValueFactory(new PropertyValueFactory("position"));
 		
-		tablePT.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PT>() {
+	    TableColumn colMent= new TableColumn("멘트");
+	    colMent.setPrefWidth(120);
+	    colMent.setStyle("-fx-allignment: CENTER");
+	    colMent.setCellValueFactory(new PropertyValueFactory("ment"));
+
+		tablePT.getColumns().addAll(colName, colGend, colPositon, colMent);
+		
+		tablePT.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Member>() {
 
 			@Override
-			public void changed(ObservableValue<? extends PT> observable, PT oldValue, PT newValue) {
-				int imgName= newValue.getNo();
-				imgPt.setImage(new Image(getClass().getResource("/image/trainer"+imgName+".jpg").toString()));
+			public void changed(ObservableValue<? extends Member> observable, Member oldValue, Member newValue) {
+				String imgName= newValue.getId();
+				imgPt.setImage(new Image(getClass().getResource("/image/"+imgName+".jpg").toString()));
 			}//
 		});
 	

@@ -89,9 +89,18 @@ public class PtDatePicController implements Initializable {
 		//달력 날짜 설정 초기화 
 		initCalender();
 		
+		//선택한 트레이너의 스케줄을 테이블로  가져오기
+		trainerScheduleTotalList();
+		
+		
+	}//end of initialize
+	
+	//선택한 트레이너의 스케줄을 테이블로  가져오기
+		private void trainerScheduleTotalList() {
+		
 		
 	}
-	
+
 		//달력에 날짜 설정 초기화
 		private void initCalender() {
 		ptDateArray = new TextField[] { ptDate10, ptDate11, ptDate12, ptDate13, ptDate14, ptDate15, ptDate16,
