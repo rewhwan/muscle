@@ -241,6 +241,50 @@ public class MemberDAO {
         return member;
     }
     
+    //트레이너 정보 찾기 함수
+    public ArrayList<Member> findTrainer() {
+    	arrayList = new ArrayList<Member>();
+
+        try {
+            con = DBUtill.getConnection();
+
+            //DB 연결 성공여부 체크
+            if(con != null) {
+                System.out.println("MemberDAO.findTrainer : DB 연결 성공");
+            }else {
+                System.out.println("MemberDAO.findTrainer : DB 연결 실패");
+            }
+            
+            //쿼리문
+            String query = "SELECT * from member where trainer_flag=\"t\"";
+
+            //쿼리문 실행준비
+            pstmt = con.prepareStatement(query);
+
+            //쿼리문의 결과를 resultset으로 받는다
+            rs = pstmt.executeQuery();
+
+      
+            while(rs.next()) {
+                Member member = new Member(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11));
+                arrayList.add(member);
+            }
+
+        } catch (Exception e) {
+            AlertUtill.showWarningAlert("오류!!!!!!!!!!!","알 수 없는 오류가 발생했습니다.","관리자에게 문의해 주시기 바랍니다."+e.getMessage());
+        }finally {
+            try {
+                if(rs != null)	rs.close();
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close();
+            } catch (SQLException e) {
+                System.out.println("MemberDAO.findTrainer"+e.getMessage());
+            }
+        }
+    	
+    	return arrayList;
+    }
+    
     //회원 정보를 수정하면 수정한 내용이 memberTBL에 바뀌게 
    public  int updateMemInfo(Member member) {
     
@@ -300,7 +344,7 @@ public class MemberDAO {
 
     }
     
-    
+    //트레이너의 이름으로 그 트레이너의 스케줄을 가져와서 테이블에 띄움
     
     
 }
