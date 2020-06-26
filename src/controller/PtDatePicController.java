@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -64,8 +65,7 @@ public class PtDatePicController implements Initializable {
 	@FXML private TextField ptDate64;
 	@FXML private TextField ptDate65;
 	@FXML private TextField ptDate66;
-	
-	
+
 	@FXML private TableView<PT> ptTraTable;
 	ObservableList<PT>obsPTdate;
 	private Integer jj=0;
@@ -76,6 +76,10 @@ public class PtDatePicController implements Initializable {
 
 	private LocalDateTime ldt = LocalDateTime.now();
 	private Calendar cal = Calendar.getInstance();
+	
+	//테스트용 버튼  
+	@FXML private Button btnTest1;
+	@FXML private Button btnTest2;
 	
 	
 	@Override
@@ -91,6 +95,12 @@ public class PtDatePicController implements Initializable {
 		
 		//선택한 트레이너의 스케줄을 테이블로  가져오기
 		trainerScheduleTotalList();
+		
+		btnTest1.setOnAction(e ->{
+			ldt = ldt.plusMonths(1);
+			System.out.println(ldt);
+			initCalender();
+		});
 		
 		
 	}//end of initialize
@@ -195,7 +205,7 @@ public class PtDatePicController implements Initializable {
 			TableColumn colTitle = new TableColumn("시간");
 			colTitle.setPrefWidth(250);
 			colTitle.setStyle("-fx-allignment: CENTER");
-			colTitle.setCellValueFactory(new PropertyValueFactory<>("created_at"));
+			colTitle.setCellValueFactory(new PropertyValueFactory<>("time"));
 
 			TableColumn colContents = new TableColumn("트레이너");
 			colContents.setPrefWidth(250);

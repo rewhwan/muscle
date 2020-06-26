@@ -26,6 +26,7 @@ import javafx.stage.StageStyle;
 import model.Member;
 import model.Notice;
 import model.PT;
+import model.PTMember;
 import model.QuestionMember;
 
 import java.io.File;
@@ -92,6 +93,7 @@ public class MemberMainController implements Initializable {
 	
 	
 	public Stage stage;
+	private ObservableList<PT> obsListPTInfo;
 	private ObservableList<QuestionMember> obsList;
 	private ObservableList<Notice> obsListNo;
 	private ObservableList<Member> obsListPT;
@@ -112,6 +114,7 @@ public class MemberMainController implements Initializable {
 		this.obsListPT = FXCollections.observableArrayList();
 		this.obsListNo = FXCollections.observableArrayList();
 		this.obsListMember = FXCollections.observableArrayList();
+		this.obsListPTInfo =FXCollections.observableArrayList();
 		this.stage = null;
 	}
 
@@ -171,8 +174,12 @@ public class MemberMainController implements Initializable {
 		//회원정보 회원정보 수정 버튼 이벤트 등록 및 핸들러
 		btnMemChange.setOnAction( event-> {	handleBtnMemChangeAction(event);});
 		
-		//회원정보 회원권,pt잔여 횟수 금액 테이블
+		//회원정보 탭의 테이블 초기화
 		tableMemInfoInitialize();
+		
+		//db의 PT 테이블에서 데이터를 가져와 회원정보 탭의 테이블에 넣음 
+		myPTInfoList();
+		
 //---------------------------------------------------------------------------------------------		
 
 		//운동정보에서 버튼을 누르면 팝업창이 뜨고 그 운동의 동영상이 나오게 이벤트 처리
@@ -180,27 +187,45 @@ public class MemberMainController implements Initializable {
 		//btnSeatedDip.setOnAction(event -> an	);
 	}// end of initialize
 	
-	
-	//회원정보 회원권,pt잔여 횟수 금액 테이블
+	//db의 PT 테이블에서 데이터를 가져와 회원정보 탭의 테이블에 넣음 
+	private void myPTInfoList() {
+		PtDAO ptDAO = new PtDAO();
+		ArrayList<PT> myPTInfo = ptDAO.getMyPTInfo();
+		if(myPTInfo ==null) {
+			return;
+		}
+ 		for(int i=0; i<myPTInfo.size(); i++) {
+ 			PT pt = myPTInfo.get(i);
+ 			obsListPTInfo.add(pt);
+ 		}
+ 		
+	}
+
+	//회원정보 탭의 테이블 초기화
 	private void tableMemInfoInitialize() {
 		
-		/*TableColumn colRegDay = new TableColumn("등록일");
+		TableColumn colRegDay = new TableColumn("트레이너");
 		colRegDay.setPrefWidth(100);
 		colRegDay.setStyle("-fx-allignment: CENTER");
-		colRegDay.setCellValueFactory(new PropertyValueFactory<>("created_at"));
+		colRegDay.setCellValueFactory(new PropertyValueFactory<>("trainer_id"));
 
-		TableColumn colTitle = new TableColumn("만료일");
-		colTitle.setPrefWidth(250);
-		colTitle.setStyle("-fx-allignment: CENTER");
-		colTitle.setCellValueFactory(new PropertyValueFactory<>("date"));
+		TableColumn colDate = new TableColumn("날짜");
+		colDate.setPrefWidth(250);
+		colDate.setStyle("-fx-allignment: CENTER");
+		colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
-		TableColumn colContents = new TableColumn("내용");
-		colContents.setPrefWidth(250);
-		colContents.setStyle("-fx-allignment: CENTER");
-		colContents.setCellValueFactory(new PropertyValueFactory<>("contents"));
+		TableColumn colTime = new TableColumn("시간");
+		colTime.setPrefWidth(250);
+		colTime.setStyle("-fx-allignment: CENTER");
+		colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
 
-		tableMemInfo.getColumns().addAll(colRegDay, colTitle, colContents);
-		tableMemInfo.setItems(obsListNo);*/
+		/*TableColumn colCreat = new TableColumn("작성일");
+		colCreat.setPrefWidth(250);
+		colCreat.setStyle("-fx-allignment: CENTER");
+		colCreat.setCellValueFactory(new PropertyValueFactory<>("created_at"));*/
+		
+		tableMemInfo.getColumns().addAll(colRegDay, colDate, colTime);
+		tableMemInfo.setItems(obsListPTInfo);
 		
 	}
 

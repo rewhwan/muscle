@@ -127,10 +127,8 @@ public class PtDAO {
 				dbClsByDateList.add(pt);
 			}
 			if (resultCount == 0) {
-				//AdminController.callAlert("[Search Classes By Date] : 선택된 날짜 '" + selectedDate + "'에는 수업목록이 존재하지 않습니다. \r\n 날짜를 한 번 더 확인해주세요.");
 			}
 		} catch (SQLException e) {
-			//AdminController.callAlert("[Search Selected Class] ID찾기 실패 : 데이터 실행에 문제가 발생했어요.");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -181,5 +179,37 @@ public class PtDAO {
         return PTTimeCombo;
     }
     
-    //시간별 PT 횟수를 불러옵니다.
+    //회원정보 창의 테이블에 pt 신청한 내용. 트레이너 날짜 시간을 가져온다
+    public static ArrayList<PT> getMyPTInfo() {
+    	ArrayList<PT> myPTInfo = new ArrayList<PT>();
+
+        ResultSet rs = null;
+        try {
+            con = DBUtill.getConnection();
+            if (con != null) {
+                System.out.println("controller.PtDAO: DB 연결성공");
+            } else {
+                System.out.println("controller.PtDAO: DB 연결 실패");
+            }
+
+            //쿼리문
+            String query = "SELECT * from personaltraining where member_id ='hh'";
+
+            //쿼리문 준비
+            pstmt = con.prepareStatement(query);
+            //쿼리실행 결과값 저장
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                PT pt = new PT (rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9));
+                myPTInfo.add(pt);
+            }
+
+
+        }catch (Exception e) {
+            AlertUtill.showWarningAlert("PTDAO getMyPTInfo 점검요망", "PTDAO getMyPTInfo 문제발생", "문제사항!! " + e.getMessage());
+        }
+        return myPTInfo;
+    }
+    
 }
