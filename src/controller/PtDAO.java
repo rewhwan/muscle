@@ -8,10 +8,7 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.PT;
-import model.PTBarChart;
-import model.PTMember;
-import model.PTPieChart;
+import model.*;
 
 
 public class PtDAO {
@@ -99,8 +96,8 @@ public class PtDAO {
         return PTMemberArrayList;
     }
     
-    //달력에서 날짜를 선택하면 해당일의 PT 신청 정보를 가져온다.
-    public static ObservableList<PT> selectClassDataByDate(String date) {
+    //달력에서 날짜를 선택하면 해당일의 PT 신청 정보를 가져온다. -> 해당 트레이너의 신청정보를 가져오도록 수정
+    public static ObservableList<PT> getTrainerPTDateList(String date, Member trainerInfo) {
 		ObservableList<PT> dbClsByDateList = FXCollections.observableArrayList();
 
 		try {
@@ -115,15 +112,16 @@ public class PtDAO {
 			} else {
 				System.out.println("controller.PtDAO: DB 연결 실패");
 			}
-			String query = "select date, time, created_at, trainer_id from personaltraining where date like?";
+			String query = "select * from personaltraining where date like? AND trainer_id = ?";
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, "%"+date+"%");
+			pstmt.setString(2, trainerInfo.getId());
 			
 			rs = pstmt.executeQuery();
 
 			int resultCount = 0;
 			while (rs.next()) {
-				PT pt = new PT(rs.getString(1), rs.getString(2) , rs.getString(3), rs.getString(4));
+				PT pt = new PT(rs.getInt(1), rs.getString(2) , rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
 				dbClsByDateList.add(pt);
 			}
 			if (resultCount == 0) {
