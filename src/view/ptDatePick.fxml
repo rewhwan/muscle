@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PtDatePicController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PtDatePicController">
    <children>
-      <Pane layoutX="-25.0" layoutY="10.0" prefHeight="566.0" prefWidth="710.0">
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="56.0" layoutY="1.0" text="PT 신청" underline="true">
+            <Label text="PT 신청" underline="true">
                <font>
                   <Font name="Baskerville Old Face" size="22.0" />
                </font>
@@ -21,309 +27,321 @@
                   <Insets top="3.0" />
                </padding>
             </Label>
-            <TableView fx:id="ptTraTable" layoutX="46.0" layoutY="309.0" prefHeight="202.0" prefWidth="620.0" />
-            <TextField fx:id="ptDateTxFRegi" alignment="CENTER" editable="false" focusTraversable="false" layoutX="544.0" layoutY="516.0" prefHeight="29.0" prefWidth="121.0" text="예약">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Malgun Gothic Semilight" size="15.0" />
-               </font>
-            </TextField>
-            <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="45.0" layoutY="40.0" prefHeight="258.0" prefWidth="620.0">
+            <HBox alignment="CENTER" spacing="30.0">
                <children>
-                  <Label prefHeight="34.0" prefWidth="39.0" text="SUN" textFill="RED">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="34.0" prefWidth="43.0" text="MON" GridPane.columnIndex="1">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="26.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="34.0" prefWidth="39.0" text="TUE" GridPane.columnIndex="2">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="34.0" prefWidth="39.0" text="WED" GridPane.columnIndex="3">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="34.0" prefWidth="39.0" text="THU" GridPane.columnIndex="4">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="34.0" prefWidth="39.0" text="FRI" GridPane.columnIndex="5">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="34.0" prefWidth="39.0" text="SAT" textFill="BLUE" GridPane.columnIndex="6">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="ptDate10" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate12" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate11" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate13" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate14" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate15" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate16" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate36" editable="false" prefHeight="59.0" prefWidth="82.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate35" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate34" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate33" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate32" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate31" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate30" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="3">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate26" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate25" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate24" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate23" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate22" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate21" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate20" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate40" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="4">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate42" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate41" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate56" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate55" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate54" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate53" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate52" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate51" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate50" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="5">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate46" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate45" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate44" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate43" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate64" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate63" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate62" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate61" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate60" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="6">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate66" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="ptDate65" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </TextField>
+                  <Button fx:id="btnLastMonth" mnemonicParsing="false" text="이전달" />
+                  <Label fx:id="labelCalenderMonth" text="날짜" />
+                  <Button fx:id="btnNextMonth" mnemonicParsing="false" text="다음달" />
                </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <padding>
-                  <Insets top="2.0" />
-               </padding>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <Button fx:id="btnTest1" layoutX="146.0" layoutY="518.0" mnemonicParsing="false" text="Test1 " />
-            <Button fx:id="btnTest2" layoutX="252.0" layoutY="518.0" mnemonicParsing="false" text="Test2" />
+            </HBox>
+            <Pane>
+               <children>
+                  <TableView fx:id="ptTraTable" layoutX="25.0" layoutY="309.0" prefHeight="202.0" prefWidth="620.0" />
+                  <TextField fx:id="ptDateTxFRegi" alignment="CENTER" editable="false" focusTraversable="false" layoutX="544.0" layoutY="516.0" prefHeight="29.0" prefWidth="121.0" text="예약">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Malgun Gothic Semilight" size="15.0" />
+                     </font>
+                  </TextField>
+                  <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="25.0" layoutY="40.0" prefHeight="258.0" prefWidth="620.0">
+                     <children>
+                        <Label prefHeight="34.0" prefWidth="39.0" text="SUN" textFill="RED">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="43.0" text="MON" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="26.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="39.0" text="TUE" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="39.0" text="WED" GridPane.columnIndex="3">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="39.0" text="THU" GridPane.columnIndex="4">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="39.0" text="FRI" GridPane.columnIndex="5">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="39.0" text="SAT" textFill="BLUE" GridPane.columnIndex="6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="ptDate10" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate12" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate11" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate13" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate14" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate15" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate16" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate36" editable="false" prefHeight="59.0" prefWidth="82.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate35" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate34" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate33" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate32" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate31" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate30" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="3">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate26" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate25" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate24" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate23" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate22" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate21" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate20" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate40" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="4">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate42" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate41" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate56" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate55" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate54" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate53" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate52" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate51" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate50" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="5">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate46" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate45" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate44" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate43" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate64" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate63" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate62" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate61" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate60" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.rowIndex="6">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate66" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="ptDate65" editable="false" prefHeight="45.0" prefWidth="97.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextField>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <padding>
+                        <Insets top="2.0" />
+                     </padding>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </Pane>
          </children>
-      </Pane>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

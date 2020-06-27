@@ -37,8 +37,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
-import com.sun.webkit.ContextMenu.ShowContext;
-
 public class MemberMainController implements Initializable {
 	private final File DIR = new File("C:/images");
 	
@@ -91,7 +89,7 @@ public class MemberMainController implements Initializable {
 	@FXML private Button btnSeatedDip;
 	
 	
-	
+
 	public Stage stage;
 	private ObservableList<PT> obsListPTInfo;
 	private ObservableList<QuestionMember> obsList;
@@ -164,7 +162,7 @@ public class MemberMainController implements Initializable {
 		btnPTApply.setOnMouseClicked( event-> {	handleBtnPtApplyAction(event);	});
 		
 		//PT날짜 고르는 창의 테이블 뷰 컬럼 초기화
-		//tablePtDatePicInitialize();
+//		tablePtDatePicInitialize();
 //---------------------------------------------------------------------------------------------	
 		
 		//회원권 신청에서 1개월의 8만원 버튼을 눌렀을 때의 이벤트 처리
@@ -236,29 +234,32 @@ public class MemberMainController implements Initializable {
 		
 		trainerSelect=tablePT.getSelectionModel().getSelectedIndex();
 		if(trainerSelect>=0) {
-			Parent root;
-			ObservableList<PT> obsPTdate = FXCollections.observableArrayList();
+			Parent root = null;
 			
 			try {
-		
+
 				root=FXMLLoader.load(getClass().getResource("/view/ptDatePick.fxml"));
 				Scene scene = new Scene(root);
 				Stage ptDate = new Stage(StageStyle.UTILITY);
-		
-				ptDate.initModality(Modality.WINDOW_MODAL);
-				ptDate.initOwner(stage);
+
 				ptDate.setScene(scene);
+				ptDate.initModality(Modality.WINDOW_MODAL);
+				ptDate.initOwner(primarystage);
 				ptDate.setResizable(false);
 				ptDate.setTitle("PT 날짜 선택창");
-				ptDate.showAndWait();
+				Member trainerInfo = (Member)tablePT.getSelectionModel().getSelectedItem();
+				PtDatePicController.trainerInfo = trainerInfo;
+				ptDate.show();
+
 			} catch (IOException e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("PT 날짜 선택창에 문제 발생");
 				alert.setHeaderText("PT 날짜 선택창 점검 하세요");
 				alert.setContentText("다음에는 주의하세요"+e.getMessage());
 				alert.showAndWait();
-			} 
-			
+			}
+
+
 		}else {
 			AlertUtill.showInformationAlert("트레이너선택", "트레이너를 선택하세요", "트레이너를 선택하세요");
 		}

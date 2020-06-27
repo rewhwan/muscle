@@ -6,14 +6,13 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Member;
 import model.PT;
 
 public class PtDatePicController implements Initializable {
@@ -76,10 +75,16 @@ public class PtDatePicController implements Initializable {
 
 	private LocalDateTime ldt = LocalDateTime.now();
 	private Calendar cal = Calendar.getInstance();
-	
-	//테스트용 버튼  
-	@FXML private Button btnTest1;
-	@FXML private Button btnTest2;
+
+	//달력의 현재 월을 표시해주는 라벨
+	@FXML private Label labelCalenderMonth;
+
+	//선택한 트레이너의 정보를 가지고 있는 변수
+	public static Member trainerInfo = null;
+
+	//달력 넘기는 버튼
+	@FXML private Button btnLastMonth;
+	@FXML private Button btnNextMonth;
 	
 	
 	@Override
@@ -95,16 +100,24 @@ public class PtDatePicController implements Initializable {
 		
 		//선택한 트레이너의 스케줄을 테이블로  가져오기
 		trainerScheduleTotalList();
-		
-		btnTest1.setOnAction(e ->{
-			ldt = ldt.plusMonths(1);
-			System.out.println(ldt);
-			initCalender();
-		});
-		
+
+		//달력 버튼 클릭시 이벤트
+		btnNextMonth.setOnAction(e -> btnMonthAction(e));
+		btnLastMonth.setOnAction(e -> btnMonthAction(e));
 		
 	}//end of initialize
-	
+
+	//달력의 달을 바꾸어주는 버튼 클릭시 사용하는 함수
+	private void btnMonthAction(ActionEvent event) {
+		//클릭한 버튼의 id 값에 따라서 실행하는 실행문을 다르게 해줍니다.
+		switch (((Button)event.getSource()).getId()) {
+			case "btnNextMonth": ldt = ldt.plusMonths(1); break;
+			case "btnLastMonth": ldt = ldt.minusMonths(1); break;
+		}
+		System.out.println(ldt);
+		initCalender();
+	}
+
 	//선택한 트레이너의 스케줄을 테이블로  가져오기
 		private void trainerScheduleTotalList() {
 		
@@ -121,14 +134,19 @@ public class PtDatePicController implements Initializable {
 			 ptDate60, ptDate61, ptDate62, ptDate63, ptDate64, ptDate65, ptDate66
 		};
 		
-			 final int year = ldt.getYear();
+			 	final int year = ldt.getYear();
 				final int month = ldt.getMonthValue();
 				int day = ldt.getDayOfMonth();
+
+				//달력의 현재월과 연도를 보여줍니다.
+				labelCalenderMonth.setText(year+"년 "+month +"월");
+
 				cal.set(year, month - 1, 1);
 				int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 				int firstday = 0;
 				int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-				switch (dayOfWeek) {
+
+			switch (dayOfWeek) {
 				case 1:
 					firstday = 0;
 					break;
@@ -153,39 +171,46 @@ public class PtDatePicController implements Initializable {
 				}
 				int j = 0;
 
-				for (int i = firstday; i < lastDay + firstday; i++) {
-					j++;
-					ptDateArray[i].setText("" + j);
-					ptDateArray[i].setStyle("-fx-cursor: hand; ");
-					
-					final int ii = i;
-					ptDateArray[i].setOnMouseClicked(e -> {	
-						
-						String month1 = "";
-						if (month < 10) {
-							month1 = "0" + month;
-						}
-						String day1 = "";
-						if (Integer.parseInt(ptDateArray[ii].getText()) < 10) {
-							day1 = "0" + ptDateArray[ii].getText();
-						} else {
-							day1 = ptDateArray[ii].getText();
+				for (int i = 0; i < 42; i++) {
 
-						}
-						
-						String date = year + "-" + month1 + "-" + day1;
-						
-						if (e.getClickCount() == 1) {
-							ObservableList<PT> dbClsByDateList = PtDAO.selectClassDataByDate(date);
-							ptTraTable.setItems(dbClsByDateList);					
-							
-							if(jj!=ii){						
-								ptDateArray[ii].setStyle("-fx-background-color: orange");		
-								ptDateArray[jj].setStyle("-fx-background-color: white");								
-							}					
-							jj=ii;
-						}
-					});
+					if (i >= firstday && i < firstday + lastDay) {
+						j++;
+						ptDateArray[i].setText("" + j);
+						ptDateArray[i].setStyle("-fx-cursor: hand; ");
+
+						final int ii = i;
+						ptDateArray[i].setOnMouseClicked(e -> {
+
+							String month1 = "";
+							if (month < 10) {
+								month1 = "0" + month;
+							}
+							String day1 = "";
+							if (Integer.parseInt(ptDateArray[ii].getText()) < 10) {
+								day1 = "0" + ptDateArray[ii].getText();
+							} else {
+								day1 = ptDateArray[ii].getText();
+
+							}
+
+							String date = year + "-" + month1 + "-" + day1;
+
+							if (e.getClickCount() == 1) {
+								ObservableList<PT> dbClsByDateList = PtDAO.getTrainerPTDateList(date, trainerInfo);
+								ptTraTable.setItems(dbClsByDateList);
+
+								if(jj!=ii){
+									ptDateArray[ii].setStyle("-fx-background-color: orange");
+									ptDateArray[jj].setStyle("-fx-background-color: white");
+								}
+								jj=ii;
+							}
+						});
+					}else {
+						ptDateArray[i].setText("");
+					}
+
+
 				}
 	}
 		
@@ -212,8 +237,6 @@ public class PtDatePicController implements Initializable {
 			colContents.setStyle("-fx-allignment: CENTER");
 			colContents.setCellValueFactory(new PropertyValueFactory<>("trainer_id"));
 
-			/*tableNotice.getColumns().addAll(colNo, colTitle, colContents);
-			tableNotice.setItems(obsListNo);*/
 			ptTraTable.getColumns().addAll(colPtDate,colTitle,colContents);
 			ptTraTable.setItems(obsPTdate);
 		
