@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.*;
+import sun.font.CreatedFontTracker;
 
 
 public class PtDAO {
@@ -17,7 +18,8 @@ public class PtDAO {
     static Connection con = null;
     static PreparedStatement pstmt = null;
     static ResultSet rs = null;
-
+    int returnValue = 0;
+    
     //PT 신청 정보를 전부 가져와줍니다.
     public ArrayList<PT> getTotalList() {
         ArrayList<PT> arrayList = new ArrayList<PT>();
@@ -112,7 +114,7 @@ public class PtDAO {
 			} else {
 				System.out.println("controller.PtDAO: DB 연결 실패");
 			}
-			String query = "select * from personaltraining where date like? AND trainer_id = ?";
+			String query = "select no, member_id, trainer_id, date, TIME_FORMAT(time,\"%p %l:%i\") AS time, created_by , created_at, deleted_by, deleted_at from personaltraining where date like? AND trainer_id = ? order by time asc";
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, "%"+date+"%");
 			pstmt.setString(2, trainerInfo.getId());
@@ -143,9 +145,9 @@ public class PtDAO {
 		}
 		return dbClsByDateList;
 	}
-    
+    //콤보 박스에 시간을 설정한다
     //해당일에 PT가 신청된 시간을 불러옵니다.
-    public static ObservableList<PTMember> getPTTimeCombo() {
+    public static ObservableList<PTMember> getPTTimeCombo(String date, String trainerId) {
         ObservableList<PTMember> PTTimeCombo = FXCollections.observableArrayList();
 
         try {
@@ -157,10 +159,12 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT DISTINCT TIME_FORMAT(time,\"%H:%i\") AS time FROM personaltraining AS PT WHERE date = \"2020-06-25\" ORDER BY time ASC";
+            String query = "SELECT DISTINCT TIME_FORMAT(time,\"%H:%i\") AS time FROM personaltraining AS PT WHERE date = ? AND trainer_id = ?ORDER BY time ASC";
 
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
+            pstmt.setString(1, date);
+            pstmt.setString(2, trainerId);
             //쿼리실행 결과값 저장
             rs = pstmt.executeQuery();
 
@@ -176,8 +180,9 @@ public class PtDAO {
         return PTTimeCombo;
     }
 
+    //member_id로 pt정보를 가져온다 
     //회원정보 창의 테이블에 pt 신청한 내용. 트레이너 날짜 시간을 가져온다
-    public static ArrayList<PT> getMyPTInfo() {
+    public  ArrayList<PT> getMyPTInfo() {
     	ArrayList<PT> myPTInfo = new ArrayList<PT>();
 
         try {
@@ -193,6 +198,7 @@ public class PtDAO {
 
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
+        
             //쿼리실행 결과값 저장
             rs = pstmt.executeQuery();
 
@@ -269,5 +275,49 @@ public class PtDAO {
         }
 
         return PTBarChartObsList;
+    }
+    
+    //pt 신청하는 함수
+    public void reservationPT(Member memberLogin, Member trainerInfo, String date, String time ) {
+    	
+    	try {
+			con = DBUtill.getConnection();
+			
+			if(con!=null) {
+				  System.out.println("controller.PtDAO: DB 연결성공");
+			}else {
+                System.out.println("controller.PtDAO: DB 연결 실패");
+            }
+			
+			String query = "insert into personaltraining values (null,?,?,?,?,?,now(), null,null)";
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, memberLogin.getId());
+			pstmt.setString(2, trainerInfo.getId());
+			pstmt.setString(3, date);
+			pstmt.setString(4, time);
+			pstmt.setString(5, memberLogin.getId());
+			
+			returnValue = pstmt.executeUpdate();
+			if(returnValue !=0) {
+				AlertUtill.showInformationAlert("PT등록 성공", "PT등록에 성공했습니다", time+"시에 PT등록이 되었습니다");
+			} else {
+				throw new Exception(memberLogin.getId()+"의 PT 등록에 문제 있음 ");
+			}
+			
+		} catch (Exception e) {
+			AlertUtill.showErrorAlert("PT등록 점검요망", "reservationPT에 문제 있음 ", "reservationPT를 점검해주세요 ");
+		} finally {
+			
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+				
+			} catch (SQLException e) {
+				System.out.println("controller.PtDAO.reservationPT"+e.getMessage());
+			}
+			
+		}
+
     }
 }

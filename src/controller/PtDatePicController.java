@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Member;
 import model.PT;
+import model.PTMember;
 
 public class PtDatePicController implements Initializable {
 	
@@ -87,6 +88,12 @@ public class PtDatePicController implements Initializable {
 	@FXML private Button btnLastMonth;
 	@FXML private Button btnNextMonth;
 	
+	//시간 선택하는 콤보박스
+	@FXML private ComboBox cmbPTTime;
+	 private ObservableList<PTMember> PTTime = FXCollections.observableArrayList();
+	 
+	//달력에서 선택한 날짜를 가지고 있는 변수
+	private String selectDate = null;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -94,7 +101,7 @@ public class PtDatePicController implements Initializable {
 		tablePtDatePicInitialize();
 		
 		//예약버튼을 누르면 예약되게 하는 이벤트
-		ptDateTxFRegi.setOnMouseClicked( event-> {handleTxFRegi(event);});
+		ptDateTxFRegi.setOnMouseClicked( event-> handleptDateTxfRegiAction());
 		
 		//달력 날짜 설정 초기화 
 		initCalender();
@@ -107,6 +114,28 @@ public class PtDatePicController implements Initializable {
 		btnLastMonth.setOnAction(e -> btnMonthAction(e));
 		
 	}//end of initialize
+	
+	 private void comboTimeInitiallize(String date, Member trainerInfo) {
+		 ObservableList<String> obsList = FXCollections.observableArrayList();
+		 cmbPTTime.setItems(obsList);
+		 
+		 cmbPTTime.getItems().add("10:00");
+		 cmbPTTime.getItems().add("11:00");
+		 cmbPTTime.getItems().add("13:00");
+		 cmbPTTime.getItems().add("14:00");
+		 cmbPTTime.getItems().add("15:00");
+		 cmbPTTime.getItems().add("16:00");
+		 cmbPTTime.getItems().add("17:00");
+		 cmbPTTime.getItems().add("18:00");
+
+		 PTTime = PtDAO.getPTTimeCombo(date, trainerInfo.getId());
+
+		 for(int i= 0;i < PTTime.size();i++) {	
+			 cmbPTTime.getItems().remove(PTTime.get(i).getTime());
+		 }
+
+
+    }
 
 	//달력의 달을 바꾸어주는 버튼 클릭시 사용하는 함수
 	private void btnMonthAction(ActionEvent event) {
@@ -181,7 +210,7 @@ public class PtDatePicController implements Initializable {
 
 						final int ii = i;
 						ptDateArray[i].setOnMouseClicked(e -> {
-
+							
 							String month1 = "";
 							if (month < 10) {
 								month1 = "0" + month;
@@ -195,9 +224,11 @@ public class PtDatePicController implements Initializable {
 							}
 
 							String date = year + "-" + month1 + "-" + day1;
+							selectDate = date;
 
 							if (e.getClickCount() == 1) {
 								ObservableList<PT> dbClsByDateList = PtDAO.getTrainerPTDateList(date, trainerInfo);
+								comboTimeInitiallize(date, trainerInfo);
 								ptTraTable.setItems(dbClsByDateList);
 
 								if(jj!=ii){
@@ -212,33 +243,33 @@ public class PtDatePicController implements Initializable {
 					}
 
 
+					
 				}
 	}
 		
 		//예약버튼을 누르면 예약되게 하는 이벤트
-		private void handleTxFRegi(Event event) {
-			ptDateTxFRegi.setDisable(false);
-			System.out.println();
-			
+		private void handleptDateTxfRegiAction() {
+			PtDAO PTDAO = new PtDAO();
+			PTDAO.reservationPT(MemberMainController.memberLogin, trainerInfo, selectDate,cmbPTTime.getSelectionModel().getSelectedItem().toString());
 		}
 
 		//PT날짜 고르는 창의 테이블 뷰 컬럼 초기화 
 		private void tablePtDatePicInitialize() {
 			obsPTdate = FXCollections.observableArrayList();
 			TableColumn colPtDate = new TableColumn("날짜");
-			colPtDate.setPrefWidth(200);
-			colPtDate.setStyle("-fx-allignment: CENTER");
+			colPtDate.setPrefWidth(120);
+			colPtDate.setStyle("-fx-alignment: CENTER");
 			colPtDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
 			TableColumn colTitle = new TableColumn("시간");
-			colTitle.setPrefWidth(250);
-			colTitle.setStyle("-fx-allignment: CENTER");
+			colTitle.setPrefWidth(100);
+			colTitle.setStyle("-fx-alignment: CENTER");
 			colTitle.setCellValueFactory(new PropertyValueFactory<>("time"));
 
-			TableColumn colContents = new TableColumn("트레이너");
-			colContents.setPrefWidth(250);
-			colContents.setStyle("-fx-allignment: CENTER");
-			colContents.setCellValueFactory(new PropertyValueFactory<>("trainer_id"));
+			TableColumn colContents = new TableColumn("회원아이디");
+			colContents.setPrefWidth(120);
+			colContents.setStyle("-fx-alignment: CENTER");
+			colContents.setCellValueFactory(new PropertyValueFactory<>("member_id"));
 
 			ptTraTable.getColumns().addAll(colPtDate,colTitle,colContents);
 			ptTraTable.setItems(obsPTdate);
