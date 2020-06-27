@@ -92,12 +92,11 @@ public class LoginController implements Initializable {
         scene.setFill(Color.TRANSPARENT);
         scene.getStylesheets().add("/view/find_idpw.css");
 
+        //아이디 패스워드 찾기창 컨트롤러 호츨
         FindIdPwController findIdPwController = fxmlLoader.getController();
         findIdPwController.primarystage = findModal;
 
-
-        //로그인창을 닫고 회원가입창을 열어줌
-        primarystage.close();
+        //아이디 비밀번호 찾기 창을 모달창으로 띄워줌
         findModal.show();
 
     }

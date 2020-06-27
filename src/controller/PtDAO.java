@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.PT;
+import model.PTBarChart;
 import model.PTMember;
+import model.PTPieChart;
 
 
 public class PtDAO {
@@ -70,7 +72,7 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT PT.`no`, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") time, MB.`name`, MB.phone, PT.created_by, PT.created_at  FROM personaltraining AS PT INNER JOIN member AS MB ON MB.id = PT.member_id WHERE trainer_id = ? ORDER BY time ASC";
+            String query = "SELECT PT.`no`, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") time, MB.`name`, MB.phone, PT.created_by, DATE_FORMAT(PT.created_at,\"%Y-%m-%d %H:%i:%S\")  FROM personaltraining AS PT INNER JOIN member AS MB ON MB.id = PT.member_id WHERE trainer_id = ? ORDER BY time ASC";
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
             pstmt.setString(1,  memberID);
@@ -83,7 +85,7 @@ public class PtDAO {
             }
 
         } catch (Exception e) {
-            AlertUtill.showWarningAlert("PTDAO getTrainerPTList 점검요망", "PTDAO getTrainerPTList 문제발생", "문제사항!! " + e.getMessage());
+            AlertUtill.showWarningAlert("PTDAO getTrainerPTList 점검요망", "PTDAO getTrainerPTList 문제발생", "문제사항 " + e.getMessage());
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -100,9 +102,7 @@ public class PtDAO {
     //달력에서 날짜를 선택하면 해당일의 PT 신청 정보를 가져온다.
     public static ObservableList<PT> selectClassDataByDate(String date) {
 		ObservableList<PT> dbClsByDateList = FXCollections.observableArrayList();
-		
 
-		ResultSet rs = null;
 		try {
 			try {
 				con = DBUtill.getConnection();
@@ -150,7 +150,6 @@ public class PtDAO {
     public static ObservableList<PTMember> getPTTimeCombo() {
         ObservableList<PTMember> PTTimeCombo = FXCollections.observableArrayList();
 
-        ResultSet rs = null;
         try {
             con = DBUtill.getConnection();
             if (con != null) {
@@ -174,16 +173,15 @@ public class PtDAO {
 
 
         }catch (Exception e) {
-            AlertUtill.showWarningAlert("PTDAO getTrainerPTList 점검요망", "PTDAO getTrainerPTList 문제발생", "문제사항!! " + e.getMessage());
+            AlertUtill.showWarningAlert("PTDAO getTrainerPTList 점검요망", "PTDAO getTrainerPTList 문제발생", "문제사항 " + e.getMessage());
         }
         return PTTimeCombo;
     }
-    
+
     //회원정보 창의 테이블에 pt 신청한 내용. 트레이너 날짜 시간을 가져온다
     public static ArrayList<PT> getMyPTInfo() {
     	ArrayList<PT> myPTInfo = new ArrayList<PT>();
 
-        ResultSet rs = null;
         try {
             con = DBUtill.getConnection();
             if (con != null) {
@@ -207,9 +205,71 @@ public class PtDAO {
 
 
         }catch (Exception e) {
-            AlertUtill.showWarningAlert("PTDAO getMyPTInfo 점검요망", "PTDAO getMyPTInfo 문제발생", "문제사항!! " + e.getMessage());
+            AlertUtill.showWarningAlert("PTDAO getMyPTInfo 점검요망", "PTDAO getMyPTInfo 문제발생", "문제사항 " + e.getMessage());
         }
         return myPTInfo;
     }
-    
+
+    //시간별 PT 횟수를 불러옵니다.
+    public static ObservableList<PTPieChart> getPTPieChart() {
+        ObservableList<PTPieChart> PTPieChartObsList = FXCollections.observableArrayList();
+
+        try {
+            con = DBUtill.getConnection();
+            if (con != null) {
+                System.out.println("controller.PtDAO: DB 연결성공");
+            } else {
+                System.out.println("controller.PtDAO: DB 연결 실패");
+            }
+
+            String query = "SELECT TIME_FORMAT(time,\"%p %l:%i\") AS time, COUNT(no) AS cnt FROM personaltraining GROUP BY time ORDER BY time ASC";
+
+            //쿼리문 준비
+            pstmt = con.prepareStatement(query);
+            //쿼리실행 결과값 저장
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                PTPieChart PTPieChart = new PTPieChart (rs.getString(1), rs.getInt(2));
+                PTPieChartObsList.add(PTPieChart);
+            }
+
+        }catch (Exception e) {
+            AlertUtill.showWarningAlert("PTDAO getPTPieChart 점검요망", "PTDAO getPTPieChart 문제발생", "문제사항 " + e.getMessage());
+        }
+
+        return PTPieChartObsList;
+    }
+
+    //전체 회원의 PT 횟수를 불러옵니다
+    public static ObservableList<PTBarChart> getPTBarChart() {
+        ObservableList<PTBarChart> PTBarChartObsList = FXCollections.observableArrayList();
+
+        try {
+
+            con = DBUtill.getConnection();
+            if (con != null) {
+                System.out.println("controller.PtDAO: DB 연결성공");
+            } else {
+                System.out.println("controller.PtDAO: DB 연결 실패");
+            }
+
+            //쿼리문
+            String query = "SELECT member_id, COUNT(no) AS cnt from personaltraining GROUP BY member_id";
+            //쿼리문 준비
+            pstmt = con.prepareStatement(query);
+            //쿼리실행 결과값 저장
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                PTBarChart PTBarChart = new PTBarChart (rs.getString(1), rs.getInt(2));
+                PTBarChartObsList.add(PTBarChart);
+            }
+
+        } catch (Exception e) {
+            AlertUtill.showWarningAlert("PTDAO getPTBarChart 점검요망", "PTDAO getPTBarChart 문제발생", "문제사항 " + e.getMessage());
+        }
+
+        return PTBarChartObsList;
+    }
 }

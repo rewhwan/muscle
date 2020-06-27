@@ -37,7 +37,8 @@ public class NoticeDAO {
 			} else {
 				System.out.println("controller.NoticeDAO: DB 연결 실패");
 			}
-			String query = "select * from notice";
+			String query = "select no, title, contents, created_by , DATE_FORMAT(created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at from notice ORDER BY no DESC";
+
 			pstmt= con.prepareStatement(query);
 			rs= pstmt.executeQuery();
 			
@@ -78,7 +79,7 @@ public class NoticeDAO {
 			}
 
 			//쿼리문
-			String query = "INSERT INTO notice VALUES (null,,now())";
+			String query = "INSERT INTO notice VALUES (null,? , ? , ? ,now())";
 
 			//쿼리문 준비
 			pstmt = con.prepareStatement(query);
