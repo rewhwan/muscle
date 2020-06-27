@@ -70,8 +70,9 @@ public class PtDatePicController implements Initializable {
 	ObservableList<PT>obsPTdate;
 	private Integer jj=0;
 	
+	//예약하기 텍스트 필드  
 	@FXML private TextField ptDateTxFRegi; //ptDatePick.fxml의 예약 부분 
-
+	
 	TextField [] ptDateArray = new TextField[42];
 
 	private LocalDateTime ldt = LocalDateTime.now();
@@ -191,14 +192,16 @@ public class PtDatePicController implements Initializable {
 		
 		//예약버튼을 누르면 예약되게 하는 이벤트
 		private void handleTxFRegi(Event event) {
-			PT pt = ptTraTable.getSelectionModel().getSelectedItem();
-	}
+			ptDateTxFRegi.setDisable(false);
+			System.out.println();
+			
+		}
 
 		//PT날짜 고르는 창의 테이블 뷰 컬럼 초기화 
 		private void tablePtDatePicInitialize() {
 			obsPTdate = FXCollections.observableArrayList();
 			TableColumn colPtDate = new TableColumn("날짜");
-			colPtDate.setPrefWidth(100);
+			colPtDate.setPrefWidth(200);
 			colPtDate.setStyle("-fx-allignment: CENTER");
 			colPtDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 

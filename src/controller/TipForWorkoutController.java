@@ -31,7 +31,7 @@ public class TipForWorkoutController implements Initializable {
 	private Button btnClose;
 	
 	private WebEngine engine;
-
+	public static String clikedButtonText;
 	
 	public Stage stage;
 	public Stage primaryStage = null;
@@ -41,23 +41,24 @@ public class TipForWorkoutController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		engine = webView.getEngine();
+		//btnPlay.setOnAction(event-> {engine.load("https://www.youtube.com/watch?v=32ULd1Tb1WA");});
 		btnPlay.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				engine.load("https://www.youtube.com/watch?v=32ULd1Tb1WA");
-
+				switch(clikedButtonText) {
+				case  "[가슴] 체스트 프레스":engine.load("https://www.youtube.com/watch?v=32ULd1Tb1WA"); break ;
+				case  "[가슴/삼두] 시티드 딥":engine.load("https://www.youtube.com/watch?v=kTuBlatn8JA"); break;
+				case  "[가슴] 펙 덱 플라이":engine.load("https://www.youtube.com/watch?v=6QB6XzaWI3I"); break;
+				case  "[가슴] 인클라인 체스트 프레스":engine.load("https://www.youtube.com/watch?v=DUary1hEAfE"); break;
+				case  "[가슴] 시티드 체스트 프레스":engine.load("https://www.youtube.com/watch?v=ppPQgmgpafM"); break;
+				case  "[가슴] 케이블 크로스오버":engine.load("https://www.youtube.com/watch?v=fSX9jWOa0Mc"); break;
+				case  "[가슴/삼두] 딥스":engine.load("https://www.youtube.com/watch?v=pQSfXvaQGas"); break;
+				case  "[가슴] 인클라인 벤치 프레스":engine.load("https://www.youtube.com/watch?v=XaZhNpb112s"); break;		
+				}	
 			}
 		});
-
-		btnClose.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				handleBtnCloseAction(event);
-				
-			}
-		});
+		btnClose.setOnAction(event-> {handleBtnCloseAction(event);});
 
 	}
 
@@ -71,6 +72,5 @@ public class TipForWorkoutController implements Initializable {
 			closeStage.close();
         } catch (IOException e) {
         }
-
 	}
 }

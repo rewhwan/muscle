@@ -298,7 +298,7 @@
                                        <image>
                                           <Image url="@../image/PecDeckFly.jpg" />
                                        </image></ImageView>
-                                    <TextField alignment="CENTER" text="[가슴] 펙 덱 플라이" />
+                                    <Button fx:id="btnPecdeckfly" mnemonicParsing="false" text="[가슴] 펙 덱 플라이" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
@@ -308,7 +308,7 @@
                                           <Image url="@../image/InclineChestPress.jpg" />
                                        </image>
                                     </ImageView>
-                                    <TextField alignment="CENTER" text="[가슴] 인클라인 체스트 프레스" />
+                                    <Button fx:id="btnInclineChestPress" mnemonicParsing="false" text="[가슴] 인클라인 체스트 프레스" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
@@ -318,7 +318,7 @@
                                           <Image url="@../image/SeatedChestPress.jpg" />
                                        </image>
                                     </ImageView>
-                                    <TextField alignment="CENTER" text="[가슴] 시티드 체스트 프레스" />
+                                    <Button fx:id="btnSeatedChestPress" mnemonicParsing="false" text="[가슴] 시티드 체스트 프레스" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -327,7 +327,7 @@
                                        <image>
                                           <Image url="@../image/CableCrossover.jpg" />
                                        </image></ImageView>
-                                    <TextField alignment="CENTER" text="[가슴] 케이블 크로스오버" />
+                                    <Button fx:id="btnCableCrossOver" mnemonicParsing="false" text="[가슴] 케이블 크로스오버" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -336,7 +336,7 @@
                                        <image>
                                           <Image url="@../image/Dips.jpg" />
                                        </image></ImageView>
-                                    <TextField alignment="CENTER" text="[가슴/삼두] 딥스" />
+                                    <Button fx:id="btnDips" mnemonicParsing="false" text="[가슴/삼두] 딥스" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -345,7 +345,7 @@
                                        <image>
                                           <Image url="@../image/InclineBenchPress.jpg" />
                                        </image></ImageView>
-                                    <TextField alignment="CENTER" text="[가슴] 인클라인 벤치 프레스" />
+                                    <Button fx:id="btnInclineBenchPress" mnemonicParsing="false" text="[가슴] 인클라인 벤치 프레스" />
                                  </children>
                               </VBox>
                            </children>
