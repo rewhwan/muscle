@@ -19,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -87,10 +88,15 @@ public class MemberMainController implements Initializable {
 	
 	
 	//운동정보 관련 
-	@FXML private Button btnChestPress;
-	@FXML private Button btnSeatedDip;
-	
-	
+	@FXML public Button btnChestPress;
+	@FXML public Button btnSeatedDip;
+	@FXML public Button btnPecdeckfly;
+	@FXML public Button btnInclineChestPress;
+	@FXML public Button btnSeatedChestPress;
+	@FXML public Button btnCableCrossOver;
+	@FXML public Button btnDips;
+	@FXML public Button btnInclineBenchPress;
+	@FXML private AnchorPane anchorPane2;
 	
 	public Stage stage;
 	private ObservableList<PT> obsListPTInfo;
@@ -181,11 +187,19 @@ public class MemberMainController implements Initializable {
 		myPTInfoList();
 		
 //---------------------------------------------------------------------------------------------		
-
+		
+		
 		//운동정보에서 버튼을 누르면 팝업창이 뜨고 그 운동의 동영상이 나오게 이벤트 처리
 		btnChestPress.setOnAction( event-> { handleBtnChestPressAction(event);});
-		//btnSeatedDip.setOnAction(event -> an	);
+		btnSeatedDip.setOnAction(event -> {handleBtnSeatedDipAction(event);});
+		btnPecdeckfly.setOnAction(event -> {handleBtnPecDecFlyAction(event);});
+		btnInclineChestPress.setOnAction(event -> {handleBtnInclineChestPressAction(event);});
+		btnSeatedChestPress.setOnAction(event -> {handleBtnSeatedChestPressAction(event);});
+		btnCableCrossOver.setOnAction(event -> {handleBtnCableCrossOverAction(event);});
+		btnDips.setOnAction(event -> {handleBtnDipsAction(event);});
+		btnInclineBenchPress.setOnAction(event -> {handleBtnInclineBenchPressAction(event);});
 	}// end of initialize
+	
 	
 	//db의 PT 테이블에서 데이터를 가져와 회원정보 탭의 테이블에 넣음 
 	private void myPTInfoList() {
@@ -298,7 +312,7 @@ public class MemberMainController implements Initializable {
  		}
 	}
 	
-	//운동정보에서 버튼을 누르면 팝업창이 뜨고 그 운동의 동영상이 나오게 이벤트 처리
+	//체스트 프레스 버튼 이벤트 처리
 	private void handleBtnChestPressAction(ActionEvent event) {
 		Parent root;
 		
@@ -307,9 +321,8 @@ public class MemberMainController implements Initializable {
 				Scene scene = new Scene(root);
 				Stage WorkOut = new Stage(StageStyle.UTILITY);
 				
-				//Button btnClose = (Button) scene.lookup("#btnClose");
-				//btnClose.setOnAction(e-> {WorkOut.close();});
-				
+				TipForWorkoutController.clikedButtonText = btnChestPress.getText();
+
 				WorkOut.initModality(Modality.WINDOW_MODAL);
 				WorkOut.initOwner(stage);
 				WorkOut.setScene(scene);
@@ -323,8 +336,188 @@ public class MemberMainController implements Initializable {
 				alert.setContentText("다음에는 주의하세요"+e.getMessage());
 				alert.showAndWait();
 			}
+	}
+	//시티드 딥 이벤트 처리
+	private void handleBtnSeatedDipAction(ActionEvent event) {
+		Parent root;
+		
+		try {
+			root=FXMLLoader.load(getClass().getResource("/view/tipForWork.fxml"));
+			Scene scene = new Scene(root);
+			Stage WorkOut = new Stage(StageStyle.UTILITY);
+			
+			TipForWorkoutController.clikedButtonText = btnSeatedDip.getText();
+			
+			WorkOut.initModality(Modality.WINDOW_MODAL);
+			WorkOut.initOwner(stage);
+			WorkOut.setScene(scene);
+			WorkOut.setResizable(false);
+			WorkOut.setTitle("운동정보창");
+			WorkOut.showAndWait();
+		} catch (IOException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("운동정보 등록에 문제 발생");
+			alert.setHeaderText("공지사항 등록 점검 하세요");
+			alert.setContentText("다음에는 주의하세요"+e.getMessage());
+			alert.showAndWait();
+		}
+	}
+	//펙 덱 플라이 버튼 이벤트 처리 
+	private void handleBtnPecDecFlyAction(ActionEvent event) {
+		Parent root;
+		
+		try {
+			root=FXMLLoader.load(getClass().getResource("/view/tipForWork.fxml"));
+			Scene scene = new Scene(root);
+			Stage WorkOut = new Stage(StageStyle.UTILITY);
+			
+			TipForWorkoutController.clikedButtonText = btnPecdeckfly.getText();
+			
+			WorkOut.initModality(Modality.WINDOW_MODAL);
+			WorkOut.initOwner(stage);
+			WorkOut.setScene(scene);
+			WorkOut.setResizable(false);
+			WorkOut.setTitle("운동정보창");
+			WorkOut.showAndWait();
+		} catch (IOException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("운동정보 등록에 문제 발생");
+			alert.setHeaderText("공지사항 등록 점검 하세요");
+			alert.setContentText("다음에는 주의하세요"+e.getMessage());
+			alert.showAndWait();
+		}
+	}
+	//인클라인 체스트 프레스 버튼 이벤트 처리
+	private void handleBtnInclineChestPressAction(ActionEvent event) {
+		Parent root;
+		
+		try {
+			root=FXMLLoader.load(getClass().getResource("/view/tipForWork.fxml"));
+			Scene scene = new Scene(root);
+			Stage WorkOut = new Stage(StageStyle.UTILITY);
+			
+			TipForWorkoutController.clikedButtonText = btnInclineChestPress.getText();
+			
+			WorkOut.initModality(Modality.WINDOW_MODAL);
+			WorkOut.initOwner(stage);
+			WorkOut.setScene(scene);
+			WorkOut.setResizable(false);
+			WorkOut.setTitle("운동정보창");
+			WorkOut.showAndWait();
+		} catch (IOException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("운동정보 등록에 문제 발생");
+			alert.setHeaderText("공지사항 등록 점검 하세요");
+			alert.setContentText("다음에는 주의하세요"+e.getMessage());
+			alert.showAndWait();
+		}	
+	}
+	//[가슴] 시티드 체스트 프레스 버튼 이벤트 처리
+	private void handleBtnSeatedChestPressAction(ActionEvent event) {
+		Parent root;
+		
+		try {
+			root=FXMLLoader.load(getClass().getResource("/view/tipForWork.fxml"));
+			Scene scene = new Scene(root);
+			Stage WorkOut = new Stage(StageStyle.UTILITY);
+			
+			TipForWorkoutController.clikedButtonText = btnSeatedChestPress.getText();
+			
+			WorkOut.initModality(Modality.WINDOW_MODAL);
+			WorkOut.initOwner(stage);
+			WorkOut.setScene(scene);
+			WorkOut.setResizable(false);
+			WorkOut.setTitle("운동정보창");
+			WorkOut.showAndWait();
+		} catch (IOException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("운동정보 등록에 문제 발생");
+			alert.setHeaderText("공지사항 등록 점검 하세요");
+			alert.setContentText("다음에는 주의하세요"+e.getMessage());
+			alert.showAndWait();
+		}	
+	}
+	
+	//[가슴] 케이블 크로스오버 버튼 이벤트 처리 
+	private void handleBtnCableCrossOverAction(ActionEvent event) {
+		Parent root;
+		
+		try {
+			root=FXMLLoader.load(getClass().getResource("/view/tipForWork.fxml"));
+			Scene scene = new Scene(root);
+			Stage WorkOut = new Stage(StageStyle.UTILITY);
+			
+			TipForWorkoutController.clikedButtonText = btnCableCrossOver.getText();
+			
+			WorkOut.initModality(Modality.WINDOW_MODAL);
+			WorkOut.initOwner(stage);
+			WorkOut.setScene(scene);
+			WorkOut.setResizable(false);
+			WorkOut.setTitle("운동정보창");
+			WorkOut.showAndWait();
+		} catch (IOException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("운동정보 등록에 문제 발생");
+			alert.setHeaderText("공지사항 등록 점검 하세요");
+			alert.setContentText("다음에는 주의하세요"+e.getMessage());
+			alert.showAndWait();
+		}	
+		
+	}
+	//[가슴/삼두] 딥스 버튼 이벤트 처리 
+	private void handleBtnDipsAction(ActionEvent event) {
+		Parent root;
+		
+		try {
+			root=FXMLLoader.load(getClass().getResource("/view/tipForWork.fxml"));
+			Scene scene = new Scene(root);
+			Stage WorkOut = new Stage(StageStyle.UTILITY);
+			
+			TipForWorkoutController.clikedButtonText = btnDips.getText();
+			
+			WorkOut.initModality(Modality.WINDOW_MODAL);
+			WorkOut.initOwner(stage);
+			WorkOut.setScene(scene);
+			WorkOut.setResizable(false);
+			WorkOut.setTitle("운동정보창");
+			WorkOut.showAndWait();
+		} catch (IOException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("운동정보 등록에 문제 발생");
+			alert.setHeaderText("공지사항 등록 점검 하세요");
+			alert.setContentText("다음에는 주의하세요"+e.getMessage());
+			alert.showAndWait();
+		}	
 
 	}
+	
+	//[가슴] 인클라인 벤치 프레스 버튼 이벤트 처리
+	private void handleBtnInclineBenchPressAction(ActionEvent event) {
+		Parent root;
+		
+		try {
+			root=FXMLLoader.load(getClass().getResource("/view/tipForWork.fxml"));
+			Scene scene = new Scene(root);
+			Stage WorkOut = new Stage(StageStyle.UTILITY);
+			
+			TipForWorkoutController.clikedButtonText = btnInclineBenchPress.getText();
+			
+			WorkOut.initModality(Modality.WINDOW_MODAL);
+			WorkOut.initOwner(stage);
+			WorkOut.setScene(scene);
+			WorkOut.setResizable(false);
+			WorkOut.setTitle("운동정보창");
+			WorkOut.showAndWait();
+		} catch (IOException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("운동정보 등록에 문제 발생");
+			alert.setHeaderText("공지사항 등록 점검 하세요");
+			alert.setContentText("다음에는 주의하세요"+e.getMessage());
+			alert.showAndWait();
+		}	
+		
+	}
+
 	//db 멤버에서 트레이너의 데이터를 가져와서 화면에 띄운다 
 	private void ptTotalList() {
 		MemberDAO memberDAO = new MemberDAO();
@@ -426,22 +619,22 @@ public class MemberMainController implements Initializable {
 		tablePT.setItems(obsListPT);
 		
 		TableColumn colName =  new TableColumn("이름");
-		colName.setPrefWidth(80);
+		colName.setPrefWidth(100);
 		colName.setStyle("-fx-allignment: CENTER");
 		colName.setCellValueFactory(new PropertyValueFactory("name"));
 
 		TableColumn colGend= new TableColumn("성별");
-		colGend.setPrefWidth(110);
+		colGend.setPrefWidth(80);
 		colGend.setStyle("-fx-allignment: CENTER");
 		colGend.setCellValueFactory(new PropertyValueFactory("gender"));
 
 		TableColumn colPositon= new TableColumn("직책");
-		colPositon.setPrefWidth(140);
+		colPositon.setPrefWidth(150);
 		colPositon.setStyle("-fx-allignment: CENTER");
 		colPositon.setCellValueFactory(new PropertyValueFactory("position"));
 		
 	    TableColumn colMent= new TableColumn("멘트");
-	    colMent.setPrefWidth(120);
+	    colMent.setPrefWidth(250);
 	    colMent.setStyle("-fx-allignment: CENTER");
 	    colMent.setCellValueFactory(new PropertyValueFactory("ment"));
 
