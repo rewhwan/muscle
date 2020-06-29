@@ -14,8 +14,11 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javafx.stage.StageStyle;
 import model.*;
 
 import java.io.IOException;
@@ -57,9 +60,14 @@ public class AdminMainController implements Initializable {
     //Question 질문 테이블
     @FXML TableView tableQuestion;
     private ObservableList<QuestionMember> questionObsList = FXCollections.observableArrayList();
+    //Question 테이블에서 선택된 컬럼의 정보를 가져오는 변수
+    QuestionMember selectedQuestion = null;
 
-    //Answer입력 버튼
+    //Answer 버튼
     @FXML Button btnAnswerRegist;
+    //Answer 텍스트 에어리어
+    @FXML TextArea txtAnswerContents;
+
 
     //기본 스테이지 변수
     public Stage primarystage;
@@ -71,6 +79,12 @@ public class AdminMainController implements Initializable {
     NoticeDAO noticeDAO = new NoticeDAO();
     PtDAO ptDAO = new PtDAO();
     QuestionDAO questionDAO = new QuestionDAO();
+    AnswerDAO answerDAO = new AnswerDAO();
+
+    //화면설정에 필요한 변수들을 전역변수로 세팅
+    FXMLLoader fxmlLoader = null;
+    Parent view = null;
+    Scene scene = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,7 +98,7 @@ public class AdminMainController implements Initializable {
         //공지사항 삭제
         btnNoticeDelete.setOnAction(e -> handleBtnNoticeDelete(e,selectedNotice));
         //공지사항 테이블 선택시 이벤트
-        tableNotice.setOnMousePressed( e -> handleTableNoticePressAction(e));
+        tableNotice.setOnMousePressed(e -> handleTableNoticePressAction(e));
 
         //PT신청정보 테이블값 초기화
         PTTableViewColumnInitiallize();
@@ -101,6 +115,10 @@ public class AdminMainController implements Initializable {
         questionTableViewColumnInitiallize();
         //DB에서 Question을 전부 가져와줍니다.
         questionTotalList();
+        //Question 테이블 선택시 이벤트
+        tableQuestion.setOnMousePressed(e -> handleTableQuestionPressAction(e));
+        //Answer 등록 버튼 클릭시 이벤트 함수
+        btnAnswerRegist.setOnAction(e -> handleBtnAnswerRegistAction());
 
         //회원정보 테스트
         btnTest.setOnAction(e->System.out.println(memberlogin));
@@ -109,6 +127,60 @@ public class AdminMainController implements Initializable {
 
     }
 
+    //답변 등록버튼 클릭시 실행하는 함수
+    private void handleBtnAnswerRegistAction() {
+
+        Optional<ButtonType> result = AlertUtill.showConfirmationAlert("답변등록 확인","정말 "+selectedQuestion.getNo()+"번의 질문에 답변을 등록하시겠습니까?","답변을 등록하시려면 엔터키 혹은 OK버튼을 눌러주세요.");
+        //취소버튼 클릭시 발생하는 이벤트
+        if(result.get() == ButtonType.CANCEL) return;
+
+        int resultValue = answerDAO.answerRegist(selectedQuestion,txtAnswerContents.getText(),memberlogin);
+
+        if(resultValue != 0) {
+            questionObsList.clear();
+            questionTotalList();
+        }
+    }
+
+    //Question테이블 클릭시 발생하는 이벤트 함수
+    private void handleTableQuestionPressAction(MouseEvent e) {
+        selectedQuestion = (QuestionMember) tableQuestion.getSelectionModel().getSelectedItem();
+    }
+
+    //답변 등록버튼 클릭시 이벤트 함수
+    private void handelBtnAnswerRegistAction() {
+        if(selectedQuestion == null) {
+            AlertUtill.showWarningAlert("btnAnswerRegist 오류","수정할 데이터가 없습니다.","수정할 데이터를 먼저 테이블에서 선택해 주세요.");
+            return;
+        }
+
+        fxmlLoader = new FXMLLoader(getClass().getResource("/view/answer_regist.fxml"));
+        try {
+            view = fxmlLoader.load();
+        } catch (IOException e) {
+        }
+        scene = new Scene(view);
+
+        Stage answerModal = new Stage(StageStyle.UTILITY);
+        answerModal.setTitle("Answer 등록");
+        answerModal.setScene(scene);
+        answerModal.initModality(Modality.WINDOW_MODAL);
+        answerModal.initOwner(primarystage);
+        answerModal.setResizable(false);
+        scene.setFill(Color.TRANSPARENT);
+
+        //답변 입력창 컨트롤러 호출
+        AnswerRegistController answerRegistController = fxmlLoader.getController();
+        answerRegistController.primarystage = answerModal;
+        answerRegistController.question = selectedQuestion;
+        answerRegistController.memberLogin = memberlogin;
+
+        //답변 입력창 모달창을 보여줍니다.
+        answerModal.show();
+
+    }
+
+    //질문 내용을 전부 가져와 줍니다.
     private void questionTotalList() {
 
         //DB에서 공지사항에 대한 정보를 가져옵니다.
@@ -129,40 +201,42 @@ public class AdminMainController implements Initializable {
 
     }
 
+    //질문 테이블 칼럼 세팅
     private void questionTableViewColumnInitiallize() {
         //테이블뷰 UI객체 컬럼 초기화
         TableColumn colNo = new TableColumn("no");
         colNo.setPrefWidth(100);
-        colNo.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colNo.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
         colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
 
         TableColumn colTitle = new TableColumn("제목");
-        colTitle.setPrefWidth(150);
-        colTitle.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colTitle.setPrefWidth(162);
+        colTitle.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         TableColumn colContents = new TableColumn("내용");
-        colContents.setPrefWidth(600);
-        colContents.setStyle("-fx-font-size:18px; -fx-alignment: CENTER_LEFT");
+        colContents.setPrefWidth(320);
+        colContents.setStyle("-fx-font-size:16px; -fx-alignment: CENTER_LEFT");
         colContents.setCellValueFactory(new PropertyValueFactory<>("contents"));
 
         TableColumn colCreatedBy = new TableColumn("작성자");
-        colCreatedBy.setPrefWidth(150);
-        colCreatedBy.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colCreatedBy.setPrefWidth(120);
+        colCreatedBy.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
         colCreatedBy.setCellValueFactory(new PropertyValueFactory<>("created_by"));
 
         TableColumn colCreatedAt = new TableColumn("작성일");
-        colCreatedAt.setPrefWidth(205);
-        colCreatedAt.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colCreatedAt.setPrefWidth(200);
+        colCreatedAt.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
         colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("created_at"));
 
-        tableQuestion.setFixedCellSize(70);
+        tableQuestion.setFixedCellSize(50);
 
         tableQuestion.getColumns().addAll(colNo, colTitle, colContents, colCreatedBy, colCreatedAt);
         tableQuestion.setItems(questionObsList);
 
     }
 
+    //공지사항 삭제버튼 클릭시 이벤트 함수
     private void handleBtnNoticeDelete(ActionEvent e, Notice selectedNotice) {
 
         //테이블 뷰에서 선택을 하지 않았을 경우 오류처리
@@ -182,10 +256,12 @@ public class AdminMainController implements Initializable {
 
     }
 
+    //공지사항 테이블 클릭시 어느것을 선택했는지 알려줌
     private void handleTableNoticePressAction(MouseEvent e) {
         selectedNotice = (Notice) tableNotice.getSelectionModel().getSelectedItem();
     }
 
+    //전체회원의 PT통계를 바챠트로 보여줍니다.
     private void PTBarChartInitiallize() {
         ObservableList<PTBarChart> PTBarChartResult = PtDAO.getPTBarChart();
         ObservableList PTBarChart = FXCollections.observableArrayList();
@@ -200,6 +276,7 @@ public class AdminMainController implements Initializable {
         this.PTBarChart.getData().add(series);
     }
 
+    // 전체회원의 PT시간 통계를 파이챠트로 보여줍니다.
     private void PTPieChartInitiallize() {
         ObservableList<PTPieChart> PTPieChartResult = PtDAO.getPTPieChart();
         ObservableList PTPieChart = FXCollections.observableArrayList();

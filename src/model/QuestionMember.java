@@ -64,9 +64,15 @@ public class QuestionMember {
 	public void setCreated_at(String created_at) {
 		this.created_at = created_at;
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "QuestionMember{" +
+				"no=" + no +
+				", title='" + title + '\'' +
+				", contents='" + contents + '\'' +
+				", created_by='" + created_by + '\'' +
+				", created_at='" + created_at + '\'' +
+				'}';
+	}
 }
