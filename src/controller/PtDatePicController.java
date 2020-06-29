@@ -148,7 +148,6 @@ public class PtDatePicController implements Initializable {
 			case "btnNextMonth": ldt = ldt.plusMonths(1); break;
 			case "btnLastMonth": ldt = ldt.minusMonths(1); break;
 		}
-		System.out.println(ldt);
 		initCalender();
 	}
 
@@ -247,7 +246,9 @@ public class PtDatePicController implements Initializable {
 					}
 
 
-					
+
+
+
 				}
 	}
 		
