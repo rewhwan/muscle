@@ -5,39 +5,38 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="720.0" prefWidth="985.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="720.0" prefWidth="762.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="68.0" prefWidth="762.0">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
                <children>
                   <Label text="제목" />
                </children>
             </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="CENTER_LEFT">
                <children>
-                  <TextField id="txtTitle" />
+                  <TextField id="txtTitle" prefWidth="460.0" />
                </children>
             </VBox>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="171.0" prefWidth="762.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label text="내용" />
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="CENTER">
                <children>
-                  <TextArea id="txtContents" prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea id="txtContents" prefHeight="170.0" prefWidth="460.0" />
                </children>
             </VBox>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
          <children>
-            <Button id="btnList" mnemonicParsing="false" text="목록" />
             <Button id="btnRegist" mnemonicParsing="false" text="등록" />
             <Button id="btnCancel" mnemonicParsing="false" text="취소" />
          </children>

@@ -194,7 +194,7 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT * from personaltraining where member_id ='hh'";
+            String query = "SELECT * from personaltraining where member_id ='hyc20'";
 
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
