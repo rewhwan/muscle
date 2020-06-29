@@ -13,6 +13,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import model.*;
@@ -32,10 +33,14 @@ public class AdminMainController implements Initializable {
     @FXML TextField txtNoticeTitle;
     @FXML TextArea txtNoticeContents;
     @FXML Button btnNoticeRegist;
+    @FXML Button btnNoticeDelete;
     //공지사항 테이블
     @FXML TableView tableNotice;
+    //공지사항 테이블에서 선택된 컬럼의 정보를 가져오는 변수
+    Notice selectedNotice = null;
     //공지사항을 저장해서 받아오는 변수
     private ObservableList<Notice> noticeObsList = FXCollections.observableArrayList();
+
 
     //PT 테이블
     @FXML TableView tablePT;
@@ -49,6 +54,14 @@ public class AdminMainController implements Initializable {
     //PT신청정보 바챠트
     @FXML BarChart PTBarChart;
 
+    //Question 질문 테이블
+    @FXML TableView tableQuestion;
+    private ObservableList<QuestionMember> questionObsList = FXCollections.observableArrayList();
+
+    //Answer입력 버튼
+    @FXML Button btnAnswerRegist;
+
+    //기본 스테이지 변수
     public Stage primarystage;
 
     //로그인 정보
@@ -57,6 +70,7 @@ public class AdminMainController implements Initializable {
     //DB처리를 도와주는 객체들
     NoticeDAO noticeDAO = new NoticeDAO();
     PtDAO ptDAO = new PtDAO();
+    QuestionDAO questionDAO = new QuestionDAO();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,6 +79,12 @@ public class AdminMainController implements Initializable {
         noticeTableViewColumnInitiallize();
         //DB에서 공지사항을 전부 가져와 줍니다.
         noticeGetTotalList();
+        //공지사항 등록
+        btnNoticeRegist.setOnAction(e->handleBtnNoticeRegist(e));
+        //공지사항 삭제
+        btnNoticeDelete.setOnAction(e -> handleBtnNoticeDelete(e,selectedNotice));
+        //공지사항 테이블 선택시 이벤트
+        tableNotice.setOnMousePressed( e -> handleTableNoticePressAction(e));
 
         //PT신청정보 테이블값 초기화
         PTTableViewColumnInitiallize();
@@ -72,21 +92,98 @@ public class AdminMainController implements Initializable {
         PTGetTotalList(LoginController.memberLogin);
         //콤보박스 테스트
         comboTimeInitiallize();
-
         //PT정보에 따라서 파이차트를 만들어줍니다.
         PTPieChartInitiallize();
         //PT정보에 따라서 바챠트를 만들어줍니다.
         PTBarChartInitiallize();
 
+        //Question 테이블컬럼 초기화
+        questionTableViewColumnInitiallize();
+        //DB에서 Question을 전부 가져와줍니다.
+        questionTotalList();
+
         //회원정보 테스트
         btnTest.setOnAction(e->System.out.println(memberlogin));
-
-        //로그아웃 테스트
+        //로그아웃 버튼
         btnLogout.setOnAction(e->handleBtnLogout());
 
-        //공지사항 등록
-        btnNoticeRegist.setOnAction(e->handleBtnNoticeRegist(e));
+    }
 
+    private void questionTotalList() {
+
+        //DB에서 공지사항에 대한 정보를 가져옵니다.
+        ArrayList<QuestionMember> questionArrayList = questionDAO.getQuestionNonAnswer();
+
+        //공지사항이 없을때 예외처리
+        if(questionArrayList == null) {
+            System.out.println("hh");
+            return;
+        }
+
+        questionObsList.clear();
+
+        for(int i=0; i<questionArrayList.size(); i++) {
+            QuestionMember questionMember = questionArrayList.get(i);
+            questionObsList.add(questionMember);
+        }
+
+    }
+
+    private void questionTableViewColumnInitiallize() {
+        //테이블뷰 UI객체 컬럼 초기화
+        TableColumn colNo = new TableColumn("no");
+        colNo.setPrefWidth(100);
+        colNo.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
+
+        TableColumn colTitle = new TableColumn("제목");
+        colTitle.setPrefWidth(150);
+        colTitle.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        TableColumn colContents = new TableColumn("내용");
+        colContents.setPrefWidth(600);
+        colContents.setStyle("-fx-font-size:18px; -fx-alignment: CENTER_LEFT");
+        colContents.setCellValueFactory(new PropertyValueFactory<>("contents"));
+
+        TableColumn colCreatedBy = new TableColumn("작성자");
+        colCreatedBy.setPrefWidth(150);
+        colCreatedBy.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colCreatedBy.setCellValueFactory(new PropertyValueFactory<>("created_by"));
+
+        TableColumn colCreatedAt = new TableColumn("작성일");
+        colCreatedAt.setPrefWidth(205);
+        colCreatedAt.setStyle("-fx-font-size:18px; -fx-alignment: CENTER");
+        colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("created_at"));
+
+        tableQuestion.setFixedCellSize(70);
+
+        tableQuestion.getColumns().addAll(colNo, colTitle, colContents, colCreatedBy, colCreatedAt);
+        tableQuestion.setItems(questionObsList);
+
+    }
+
+    private void handleBtnNoticeDelete(ActionEvent e, Notice selectedNotice) {
+
+        //테이블 뷰에서 선택을 하지 않았을 경우 오류처리
+        if(selectedNotice == null) {
+            AlertUtill.showErrorAlert("공지사항 삭제 오류","테이블 뷰에서 선택된 데이터가 없습니다.","삭제할 공지사항을 먼저 선택해 주세요");
+            return;
+        }
+
+        int result = noticeDAO.noticeDelete(selectedNotice);
+
+        if(result != 0) {
+            AlertUtill.showInformationAlert("공지사항 삭제 성공","공지사항 삭제에 성공했습니다.",selectedNotice.getNo()+"번 공지사항 삭제됨");
+            this.selectedNotice = null;
+        }
+
+        noticeGetTotalList();
+
+    }
+
+    private void handleTableNoticePressAction(MouseEvent e) {
+        selectedNotice = (Notice) tableNotice.getSelectionModel().getSelectedItem();
     }
 
     private void PTBarChartInitiallize() {
@@ -125,13 +222,12 @@ public class AdminMainController implements Initializable {
         comboTime.getItems().add("17:00");
         comboTime.getItems().add("18:00");
 
-        PTTime = PtDAO.getPTTimeCombo();
+//        PTTime = PtDAO.getPTTimeCombo();
 
         for(int i= 0;i < PTTime.size();i++) {
             comboTime.getItems().remove(PTTime.get(i).getTime());
         }
-
-
+        
     }
 
     private void PTGetTotalList(Member memberlogin) {

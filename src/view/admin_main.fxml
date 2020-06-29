@@ -7,7 +7,6 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -17,6 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-image: url(/image/main.jpg); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminMainController">
 	<children>
@@ -62,11 +62,18 @@
                                               </Tab>
                                             </tabs>
                                           </TabPane>
-                                          <VBox alignment="CENTER" prefHeight="57.0">
+                                          <VBox alignment="CENTER" prefHeight="57.0" spacing="10.0">
                                              <children>
                                                 <ComboBox fx:id="comboTime" prefWidth="150.0" promptText="시간선택" />
-                                                <HBox alignment="CENTER" />
+                                                <HBox alignment="CENTER" spacing="15.0">
+                                                   <children>
+                                                      <Button fx:id="btnDelete" mnemonicParsing="false" text="삭제" />
+                                                      <Button fx:id="btnModify" mnemonicParsing="false" text="수정" />
+                                                   </children></HBox>
                                              </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
                                           </VBox>
                                        </children>
                                     </VBox>
@@ -89,7 +96,12 @@
                                                 <Label text="공지사항 등록" />
                                                 <TextField fx:id="txtNoticeTitle" promptText="제목" />
                                                 <TextArea fx:id="txtNoticeContents" prefHeight="235.0" prefWidth="334.0" promptText="내용" />
-                                                <Button fx:id="btnNoticeRegist" mnemonicParsing="false" text="등록" />
+                                                <HBox alignment="CENTER" spacing="10.0">
+                                                   <children>
+                                                      <Button fx:id="btnNoticeRegist" mnemonicParsing="false" text="등록" />
+                                                      <Button fx:id="btnNoticeDelete" mnemonicParsing="false" text="삭제" />
+                                                   </children>
+                                                </HBox>
                                              </children>
                                           </VBox>
                                           <VBox alignment="CENTER">
@@ -108,11 +120,28 @@
                         </AnchorPane>
       					</content>
       				</Tab>
-                  <Tab text="Untitled Tab">
+                  <Tab text="Q&amp;A">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="transparentAnchorPane">
                            <children>
-                              <DatePicker />
+                              <VBox alignment="CENTER" prefHeight="657.0" prefWidth="1260.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label text="답변이 등록되지 않은 질문">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView fx:id="tableQuestion" prefHeight="580.0" />
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="btnAnswerRegist" mnemonicParsing="false" text="답변등록" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                              </VBox>
                            </children>
                         </AnchorPane>
                     </content>

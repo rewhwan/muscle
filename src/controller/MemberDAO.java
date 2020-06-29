@@ -153,11 +153,7 @@ public class MemberDAO {
 
         } catch (Exception e) {
             // 경고창이 만들어짐
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("삽입 점검요망");
-            alert.setHeaderText("삽입 문제발생!\n RootController.BtnOkAction" + e.getMessage());
-            alert.setContentText("문제사항 : "+e.getMessage());
-            alert.showAndWait();
+            AlertUtill.showWarningAlert("회원가입 실패","회원가입에 실패하였습니다.","문제사항 : "+e.getMessage());
         } finally {
             try {
                 if(pstmt != null)pstmt.close();
@@ -234,7 +230,7 @@ public class MemberDAO {
                 if(pstmt != null) pstmt.close();
                 if(con != null) con.close();
             } catch (SQLException e) {
-                System.out.println("MemberDAO.IdDuplicateCheck"+e.getMessage());
+                System.out.println("MemberDAO.findMember"+e.getMessage());
             }
         }
 
@@ -271,7 +267,7 @@ public class MemberDAO {
             }
 
         } catch (Exception e) {
-            AlertUtill.showWarningAlert("오류!!!!!!!!!!!","알 수 없는 오류가 발생했습니다.","관리자에게 문의해 주시기 바랍니다."+e.getMessage());
+            AlertUtill.showWarningAlert("오류","알 수 없는 오류가 발생했습니다.","관리자에게 문의해 주시기 바랍니다."+e.getMessage());
         }finally {
             try {
                 if(rs != null)	rs.close();
@@ -294,9 +290,9 @@ public class MemberDAO {
              con = DBUtill.getConnection();
 
              if(con != null) {
-                 System.out.println("MemberDAO.Join : DB 연결 성공");
+                 System.out.println("MemberDAO.UpdateMemInfo : DB 연결 성공");
              }else {
-                 System.out.println("MemberDAO.Join : DB 연결 실패");
+                 System.out.println("MemberDAO.UpdateMemInfo : DB 연결 실패");
              }
 
              //쿼리문
@@ -325,11 +321,7 @@ public class MemberDAO {
 
          } catch (Exception e) {
              // 경고창이 만들어짐
-             Alert alert = new Alert(Alert.AlertType.ERROR);
-             alert.setTitle("정보변경 점검요망");
-             alert.setHeaderText("정보변경 문제발생!\n MemberDAO.updateMemInfo" + e.getMessage());
-             alert.setContentText("문제사항 : "+e.getMessage());
-             alert.showAndWait();
+             AlertUtill.showErrorAlert("정보변경 점검요망","정보변경 문제발생!\n MemberDAO.updateMemInfo" + e.getMessage(),"문제사항 : "+e.getMessage());
          } finally {
              try {
                  if(pstmt != null)pstmt.close();
@@ -343,8 +335,5 @@ public class MemberDAO {
          return returnValue;
 
     }
-    
-    //트레이너의 이름으로 그 트레이너의 스케줄을 가져와서 테이블에 띄움
-    
-    
+
 }

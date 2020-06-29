@@ -32,10 +32,10 @@ public class NoticeDAO {
 		try {
 			 //DBUtill에 있는 정보로 DB에 접속합니다.
 			con = DBUtill.getConnection();
-			if(con !=null) {
-				System.out.println("controller.NoticeDAO: DB 연결성공");
+			if(con != null) {
+				System.out.println("NoticeDAO.getTotalList: DB 연결성공");
 			} else {
-				System.out.println("controller.NoticeDAO: DB 연결 실패");
+				System.out.println("NoticeDAO.getTotalList: DB 연결 실패");
 			}
 			String query = "select no, title, contents, created_by , DATE_FORMAT(created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at from notice ORDER BY no DESC";
 
@@ -49,18 +49,14 @@ public class NoticeDAO {
 			}
 			
 		} catch (Exception e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("NoticeDAO getTotalList 점검요망");
-			alert.setHeaderText("NoticeDAO getTotalList에 문제 발생");
-			alert.setContentText("문제사항" + e.getMessage());
-			alert.showAndWait();
+			AlertUtill.showErrorAlert("NoticeDAO getTotalList 점검요망","NoticeDAO getTotalList에 문제 발생" ,"문제사항" + e.getMessage());
 		} finally {
 			try {
-				if(rs!=null) rs.close();
+				if(rs != null) rs.close();
 				if (pstmt != null) 	pstmt.close();
 				if (con != null) con.close();
 			} catch (SQLException e) {
-				System.out.println("RootController.DAOTotalLoadList:" + e.getMessage());
+				System.out.println("NoticeDAO.getTotalList :" + e.getMessage());
 			}
 		}
 		return arrayList;
@@ -72,10 +68,10 @@ public class NoticeDAO {
 		try {
 			con = DBUtill.getConnection();
 			//DB연결 체크
-			if(con !=null) {
-				System.out.println("AdminMainController.NoticeDAO: DB 연결성공");
+			if(con != null) {
+				System.out.println("NoticeDAO.noticeRegist: DB 연결성공");
 			} else {
-				System.out.println("AdminMainController.NoticeDAO: DB 연결 실패");
+				System.out.println("NoticeDAO.noticeRegist: DB 연결 실패");
 			}
 
 			//쿼리문
@@ -92,14 +88,9 @@ public class NoticeDAO {
 			returnValue = pstmt.executeUpdate();
 
 		} catch (Exception e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("NoticeDAO noticeRegist 점검요망");
-			alert.setHeaderText("NoticeDAO noticeRegist에 문제 발생");
-			alert.setContentText("문제사항" + e.getMessage());
-			alert.showAndWait();
+			AlertUtill.showErrorAlert("NoticeDAO noticeRegist 점검요망","NoticeDAO noticeRegist 점검요망" ,"문제사항" + e.getMessage());
 		} finally {
 			try {
-				if(rs!=null) rs.close();
 				if (pstmt != null) 	pstmt.close();
 				if (con != null) con.close();
 			} catch (SQLException e) {
@@ -110,5 +101,40 @@ public class NoticeDAO {
 		return returnValue;
 
 	}
-	
+
+	//DB 공지사항 삭제 함수
+	public int noticeDelete (Notice selectedNotice) {
+
+		try {
+			con = DBUtill.getConnection();
+			//DB연결 체크
+			if(con != null) {
+				System.out.println("NoticeDAO.noticeDelete: DB 연결성공");
+			} else {
+				System.out.println("NoticeDAO.noticeDelete: DB 연결 실패");
+			}
+
+			//쿼리문
+			String query = "DELETE FROM notice WHERE no = ?";
+
+			//쿼리문 준비
+			pstmt = con.prepareStatement(query);
+			//쿼리문 세팅
+			pstmt.setInt(1,selectedNotice.getNo());
+
+			//실행 쿼리문 갯수 반환
+			returnValue = pstmt.executeUpdate();
+		} catch (Exception e) {
+			AlertUtill.showErrorAlert("NoticeDAO noticeDelete 점검요망","NoticeDAO noticeDelete에 문제 발생" ,"문제사항 "+e.getMessage());
+		} finally {
+			try {
+				if (pstmt != null) 	pstmt.close();
+				if (con != null) con.close();
+			} catch (SQLException e) {
+				System.out.println("NoticeDAO noticeDelete :" + e.getMessage());
+			}
+		}
+
+		return returnValue;
+	}
 }

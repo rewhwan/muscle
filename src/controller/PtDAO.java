@@ -28,9 +28,9 @@ public class PtDAO {
             //DBUtill에 있는 정보로 DB에 접속합니다.
             con = DBUtill.getConnection();
             if (con != null) {
-                System.out.println("controller.PtDAO: DB 연결성공");
+                System.out.println("PTDAO.getTotalList: DB 연결성공");
             } else {
-                System.out.println("controller.PtDAO: DB 연결 실패");
+                System.out.println("PTDAO.getTotalList: DB 연결 실패");
             }
             String query = "select * from personaltraining";
             pstmt = con.prepareStatement(query);
@@ -43,14 +43,14 @@ public class PtDAO {
             }
 
         } catch (Exception e) {
-            AlertUtill.showWarningAlert("PTDAO TotalList 점검요망", "PTDAO TotalList에 문제 발생", "문제사항 " + e.getMessage());
+            AlertUtill.showWarningAlert("PTDAO getTotalList 점검요망", "PTDAO getTotalList에 문제 발생", "문제사항 " + e.getMessage());
         } finally {
             try {
                 if (rs != null) rs.close();
                 if (pstmt != null) pstmt.close();
                 if (con != null) con.close();
             } catch (SQLException e) {
-                System.out.println("PTDAO.finallyGetTotalList:" + e.getMessage());
+                System.out.println("PTDAO.getTotalList: " + e.getMessage());
             }
         }
         return arrayList;
@@ -65,9 +65,9 @@ public class PtDAO {
             //DB 연결
             con = DBUtill.getConnection();
             if (con != null) {
-                System.out.println("controller.PtDAO: DB 연결성공");
+                System.out.println("PTDAO.getTrainerPTList: DB 연결성공");
             } else {
-                System.out.println("controller.PtDAO: DB 연결 실패");
+                System.out.println("PTDAO.getTrainerPTList: DB 연결 실패");
             }
 
             //쿼리문
@@ -91,7 +91,7 @@ public class PtDAO {
                 if (pstmt != null) pstmt.close();
                 if (con != null) con.close();
             } catch (SQLException e) {
-                System.out.println("PTDAO.finallyGetTrainerPTList:" + e.getMessage());
+                System.out.println("PTDAO.getTrainerPTList : " + e.getMessage());
             }
         }
 
@@ -110,9 +110,9 @@ public class PtDAO {
 				e.printStackTrace();
 			}
 			if(con !=null) {
-				System.out.println("controller.PtDAO: DB 연결성공");
+				System.out.println("PTDAO.getTrainerPTDateList: DB 연결성공");
 			} else {
-				System.out.println("controller.PtDAO: DB 연결 실패");
+				System.out.println("PTDAO.getTrainerPTDateList: DB 연결 실패");
 			}
 			String query = "select no, member_id, trainer_id, date, TIME_FORMAT(time,\"%p %l:%i\") AS time, created_by , created_at, deleted_by, deleted_at from personaltraining where date like? AND trainer_id = ? order by time asc";
 			pstmt = con.prepareStatement(query);
@@ -140,11 +140,12 @@ public class PtDAO {
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {
-				System.out.println("RootController.PtDAO.selectClassDataByDate:" + e.getMessage());
+				System.out.println("PTDAO.getTrainerPTDateList : " + e.getMessage());
 			}
 		}
 		return dbClsByDateList;
 	}
+
     //콤보 박스에 시간을 설정한다
     //해당일에 PT가 신청된 시간을 불러옵니다.
     public static ObservableList<PTMember> getPTTimeCombo(String date, String trainerId) {
@@ -153,9 +154,9 @@ public class PtDAO {
         try {
             con = DBUtill.getConnection();
             if (con != null) {
-                System.out.println("controller.PtDAO: DB 연결성공");
+                System.out.println("PTDAO.getPTTimeCombo: DB 연결성공");
             } else {
-                System.out.println("controller.PtDAO: DB 연결 실패");
+                System.out.println("PTDAO.getPTTimeCombo: DB 연결 실패");
             }
 
             //쿼리문
@@ -174,9 +175,21 @@ public class PtDAO {
             }
 
 
-        }catch (Exception e) {
-            AlertUtill.showWarningAlert("PTDAO getTrainerPTList 점검요망", "PTDAO getTrainerPTList 문제발생", "문제사항 " + e.getMessage());
+        } catch (Exception e) {
+            AlertUtill.showWarningAlert("PTDAO getPTTimeCombo 점검요망", "PTDAO getPTTimeCombo 문제발생", "문제사항 " + e.getMessage());
+        } finally {
+
+            try {
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close();
+                if(rs != null) rs.close();
+
+            } catch (SQLException e) {
+                System.out.println("PTDAO.getPTTimeCombo"+e.getMessage());
+            }
+
         }
+
         return PTTimeCombo;
     }
 
@@ -188,9 +201,9 @@ public class PtDAO {
         try {
             con = DBUtill.getConnection();
             if (con != null) {
-                System.out.println("controller.PtDAO: DB 연결성공");
+                System.out.println("PTDAO.getMyPTInfo: DB 연결성공");
             } else {
-                System.out.println("controller.PtDAO: DB 연결 실패");
+                System.out.println("PTDAO.getMyPTInfo: DB 연결 실패");
             }
 
             //쿼리문
@@ -208,8 +221,19 @@ public class PtDAO {
             }
 
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             AlertUtill.showWarningAlert("PTDAO getMyPTInfo 점검요망", "PTDAO getMyPTInfo 문제발생", "문제사항 " + e.getMessage());
+        } finally {
+
+            try {
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close();
+                if(rs != null) rs.close();
+
+            } catch (SQLException e) {
+                System.out.println("PTDAO.getMyPTInfo"+e.getMessage());
+            }
+
         }
         return myPTInfo;
     }
@@ -221,9 +245,9 @@ public class PtDAO {
         try {
             con = DBUtill.getConnection();
             if (con != null) {
-                System.out.println("controller.PtDAO: DB 연결성공");
+                System.out.println("PTDAO.getPTPieChart: DB 연결성공");
             } else {
-                System.out.println("controller.PtDAO: DB 연결 실패");
+                System.out.println("PTDAO.getPTPieChart: DB 연결 실패");
             }
 
             String query = "SELECT TIME_FORMAT(time,\"%p %l:%i\") AS time, COUNT(no) AS cnt FROM personaltraining GROUP BY time ORDER BY time ASC";
@@ -238,8 +262,18 @@ public class PtDAO {
                 PTPieChartObsList.add(PTPieChart);
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             AlertUtill.showWarningAlert("PTDAO getPTPieChart 점검요망", "PTDAO getPTPieChart 문제발생", "문제사항 " + e.getMessage());
+        } finally {
+
+            try {
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close();
+                if(rs != null) rs.close();
+            } catch (SQLException e) {
+                System.out.println("PTDAO.getPTPieChart"+e.getMessage());
+            }
+
         }
 
         return PTPieChartObsList;
@@ -253,9 +287,9 @@ public class PtDAO {
 
             con = DBUtill.getConnection();
             if (con != null) {
-                System.out.println("controller.PtDAO: DB 연결성공");
+                System.out.println("PTDAO.getPTBarChart: DB 연결성공");
             } else {
-                System.out.println("controller.PtDAO: DB 연결 실패");
+                System.out.println("PTDAO.getPTBarChart: DB 연결 실패");
             }
 
             //쿼리문
@@ -272,6 +306,16 @@ public class PtDAO {
 
         } catch (Exception e) {
             AlertUtill.showWarningAlert("PTDAO getPTBarChart 점검요망", "PTDAO getPTBarChart 문제발생", "문제사항 " + e.getMessage());
+        } finally {
+
+            try {
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close();
+                if(rs != null) rs.close();
+            } catch (SQLException e) {
+                System.out.println("PTDAO.getPTBarChart"+e.getMessage());
+            }
+
         }
 
         return PTBarChartObsList;
@@ -284,9 +328,9 @@ public class PtDAO {
 			con = DBUtill.getConnection();
 			
 			if(con!=null) {
-				  System.out.println("controller.PtDAO: DB 연결성공");
+				  System.out.println("PTDAO.reservationPT: DB 연결성공");
 			}else {
-                System.out.println("controller.PtDAO: DB 연결 실패");
+                System.out.println("PTDAO.reservationPT: DB 연결 실패");
             }
 			
 			String query = "insert into personaltraining values (null,?,?,?,?,?,now(), null,null)";
@@ -314,7 +358,7 @@ public class PtDAO {
 				if(con != null) con.close();
 				
 			} catch (SQLException e) {
-				System.out.println("controller.PtDAO.reservationPT"+e.getMessage());
+				System.out.println("PTDAO.reservationPT"+e.getMessage());
 			}
 			
 		}

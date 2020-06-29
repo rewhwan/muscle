@@ -22,7 +22,7 @@ public class QuestionDAO {
 	ResultSet rs = null;
 	
 	//쿼리문 결과값 반환을 위한 전역변수 선언
-	ArrayList<Member> arrayList = null;
+	ArrayList<QuestionMember> arrayList = null;
 	int returnValue = 0;
 
 	//DB에서 질문 내용을 가져오는 함수 
@@ -32,9 +32,9 @@ public class QuestionDAO {
 		try {
 			con = DBUtill.getConnection();
 			if(con!=null) {
-				System.out.println("QuestionDAO.questionRegist : DB 연결 성공");
+				System.out.println("QuestionDAO.getTotalList : DB 연결 성공");
 			}else {
-				System.out.println("QuestionDAO.questionRegist : DB 연결 실패");
+				System.out.println("QuestionDAO.getTotalList : DB 연결 실패");
 			}
 			String query = "select * from question";
 			pstmt= con.prepareStatement(query);
@@ -57,14 +57,12 @@ public class QuestionDAO {
 				if (pstmt != null) 	pstmt.close();
 				if (con != null) con.close();
 			} catch (SQLException e) {
-				System.out.println("RootController.DAOTotalLoadList:" + e.getMessage());
+				System.out.println("QuestionDAO.getTotalList:" + e.getMessage());
 			}
 		}
 		return arrayListQM;
 	}
-	
-	
-	
+
 	//DB에 질문을 등록하는 함수
 	public int questionRegist(QuestionMember questionMember, Member member) {
 		
@@ -102,7 +100,7 @@ public class QuestionDAO {
 				if(pstmt != null) {pstmt.close();}
 				if(con != null) {con.close();}
 			}catch (SQLException e) {
-				System.out.println(e.getMessage());
+				System.out.println("QuestionDAO.questionRegist :"+e.getMessage());
 			}
 		
 		}
@@ -151,6 +149,44 @@ public class QuestionDAO {
 		return list;
 	}
 	
-	
+	//답변이 등록되지 않은 질문들의 목록을 가져옵니다.
+	public ArrayList<QuestionMember> getQuestionNonAnswer () {
+
+		ArrayList<QuestionMember> arrayList = new ArrayList<>();
+
+		try {
+			con = DBUtill.getConnection();
+			if(con != null) {
+				System.out.println("QuestionDAO.getQuestionNonAnswer : DB 연결 성공");
+			}else {
+				System.out.println("QuestionDAO.getQuestionNonAnswer : DB 연결 실패");
+			}
+
+			//쿼리문
+			String query = "SELECT Q.no, Q.title, Q.contents, Q.created_by, DATE_FORMAT(Q.created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at  FROM question AS Q LEFT JOIN answer AS A ON no = qustion_no WHERE qustion_no IS NULL";
+			//쿼리문 준비
+			pstmt= con.prepareStatement(query);
+			//결과값 반환
+			rs= pstmt.executeQuery();
+
+			while (rs.next()) {
+				QuestionMember question = new QuestionMember(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+				arrayList.add(question);
+			}
+
+		} catch (Exception e) {
+			AlertUtill.showWarningAlert("QuestionDAO getQuestionNonAnswer 점검요망", "QuestionDAO getQuestionNonAnswer 문제발생", "문제사항 " + e.getMessage());
+		} finally {
+			try {
+				if(con != null) con.close();
+				if(pstmt != null) pstmt.close();
+				if(rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("QuestionDAO getQuestionNonAnswer : "+e.getMessage());
+			}
+		}
+
+		return arrayList;
+	}
 	
 }

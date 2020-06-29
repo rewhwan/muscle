@@ -68,5 +68,14 @@ public class Notice {
         this.contents = contents;
     }
 
-
+    @Override
+    public String toString() {
+        return "Notice{" +
+                "no=" + no +
+                ", title='" + title + '\'' +
+                ", contents='" + contents + '\'' +
+                ", created_by='" + created_by + '\'' +
+                ", created_at='" + created_at + '\'' +
+                '}';
+    }
 }
