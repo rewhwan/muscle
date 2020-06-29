@@ -209,7 +209,6 @@
                            <children>
                               <TextField fx:id="txtNoSearch" />
                               <Button fx:id="btnNoSearch" mnemonicParsing="false" text="검색" />
-                              <Button fx:id="btnNoRegist" mnemonicParsing="false" text="등록" />
                            </children>
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="193.0" prefWidth="1226.0">
@@ -335,5 +334,6 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Button fx:id="btnLogout" layoutX="1183.0" layoutY="12.0" mnemonicParsing="false" text="로그아웃" />
    </children>
 </AnchorPane>
