@@ -1,6 +1,6 @@
 /*메인화면 anchorpane 배경화면 설정*/
 .back {
-    -fx-background-image: url("/image/3.jpeg");
+    -fx-background-image: url("/image/login.jpeg");
     -fx-background-size: cover;
 }
 
