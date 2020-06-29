@@ -476,6 +476,11 @@ public class AdminMainController implements Initializable {
 
     private void handleBtnNoticeRegist(ActionEvent e) {
 
+        if(txtNoticeTitle.getText().trim().equals("") || txtNoticeContents.getText().trim().equals("")) {
+            AlertUtill.showErrorAlert("공지사항 등록 실패","제목 또는 내용이 빈칸입니다.","내용을 입력하거나 공백이 아닌 다른값을 기입해 주세요.");
+            return;
+        }
+
         Notice notice = new Notice(txtNoticeTitle.getText().trim(), txtNoticeContents.getText().trim());
 
         int result = noticeDAO.noticeRegist(notice, memberlogin);
