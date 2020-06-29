@@ -23,7 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
+import model.Answer;
 import model.Member;
 import model.Notice;
 import model.PT;
@@ -102,16 +102,20 @@ public class MemberMainController implements Initializable {
 	private ObservableList<Notice> obsListNo;
 	private ObservableList<Member> obsListPT;
 	private ObservableList<Member> obsListMember;
+	private ObservableList<Answer> obsListAnswer;
+	
+	
 	private ToggleGroup group;
 	private int tableViewQuestionSelectedIndex;
+	private QuestionMember tableViewQuestionSelecteditem;
 	private int tableViewNoticeSelectedIndex;
 	private File selectFile;
 	private File directorySave;
 
 	public static Member memberLogin = null;
-
+	
 	public Stage primarystage = null;
-
+	public static Answer answer = null;
 
 
 	public MemberMainController() {
@@ -874,7 +878,8 @@ public class MemberMainController implements Initializable {
 	//관리자 문의 테이블을 더블 클릭하면 창이 나오게하는 이벤트 및 핸들러
 	private void handleQuestionDoubleClick(MouseEvent event) {
 		tableViewQuestionSelectedIndex =tableQuestion.getSelectionModel().getSelectedIndex();
-		
+		tableViewQuestionSelecteditem = tableQuestion.getSelectionModel().getSelectedItem();
+		AnswerDAO answerDAO = new AnswerDAO();
 		Parent root;
 		try {
 			if (event.getClickCount() != 2) {
@@ -889,6 +894,9 @@ public class MemberMainController implements Initializable {
 			Button btnCancel = (Button) root.lookup("#btnCancel");
 			TextField txtTitle = (TextField) root.lookup("#txtTitle");
 			TextArea txtContents = (TextArea) root.lookup("#txtContents");
+			TextArea txtAnswer = (TextArea) root.lookup("#txtAnswer");
+			
+			
 			Scene scene = new Scene(root);
 			queStage.setScene(scene);
 			queStage.show();
@@ -897,6 +905,10 @@ public class MemberMainController implements Initializable {
 			QuestionDAO qd=new QuestionDAO();
 			txtTitle.setText(obsList.get(tableViewQuestionSelectedIndex).getTitle());
 			txtContents.setText(obsList.get(tableViewQuestionSelectedIndex).getContents());
+			
+			int answerNO = answer.getQuestion_no();
+			txtAnswer.setText(answer.getContents());
+			
 			
 			txtTitle.setEditable(false);
 			txtContents.setEditable(false);

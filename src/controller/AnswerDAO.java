@@ -1,5 +1,6 @@
 package controller;
 
+import model.Answer;
 import model.Member;
 import model.QuestionMember;
 
@@ -61,4 +62,45 @@ public class AnswerDAO {
 
         return returnValue;
     }
+    
+    public int getAnswer (Answer answerNo) {
+        try {
+            con = DBUtill.getConnection();
+
+            if(con != null) {
+                System.out.println("AnswerDAO.getAnswer : DB 연결 성공");
+            }else {
+                System.out.println("AnswerDAO.getAnswer : DB 연결 실패");
+            }
+
+            //쿼리문
+            String query = "select * from answer where question_no = ?";
+
+            pstmt = con.prepareStatement(query);
+            
+            pstmt.setInt(1, answerNo.getQuestion_no());
+     
+            returnValue = pstmt.executeUpdate();
+
+            if(returnValue != 0) {
+                AlertUtill.showInformationAlert("답변 가져오기 성공","답변 찾기 성공하였습니다.","답변을 찾았습니다.");
+            }else {
+                throw new Exception(answerNo.getQuestion_no()+"번 답변 가져오기 문제 있음");
+            }
+        } catch (Exception e) {
+            // 경고창이 만들어짐
+            AlertUtill.showWarningAlert("답변 가져오기 실패","답변 가져오기에 실패하였습니다.","문제사항 : "+e.getMessage());
+        } finally {
+            try {
+                if(pstmt != null)pstmt.close();
+                if(con != null)con.close();
+
+            } catch (SQLException e) {
+                System.out.println("AnswerDAO.getAnswer "+e.getMessage());
+            }
+        }
+
+        return returnValue;
+    }
+   
 }
