@@ -71,7 +71,7 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT PT.`no`, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") time, MB.`name`, MB.phone, PT.created_by, DATE_FORMAT(PT.created_at,\"%Y-%m-%d %H:%i:%S\")  FROM personaltraining AS PT INNER JOIN member AS MB ON MB.id = PT.member_id WHERE trainer_id = ? ORDER BY time ASC";
+            String query = "SELECT PT.`no`, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") time, MB.`name`, MB.phone, PT.created_by, DATE_FORMAT(PT.created_at,\"%Y-%m-%d %H:%i:%S\")  FROM personaltraining AS PT INNER JOIN member AS MB ON MB.id = PT.member_id WHERE trainer_id = ?  AND date >= CURRENT_DATE ORDER BY date ASC, time ASC";
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
             pstmt.setString(1,  memberID);
