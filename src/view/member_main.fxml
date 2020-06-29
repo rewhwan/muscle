@@ -28,7 +28,7 @@
    <children>
       <TabPane layoutX="27.0" layoutY="25.0" prefHeight="681.0" prefWidth="1226.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="회원권 신청">
+          <Tab text="메인 화면">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
