@@ -32,7 +32,7 @@ public class PtDAO {
             } else {
                 System.out.println("PTDAO.getTotalList: DB 연결 실패");
             }
-            String query = "select * from personaltraining";
+            String query = "select * from personaltraining WHERE deleted_at IS NULL";
             pstmt = con.prepareStatement(query);
             rs = pstmt.executeQuery();
 
@@ -71,7 +71,7 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT PT.`no`, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") time, MB.`name`, MB.phone, PT.created_by, DATE_FORMAT(PT.created_at,\"%Y-%m-%d %H:%i:%S\")  FROM personaltraining AS PT INNER JOIN member AS MB ON MB.id = PT.member_id WHERE trainer_id = ?  AND date >= CURRENT_DATE ORDER BY date ASC, time ASC";
+            String query = "SELECT PT.`no`, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") time, MB.`name`, MB.phone, PT.created_by, DATE_FORMAT(PT.created_at,\"%Y-%m-%d %H:%i:%S\")  FROM personaltraining AS PT INNER JOIN member AS MB ON MB.id = PT.member_id WHERE trainer_id = ?  AND date >= CURRENT_DATE AND deleted_at IS NULL ORDER BY date ASC, time ASC";
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
             pstmt.setString(1,  memberID);
@@ -114,7 +114,7 @@ public class PtDAO {
 			} else {
 				System.out.println("PTDAO.getTrainerPTDateList: DB 연결 실패");
 			}
-			String query = "select no, member_id, trainer_id, date, TIME_FORMAT(time,\"%p %l:%i\") AS time, created_by , created_at, deleted_by, deleted_at from personaltraining where date like? AND trainer_id = ? order by time asc";
+			String query = "select no, member_id, trainer_id, date, TIME_FORMAT(time,\"%p %l:%i\") AS time, created_by , created_at, deleted_by, deleted_at from personaltraining where date like? AND trainer_id = ? AND deleted_at IS NULL order by time asc";
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, "%"+date+"%");
 			pstmt.setString(2, trainerInfo.getId());
@@ -160,7 +160,7 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT DISTINCT TIME_FORMAT(time,\"%H:%i\") AS time FROM personaltraining AS PT WHERE date = ? AND trainer_id = ?ORDER BY time ASC";
+            String query = "SELECT DISTINCT TIME_FORMAT(time,\"%H:%i\") AS time FROM personaltraining AS PT WHERE date = ? AND trainer_id = ? AND deleted_at IS NULL ORDER BY time ASC";
 
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
@@ -207,7 +207,7 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT PT.no, PT.member_id, PT.trainer_id, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") AS time, PT.created_by, DATE_FORMAT(PT.created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at, PT.deleted_by, PT.deleted_at , M.* from personaltraining AS PT LEFT JOIN member AS M  ON PT.trainer_id = M.id  where member_id = ?  ORDER BY date DESC, time ASC";
+            String query = "SELECT PT.no, PT.member_id, PT.trainer_id, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") AS time, PT.created_by, DATE_FORMAT(PT.created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at, PT.deleted_by, PT.deleted_at , M.* from personaltraining AS PT LEFT JOIN member AS M  ON PT.trainer_id = M.id  where member_id = ? AND deleted_at IS NULL ORDER BY date DESC, time ASC";
 
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
@@ -251,7 +251,7 @@ public class PtDAO {
                 System.out.println("PTDAO.getPTPieChart: DB 연결 실패");
             }
 
-            String query = "SELECT TIME_FORMAT(time,\"%p %l:%i\") AS time, COUNT(no) AS cnt FROM personaltraining GROUP BY time ORDER BY time ASC";
+            String query = "SELECT TIME_FORMAT(time,\"%p %l:%i\") AS time, COUNT(no) AS cnt FROM personaltraining WHERE deleted_at IS NULL GROUP BY time ORDER BY time ASC";
 
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
@@ -294,7 +294,7 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT member_id, COUNT(no) AS cnt from personaltraining GROUP BY member_id";
+            String query = "SELECT member_id, COUNT(no) AS cnt from personaltraining WHERE deleted_at IS NULL GROUP BY member_id";
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
             //쿼리실행 결과값 저장
@@ -322,7 +322,7 @@ public class PtDAO {
         return PTBarChartObsList;
     }
     
-    //pt 신청하는 함수
+    //PT 신청하는 함수
     public void reservationPT(Member memberLogin, Member trainerInfo, String date, String time ) {
     	
     	try {
@@ -364,5 +364,44 @@ public class PtDAO {
 			
 		}
 
+    }
+
+    //PT 취소하는 함수
+    public void deletePT (Member memberLogin, PTMember selecetedPT) {
+        try {
+            con = DBUtill.getConnection();
+
+            if(con!=null) {
+                System.out.println("PTDAO.deletePT: DB 연결성공");
+            }else {
+                System.out.println("PTDAO.deletePT: DB 연결 실패");
+            }
+
+            String query = "UPDATE personaltraining SET deleted_by = ?, deleted_at = now() WHERE no = ?";
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, memberLogin.getId());
+            pstmt.setInt(2, selecetedPT.getNo());
+
+            returnValue = pstmt.executeUpdate();
+            if(returnValue !=0) {
+                AlertUtill.showInformationAlert("PT삭제 성공", "PT삭제에 성공했습니다", selecetedPT.getDate()+"일 "+selecetedPT.getTime() +"시의 PT가 취소되었습니다");
+            } else {
+                throw new Exception(memberLogin.getId()+"의 PT 삭제에 문제 있음 ");
+            }
+
+        } catch (Exception e) {
+            AlertUtill.showErrorAlert("PT삭제 점검요망", "deletePT에 문제 있음 ", "deletePT를 점검해주세요 ");
+        } finally {
+
+            try {
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close();
+
+            } catch (SQLException e) {
+                System.out.println("PTDAO.deletePT"+e.getMessage());
+            }
+
+        }
     }
 }

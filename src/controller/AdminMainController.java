@@ -47,12 +47,17 @@ public class AdminMainController implements Initializable {
 
     //PT 테이블
     @FXML TableView tablePT;
+    //PT 버튼
+    @FXML Button btnPTDelete;
+    @FXML Button btnPTModify;
     //PT신청정보를 저장해서 받아오는 변수
     private ObservableList<PTMember> PTMemberObsList = FXCollections.observableArrayList();
     //PT신청정보 파이챠트
     @FXML PieChart PTPieChart;
     //PT신청정보 바챠트
     @FXML BarChart PTBarChart;
+    //선택된 PT정보
+    PTMember selectedPT = null;
 
     //Question 질문 테이블
     @FXML TableView tableQuestion;
@@ -105,6 +110,10 @@ public class AdminMainController implements Initializable {
         PTPieChartInitiallize();
         //PT정보에 따라서 바챠트를 만들어줍니다.
         PTBarChartInitiallize();
+        //PT테이블 클릭시 발생하는 이벤트 함수
+        tablePT.setOnMousePressed(e -> handleTablePTPressAction(e));
+        //PT삭제버튼 클릭시 발생하는 이벤트
+        btnPTDelete.setOnAction(e -> handleBtnPTDeleteAction(e));
 
         //Question 테이블컬럼 초기화
         questionTableViewColumnInitiallize();
@@ -120,6 +129,23 @@ public class AdminMainController implements Initializable {
         //로그아웃 버튼
         btnLogout.setOnAction(e -> handleBtnLogout());
 
+    }
+
+    private void handleTablePTPressAction(MouseEvent e) {
+        selectedPT = (PTMember) tablePT.getSelectionModel().getSelectedItem();
+    }
+
+    private void handleBtnPTDeleteAction(ActionEvent e) {
+        Optional<ButtonType> result = AlertUtill.showConfirmationAlert("삭제작업 확인요청","정말로 "+selectedPT.getName()+"님의 PT 신청내역을 삭제하시겠어요?","삭제를 하시려면 엔터키나 OK 버튼을 눌러주세요");
+
+        if(result.get() == ButtonType.CANCEL) return;
+
+        if(selectedPT == null) {
+            AlertUtill.showInformationAlert("PT정보가 없음", "삭제하고자 하는 PT 정보가 없습니다.", "삭제하고자 하는 PT를 테이블에서 먼저 선택해 주세요.");
+        }
+        ptDAO.deletePT(memberlogin, selectedPT);
+
+        PTGetTotalList(memberlogin);
     }
 
     public void handleBtnTestAction(ActionEvent e) {

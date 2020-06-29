@@ -65,8 +65,8 @@
                                              <children>
                                                 <HBox alignment="CENTER" spacing="15.0">
                                                    <children>
-                                                      <Button fx:id="btnDelete" mnemonicParsing="false" text="삭제" />
-                                                      <Button fx:id="btnModify" mnemonicParsing="false" text="수정" />
+                                                      <Button fx:id="btnPTDelete" mnemonicParsing="false" text="삭제" />
+                                                      <Button fx:id="btnPTModify" mnemonicParsing="false" text="수정" />
                                                    </children></HBox>
                                              </children>
                                              <padding>
