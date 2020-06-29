@@ -40,7 +40,7 @@ public class AdminMainController implements Initializable {
     //공지사항 테이블
     @FXML TableView tableNotice;
     //공지사항 테이블에서 선택된 컬럼의 정보를 가져오는 변수
-    Notice selectedNotice = null;
+    static Notice selectedNotice = null;
     //공지사항을 저장해서 받아오는 변수
     private ObservableList<Notice> noticeObsList = FXCollections.observableArrayList();
 
@@ -49,9 +49,6 @@ public class AdminMainController implements Initializable {
     @FXML TableView tablePT;
     //PT신청정보를 저장해서 받아오는 변수
     private ObservableList<PTMember> PTMemberObsList = FXCollections.observableArrayList();
-    //테스트 콤보박스
-    @FXML ComboBox comboTime;
-    private ObservableList<PTMember> PTTime = FXCollections.observableArrayList();
     //PT신청정보 파이챠트
     @FXML PieChart PTPieChart;
     //PT신청정보 바챠트
@@ -104,8 +101,6 @@ public class AdminMainController implements Initializable {
         PTTableViewColumnInitiallize();
         //DB에서 PT신청 내용을 가져옵니다.
         PTGetTotalList(LoginController.memberLogin);
-        //콤보박스 테스트
-        comboTimeInitiallize();
         //PT정보에 따라서 파이차트를 만들어줍니다.
         PTPieChartInitiallize();
         //PT정보에 따라서 바챠트를 만들어줍니다.
@@ -121,10 +116,16 @@ public class AdminMainController implements Initializable {
         btnAnswerRegist.setOnAction(e -> handleBtnAnswerRegistAction());
 
         //회원정보 테스트
-        btnTest.setOnAction(e->System.out.println(memberlogin));
+        btnTest.setOnAction(e -> handleBtnTestAction(e));
         //로그아웃 버튼
-        btnLogout.setOnAction(e->handleBtnLogout());
+        btnLogout.setOnAction(e -> handleBtnLogout());
 
+    }
+
+    public void handleBtnTestAction(ActionEvent e) {
+        questionTotalList();
+        noticeGetTotalList();
+        PTGetTotalList(memberlogin);
     }
 
     //답변 등록버튼 클릭시 실행하는 함수
@@ -284,6 +285,34 @@ public class AdminMainController implements Initializable {
     //공지사항 테이블 클릭시 어느것을 선택했는지 알려줌
     private void handleTableNoticePressAction(MouseEvent e) {
         selectedNotice = (Notice) tableNotice.getSelectionModel().getSelectedItem();
+
+        if(e.getClickCount() != 2) return;
+
+        fxmlLoader = new FXMLLoader(getClass().getResource("/view/admin_notice_view.fxml"));
+        try {
+            view = fxmlLoader.load();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        scene = new Scene(view);
+
+        Stage noticeModal = new Stage(StageStyle.UTILITY);
+        noticeModal.setTitle("공지사항 관람 & 수정");
+        noticeModal.setScene(scene);
+        noticeModal.initModality(Modality.WINDOW_MODAL);
+        noticeModal.initOwner(primarystage);
+        noticeModal.setResizable(false);
+        scene.setFill(Color.TRANSPARENT);
+
+        //공지사항 창의 컨트롤러 불러오기
+        AdminNoticeViewController adminNoticeViewController = fxmlLoader.getController();
+        adminNoticeViewController.primaryStage = noticeModal;
+
+        //공지사항 입력이후 창이 닫기면 실행되는 이벤트
+        noticeModal.setOnHidden(event -> noticeGetTotalList());
+
+        //공지사항 내용 창 보여주기
+        noticeModal.show();
     }
 
     //전체회원의 PT통계를 바챠트로 보여줍니다.
@@ -312,24 +341,6 @@ public class AdminMainController implements Initializable {
         }
 
         this.PTPieChart.setData(PTPieChart);
-    }
-
-    private void comboTimeInitiallize() {
-        comboTime.getItems().add("10:00");
-        comboTime.getItems().add("11:00");
-        comboTime.getItems().add("13:00");
-        comboTime.getItems().add("14:00");
-        comboTime.getItems().add("15:00");
-        comboTime.getItems().add("16:00");
-        comboTime.getItems().add("17:00");
-        comboTime.getItems().add("18:00");
-
-//        PTTime = PtDAO.getPTTimeCombo();
-
-        for(int i= 0;i < PTTime.size();i++) {
-            comboTime.getItems().remove(PTTime.get(i).getTime());
-        }
-        
     }
 
     private void PTGetTotalList(Member memberlogin) {
