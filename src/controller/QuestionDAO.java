@@ -36,7 +36,7 @@ public class QuestionDAO {
 			}else {
 				System.out.println("QuestionDAO.getTotalList : DB 연결 실패");
 			}
-			String query = "select * from question";
+			String query = "select no, title, contents, created_by ,DATE_FORMAT(created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at from question";
 			pstmt= con.prepareStatement(query);
 			rs= pstmt.executeQuery();
 			

@@ -115,7 +115,8 @@ public class MemberMainController implements Initializable {
 	public static Member memberLogin = null;
 	
 	public Stage primarystage = null;
-	public static Answer answer = null;
+
+	QuestionDAO questionDAO=new QuestionDAO();
 
 
 	public MemberMainController() {
@@ -800,27 +801,27 @@ public class MemberMainController implements Initializable {
 		TableColumn colNo = new TableColumn("번호");
 		colNo.setPrefWidth(50);
 		
-		colNo.setStyle("-fx-alignment: CENTER");
+		colNo.setStyle("-fx-font-size: 16px; -fx-alignment: CENTER;");
 		colNo.setCellValueFactory(new PropertyValueFactory("no"));
 
 		TableColumn colTitle = new TableColumn("제목");
-		colTitle.setPrefWidth(170);
-		colTitle.setStyle("-fx-alignment: CENTER");
+		colTitle.setPrefWidth(220);
+		colTitle.setStyle("-fx-font-size: 16px; -fx-alignment: CENTER;");
 		colTitle.setCellValueFactory(new PropertyValueFactory("title"));
 
 		TableColumn colContents = new TableColumn("내용");
 		colContents.setPrefWidth(350);
-		colContents.setStyle("-fx-alignment: CENTER");
+		colContents.setStyle("-fx-font-size: 16px;-fx-alignment: CENTER;");
 		colContents.setCellValueFactory(new PropertyValueFactory("contents"));
 
 		TableColumn colCreateBy = new TableColumn("작성자");
-		colCreateBy.setPrefWidth(80);
-		colCreateBy.setStyle("-fx-alignment: CENTER");
+		colCreateBy.setPrefWidth(110);
+		colCreateBy.setStyle("-fx-font-size: 16px; -fx-alignment: CENTER;");
 		colCreateBy.setCellValueFactory(new PropertyValueFactory("created_by"));
 
 		TableColumn colCreateAt = new TableColumn("작성일");
-		colCreateAt.setPrefWidth(200);
-		colCreateAt.setStyle("-fx-alignment: CENTER");
+		colCreateAt.setPrefWidth(150);
+		colCreateAt.setStyle("-fx-alignment: CENTER;");
 		colCreateAt.setCellValueFactory(new PropertyValueFactory("created_at"));
 
 		tableQuestion.getColumns().addAll(colNo, colTitle, colContents,
@@ -880,6 +881,9 @@ public class MemberMainController implements Initializable {
 		tableViewQuestionSelectedIndex =tableQuestion.getSelectionModel().getSelectedIndex();
 		tableViewQuestionSelecteditem = tableQuestion.getSelectionModel().getSelectedItem();
 		AnswerDAO answerDAO = new AnswerDAO();
+
+		ArrayList<Answer> resultArrayList = null;
+
 		Parent root;
 		try {
 			if (event.getClickCount() != 2) {
@@ -895,19 +899,23 @@ public class MemberMainController implements Initializable {
 			TextField txtTitle = (TextField) root.lookup("#txtTitle");
 			TextArea txtContents = (TextArea) root.lookup("#txtContents");
 			TextArea txtAnswer = (TextArea) root.lookup("#txtAnswer");
-			
+
+			txtTitle.setText(tableViewQuestionSelecteditem.getTitle());
+			txtContents.setText(tableViewQuestionSelecteditem.getContents());
+
+			resultArrayList = answerDAO.getAnswer(tableViewQuestionSelecteditem);
+
+			txtAnswer.setText(resultArrayList.get(0).getContents());
 			
 			Scene scene = new Scene(root);
 			queStage.setScene(scene);
 			queStage.show();
-			//int num=tableQuestion.getSelectionModel().getSelectedItem().getT();
-			String title = tableQuestion.getSelectionModel().getSelectedItem().getTitle();
-			QuestionDAO qd=new QuestionDAO();
-			txtTitle.setText(obsList.get(tableViewQuestionSelectedIndex).getTitle());
-			txtContents.setText(obsList.get(tableViewQuestionSelectedIndex).getContents());
-			
-			int answerNO = answer.getQuestion_no();
-			txtAnswer.setText(answer.getContents());
+
+
+
+//			txtTitle.setText(obsList.get(tableViewQuestionSelectedIndex).getTitle());
+//			txtContents.setText(obsList.get(tableViewQuestionSelectedIndex).getContents());
+
 			
 			
 			txtTitle.setEditable(false);

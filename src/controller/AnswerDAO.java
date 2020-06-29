@@ -21,6 +21,7 @@ public class AnswerDAO {
     ArrayList<Member> arrayList = null;
     int returnValue = 0;
 
+    //답변을 DB에 등록해주는 함수
     public int answerRegist (QuestionMember question , String contents, Member memberLogin) {
         try {
             con = DBUtill.getConnection();
@@ -62,8 +63,12 @@ public class AnswerDAO {
 
         return returnValue;
     }
-    
-    public int getAnswer (Answer answerNo) {
+
+    //DB에서 답변내용을 가져오는 함수
+    public ArrayList<Answer> getAnswer (QuestionMember selectQuestion) {
+
+        ArrayList<Answer> arrayList = new ArrayList<>();
+
         try {
             con = DBUtill.getConnection();
 
@@ -78,29 +83,33 @@ public class AnswerDAO {
 
             pstmt = con.prepareStatement(query);
             
-            pstmt.setInt(1, answerNo.getQuestion_no());
+            pstmt.setInt(1, selectQuestion.getNo());
      
-            returnValue = pstmt.executeUpdate();
+            rs = pstmt.executeQuery();
 
-            if(returnValue != 0) {
-                AlertUtill.showInformationAlert("답변 가져오기 성공","답변 찾기 성공하였습니다.","답변을 찾았습니다.");
+            if(rs.next()){
+                Answer answer = new Answer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4));
+                arrayList.add(answer);
             }else {
-                throw new Exception(answerNo.getQuestion_no()+"번 답변 가져오기 문제 있음");
+                arrayList.add(new Answer(0,"아직 답변이 등록되지 않았습니다.","",""));
+                System.out.println(arrayList);
+                return arrayList;
             }
+
         } catch (Exception e) {
             // 경고창이 만들어짐
             AlertUtill.showWarningAlert("답변 가져오기 실패","답변 가져오기에 실패하였습니다.","문제사항 : "+e.getMessage());
         } finally {
             try {
-                if(pstmt != null)pstmt.close();
-                if(con != null)con.close();
-
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close();
+                if(rs != null) rs.close();
             } catch (SQLException e) {
                 System.out.println("AnswerDAO.getAnswer "+e.getMessage());
             }
         }
 
-        return returnValue;
+        return arrayList;
     }
    
 }
