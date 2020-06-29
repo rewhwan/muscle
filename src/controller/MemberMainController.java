@@ -97,7 +97,7 @@ public class MemberMainController implements Initializable {
 	@FXML private AnchorPane anchorPane2;
 
 	public Stage stage;
-	private ObservableList<PT> obsListPTInfo;
+	private ObservableList<PTMember> obsListPTInfo;
 	private ObservableList<QuestionMember> obsList;
 	private ObservableList<Notice> obsListNo;
 	private ObservableList<Member> obsListPT;
@@ -108,7 +108,7 @@ public class MemberMainController implements Initializable {
 	private File selectFile;
 	private File directorySave;
 
-	public static Member memberLogin;
+	public static Member memberLogin = null;
 
 	public Stage primarystage = null;
 
@@ -203,13 +203,11 @@ public class MemberMainController implements Initializable {
 	//db의 PT 테이블에서 데이터를 가져와 회원정보 탭의 테이블에 넣음 
 	private void myPTInfoList() {
 		PtDAO ptDAO = new PtDAO();
-		ArrayList<PT> myPTInfo = ptDAO.getMyPTInfo();
-		if(myPTInfo ==null) {
-			return;
-		}
+		ArrayList<PTMember> myPTInfo = ptDAO.getMyPTInfo(LoginController.memberLogin);
+		if(myPTInfo == null) return;
  		for(int i=0; i<myPTInfo.size(); i++) {
- 			PT pt = myPTInfo.get(i);
- 			obsListPTInfo.add(pt);
+ 			PTMember ptMember = myPTInfo.get(i);
+ 			obsListPTInfo.add(ptMember);
  		}
  		
 	}
@@ -219,25 +217,27 @@ public class MemberMainController implements Initializable {
 		
 		TableColumn colRegDay = new TableColumn("트레이너");
 		colRegDay.setPrefWidth(100);
-		colRegDay.setStyle("-fx-allignment: CENTER");
-		colRegDay.setCellValueFactory(new PropertyValueFactory<>("trainer_id"));
+		colRegDay.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
+		colRegDay.setCellValueFactory(new PropertyValueFactory<>("name"));
 
 		TableColumn colDate = new TableColumn("날짜");
-		colDate.setPrefWidth(250);
-		colDate.setStyle("-fx-allignment: CENTER");
+		colDate.setPrefWidth(150);
+		colDate.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
 		colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
 		TableColumn colTime = new TableColumn("시간");
-		colTime.setPrefWidth(250);
-		colTime.setStyle("-fx-allignment: CENTER");
+		colTime.setPrefWidth(150);
+		colTime.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
 		colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
 
-		/*TableColumn colCreat = new TableColumn("작성일");
+		TableColumn colCreat = new TableColumn("작성일");
 		colCreat.setPrefWidth(250);
-		colCreat.setStyle("-fx-allignment: CENTER");
-		colCreat.setCellValueFactory(new PropertyValueFactory<>("created_at"));*/
+		colCreat.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
+		colCreat.setCellValueFactory(new PropertyValueFactory<>("created_at"));
+
+		tableMemInfo.setFixedCellSize(40);
 		
-		tableMemInfo.getColumns().addAll(colRegDay, colDate, colTime);
+		tableMemInfo.getColumns().addAll(colRegDay, colDate, colTime, colCreat);
 		tableMemInfo.setItems(obsListPTInfo);
 		
 	}

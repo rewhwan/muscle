@@ -215,7 +215,7 @@ public class LoginController implements Initializable {
         }else {
             //유저 화면 컨트롤러를 불러와줌
             MemberMainController memberMainController = fxmlLoader.getController();
-            memberMainController.memberLogin = memberLogin;
+            MemberMainController.memberLogin = memberLogin;
             memberMainController.primarystage = stage;
         }
 

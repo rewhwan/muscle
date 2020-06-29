@@ -195,8 +195,8 @@ public class PtDAO {
 
     //member_id로 pt정보를 가져온다 
     //회원정보 창의 테이블에 pt 신청한 내용. 트레이너 날짜 시간을 가져온다
-    public  ArrayList<PT> getMyPTInfo() {
-    	ArrayList<PT> myPTInfo = new ArrayList<PT>();
+    public ArrayList<PTMember> getMyPTInfo(Member memberLogin) {
+    	ArrayList<PTMember> myPTInfo = new ArrayList<PTMember>();
 
         try {
             con = DBUtill.getConnection();
@@ -207,17 +207,18 @@ public class PtDAO {
             }
 
             //쿼리문
-            String query = "SELECT * from personaltraining where member_id ='hyc20'";
+            String query = "SELECT PT.no, PT.member_id, PT.trainer_id, PT.date, TIME_FORMAT(PT.time,\"%p %l:%i\") AS time, PT.created_by, DATE_FORMAT(PT.created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at, PT.deleted_by, PT.deleted_at , M.* from personaltraining AS PT LEFT JOIN member AS M  ON PT.trainer_id = M.id  where member_id = ?  ORDER BY date DESC, time ASC";
 
             //쿼리문 준비
             pstmt = con.prepareStatement(query);
-        
+            pstmt.setString(1, memberLogin.getId());
+
             //쿼리실행 결과값 저장
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                PT pt = new PT (rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9));
-                myPTInfo.add(pt);
+                PTMember ptMember = new PTMember (rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14),rs.getString(15),rs.getString(16),rs.getString(17),rs.getString(18),rs.getString(19),rs.getString(20));
+                myPTInfo.add(ptMember);
             }
 
 
