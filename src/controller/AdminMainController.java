@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 
 public class AdminMainController implements Initializable {
 
-    @FXML Button btnTest;
+    @FXML Button btnRefresh;
     @FXML Button btnLogout;
 
     //공지사항등록 텍스트 필드
@@ -115,8 +115,8 @@ public class AdminMainController implements Initializable {
         //Answer 등록 버튼 클릭시 이벤트 함수
         btnAnswerRegist.setOnAction(e -> handleBtnAnswerRegistAction());
 
-        //회원정보 테스트
-        btnTest.setOnAction(e -> handleBtnTestAction(e));
+        //새로고침 이벤트 함수
+        btnRefresh.setOnAction(e -> handleBtnTestAction(e));
         //로그아웃 버튼
         btnLogout.setOnAction(e -> handleBtnLogout());
 

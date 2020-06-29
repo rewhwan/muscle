@@ -179,7 +179,7 @@
       			</tabs>
       		</TabPane>
             <Button fx:id="btnLogout" layoutX="1179.0" layoutY="3.0" mnemonicParsing="false" text="로그아웃" />
-            <Button fx:id="btnTest" layoutX="1098.0" layoutY="3.0" mnemonicParsing="false" text="회원정보" />
+            <Button fx:id="btnRefresh" layoutX="1098.0" layoutY="3.0" mnemonicParsing="false" text="새로고침" />
          </children>
       </AnchorPane>
 	</children>
