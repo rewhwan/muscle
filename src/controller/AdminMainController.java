@@ -61,7 +61,7 @@ public class AdminMainController implements Initializable {
     @FXML TableView tableQuestion;
     private ObservableList<QuestionMember> questionObsList = FXCollections.observableArrayList();
     //Question 테이블에서 선택된 컬럼의 정보를 가져오는 변수
-    QuestionMember selectedQuestion = null;
+    public static QuestionMember selectedQuestion = null;
 
     //Answer 버튼
     @FXML Button btnAnswerRegist;
@@ -145,6 +145,31 @@ public class AdminMainController implements Initializable {
     //Question테이블 클릭시 발생하는 이벤트 함수
     private void handleTableQuestionPressAction(MouseEvent e) {
         selectedQuestion = (QuestionMember) tableQuestion.getSelectionModel().getSelectedItem();
+
+        if(e.getClickCount() != 2) return;
+
+        fxmlLoader = new FXMLLoader(getClass().getResource("/view/admin_question_view.fxml"));
+        try {
+            view = fxmlLoader.load();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        scene = new Scene(view);
+
+        Stage questionModal = new Stage(StageStyle.UTILITY);
+        questionModal.setTitle("질문 내용보기");
+        questionModal.setScene(scene);
+        questionModal.initModality(Modality.NONE);
+        questionModal.initOwner(primarystage);
+        questionModal.setResizable(false);
+        scene.setFill(Color.TRANSPARENT);
+
+        //공지사항 창의 컨트롤러 불러오기
+        AdminQuestionViewController adminQuestionViewController = fxmlLoader.getController();
+        adminQuestionViewController.primaryStage = questionModal;
+
+        //공지사항 내용 창 보여주기
+        questionModal.show();
     }
 
     //답변 등록버튼 클릭시 이벤트 함수
@@ -216,7 +241,7 @@ public class AdminMainController implements Initializable {
 
         TableColumn colContents = new TableColumn("내용");
         colContents.setPrefWidth(320);
-        colContents.setStyle("-fx-font-size:16px; -fx-alignment: CENTER_LEFT");
+        colContents.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
         colContents.setCellValueFactory(new PropertyValueFactory<>("contents"));
 
         TableColumn colCreatedBy = new TableColumn("작성자");
