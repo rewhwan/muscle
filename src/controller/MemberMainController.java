@@ -325,6 +325,8 @@ public class MemberMainController implements Initializable {
 			//int num=tableQuestion.getSelectionModel().getSelectedItem().getT();
 			String title = tableNotice.getSelectionModel().getSelectedItem().toString();
 			NoticeDAO nd=new NoticeDAO();
+			txtTitle.setEditable(false);
+			txtContents.setEditable(false);
 			txtTitle.setText(obsListNo.get(tableViewNoticeSelectedIndex).getTitle());
 			txtContents.setText(obsListNo.get(tableViewNoticeSelectedIndex).getContents());
 			btnCancel.setOnAction(event2 -> {
