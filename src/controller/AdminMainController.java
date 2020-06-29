@@ -494,6 +494,7 @@ public class AdminMainController implements Initializable {
 
     }
 
+    //로그아웃 버튼 클릭시 실행하는 함수
     private void handleBtnLogout() {
         Stage stage = new Stage();
 

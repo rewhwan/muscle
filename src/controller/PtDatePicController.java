@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Member;
 import model.PT;
 import model.PTMember;
@@ -94,6 +95,9 @@ public class PtDatePicController implements Initializable {
 	 
 	//달력에서 선택한 날짜를 가지고 있는 변수
 	private String selectDate = null;
+
+	//스테이지
+	public static Stage primarystage = null;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -251,6 +255,9 @@ public class PtDatePicController implements Initializable {
 		private void handleptDateTxfRegiAction() {
 			PtDAO PTDAO = new PtDAO();
 			PTDAO.reservationPT(MemberMainController.memberLogin, trainerInfo, selectDate,cmbPTTime.getSelectionModel().getSelectedItem().toString());
+			ObservableList<PT> dbClsByDateList = PtDAO.getTrainerPTDateList(selectDate, trainerInfo);
+			comboTimeInitiallize(selectDate, trainerInfo);
+			ptTraTable.setItems(dbClsByDateList);
 		}
 
 		//PT날짜 고르는 창의 테이블 뷰 컬럼 초기화 

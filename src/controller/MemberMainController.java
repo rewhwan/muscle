@@ -36,12 +36,14 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MemberMainController implements Initializable {
 	private final File DIR = new File("C:/images");
 	
-	//커밋테스트
+	//로그아웃 버튼
+	@FXML Button btnLogout;
 	
 	// 관리자문의 관련 id
 	@FXML private Button btnQuestionWrite;
@@ -156,7 +158,7 @@ public class MemberMainController implements Initializable {
 		btnNoSearch.setOnAction( event-> { handleBtnNoSearch(event); });
 
 		//공지사항의 등록버튼 이벤트 등록 및 핸들러
-		btnNoRegist.setOnAction( event-> {	handleBtnNoRegist(event);});
+//		btnNoRegist.setOnAction( event-> {	handleBtnNoRegist(event);});
 
 		//공지사항 테이블 뷰 마우스 클릭 시 이벤트 처리 
 		tableNotice.setOnMouseClicked(event-> {handleNoticeDoubleClick(event);});
@@ -202,6 +204,9 @@ public class MemberMainController implements Initializable {
 		btnCableCrossOver.setOnAction(event -> {handleBtnCableCrossOverAction(event);});
 		btnDips.setOnAction(event -> {handleBtnDipsAction(event);});
 		btnInclineBenchPress.setOnAction(event -> {handleBtnInclineBenchPressAction(event);});
+
+//----------------------------------------------------------------------------------------------
+		btnLogout.setOnAction(e -> handleBtnLogout());
 	}// end of initialize
 	
 	
@@ -209,12 +214,42 @@ public class MemberMainController implements Initializable {
 	private void myPTInfoList() {
 		PtDAO ptDAO = new PtDAO();
 		ArrayList<PTMember> myPTInfo = ptDAO.getMyPTInfo(LoginController.memberLogin);
+		obsListPTInfo.clear();
 		if(myPTInfo == null) return;
  		for(int i=0; i<myPTInfo.size(); i++) {
  			PTMember ptMember = myPTInfo.get(i);
  			obsListPTInfo.add(ptMember);
  		}
  		
+	}
+
+	//로그아웃 함수
+	private void handleBtnLogout() {
+		Stage stage = new Stage();
+
+		Optional<ButtonType> result = AlertUtill.showConfirmationAlert("로그아웃 확인","정말 로그아웃 하시겠어요?","로그아웃을 하시려면 엔터키 혹은 OK버튼을 눌러주세요.");
+
+		if(result.get() == ButtonType.CANCEL) return;
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+		Parent view = null;
+		try {
+			view = fxmlLoader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Scene scene = new Scene(view);
+		scene.getStylesheets().add("/view/login.css");
+		stage.setTitle("PT 시스템");
+		stage.setScene(scene);
+		LoginController loginController = fxmlLoader.getController();
+
+		loginController.primarystage = stage;
+
+		primarystage.close();
+		stage.show();
+
 	}
 
 	//회원정보 탭의 테이블 초기화
@@ -270,6 +305,8 @@ public class MemberMainController implements Initializable {
 				ptDate.setTitle("PT 날짜 선택창");
 				Member trainerInfo = (Member)tablePT.getSelectionModel().getSelectedItem();
 				PtDatePicController.trainerInfo = trainerInfo;
+				PtDatePicController.primarystage = ptDate;
+				ptDate.setOnHidden(e -> myPTInfoList());
 				ptDate.show();
 
 			} catch (IOException e) {
@@ -562,6 +599,7 @@ public class MemberMainController implements Initializable {
 	private void ptTotalList() {
 		MemberDAO memberDAO = new MemberDAO();
 		ArrayList<Member> arrayList = memberDAO.findTrainer();
+		obsListPT.clear();
 
 		if(arrayList ==null) {
 			return;
@@ -691,7 +729,7 @@ public class MemberMainController implements Initializable {
 	
 	}
 
-	//공지사항의 등록버튼 이벤트 등록 및 핸들러
+	/*//공지사항의 등록버튼 이벤트 등록 및 핸들러
 	private void handleBtnNoRegist(ActionEvent event) {
 		Parent root;
 
@@ -731,7 +769,7 @@ public class MemberMainController implements Initializable {
 			alert.showAndWait();
 		}
 
-	}
+	}*/
 
 	//공지사항의 검색 버튼 이벤트 등록 및 핸들러
 	private void handleBtnNoSearch(ActionEvent event) {
