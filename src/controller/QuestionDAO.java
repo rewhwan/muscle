@@ -163,7 +163,7 @@ public class QuestionDAO {
 			}
 
 			//쿼리문
-			String query = "SELECT Q.no, Q.title, Q.contents, Q.created_by, DATE_FORMAT(Q.created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at  FROM question AS Q LEFT JOIN answer AS A ON no = qustion_no WHERE qustion_no IS NULL";
+			String query = "SELECT Q.no, Q.title, Q.contents, Q.created_by, DATE_FORMAT(Q.created_at,\"%Y-%m-%d %H:%i:%S\") AS created_at  FROM question AS Q LEFT JOIN answer AS A ON no = question_no WHERE question_no IS NULL";
 			//쿼리문 준비
 			pstmt= con.prepareStatement(query);
 			//결과값 반환
