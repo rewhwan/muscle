@@ -104,6 +104,7 @@ public class MemberMainController implements Initializable {
 	private ObservableList<Member> obsListMember;
 	private ToggleGroup group;
 	private int tableViewQuestionSelectedIndex;
+	private int tableViewNoticeSelectedIndex;
 	private File selectFile;
 	private File directorySave;
 
@@ -153,7 +154,7 @@ public class MemberMainController implements Initializable {
 		btnNoRegist.setOnAction( event-> {	handleBtnNoRegist(event);});
 
 		//공지사항 테이블 뷰 마우스 클릭 시 이벤트 처리 
-		tableQuestion.setOnMousePressed(event-> {handleTableViewQuestionPressAction(event);});
+		tableNotice.setOnMouseClicked(event-> {handleNoticeDoubleClick(event);});
 
 		//공지사항 내용 가져오기	
 		noticeTotalList();
@@ -294,12 +295,42 @@ public class MemberMainController implements Initializable {
 
 	}
 
-	//관리자 문의 테이블을 더블 클릭하면 창이 나오게하는 이벤트 및 핸들러
-	private void handleTableViewQuestionPressAction(Event event) {
-		tableViewQuestionSelectedIndex=tableQuestion.getSelectionModel().getSelectedIndex();
+	//공지사항 테이블을 더블 클릭하면 창이 나오게하는 이벤트 및 핸들러
+	private void handleNoticeDoubleClick(MouseEvent event) {
+		tableViewNoticeSelectedIndex=tableNotice.getSelectionModel().getSelectedIndex();
 		
+		Parent root;
+		try {
+			if (event.getClickCount() != 2) {
+				return;
+			
+			}
+			root = FXMLLoader.load(getClass().getResource("/view/member_notice_doubleclick.fxml"));
+			Stage notStage = new Stage(StageStyle.UTILITY);
+			notStage.initModality(Modality.WINDOW_MODAL);
+			notStage.initOwner(stage);
+			notStage.setTitle("공지사항보기");
+			Button btnCancel = (Button) root.lookup("#btnCancel");
+			TextField txtTitle = (TextField) root.lookup("#txtTitle");
+			TextArea txtContents = (TextArea) root.lookup("#txtContents");
+			Scene scene = new Scene(root);
+			notStage.setScene(scene);
+			notStage.show();
+			//int num=tableQuestion.getSelectionModel().getSelectedItem().getT();
+			String title = tableNotice.getSelectionModel().getSelectedItem().toString();
+			NoticeDAO nd=new NoticeDAO();
+			txtTitle.setText(obsListNo.get(tableViewNoticeSelectedIndex).getTitle());
+			txtContents.setText(obsListNo.get(tableViewNoticeSelectedIndex).getContents());
+			btnCancel.setOnAction(event2 -> {
+				notStage.close();
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	
+		
+		
+
 	//db에서 공지사항 내용을 가져옴 
 	private void noticeTotalList() {
 		NoticeDAO ntDAO = new NoticeDAO();
