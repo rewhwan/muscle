@@ -137,4 +137,50 @@ public class NoticeDAO {
 
 		return returnValue;
 	}
+
+	//DB 공지사항 수정 함수
+	public int noticeUpdate (Notice selectedNotice, String title, String contents) {
+		try {
+			con = DBUtill.getConnection();
+			//DB연결 체크
+			if(con != null) {
+				System.out.println("NoticeDAO.noticeUpdate: DB 연결성공");
+			} else {
+				System.out.println("NoticeDAO.noticeUpdate: DB 연결 실패");
+			}
+
+			//쿼리문
+			String query = "UPDATE notice SET title = ? , contents = ? WHERE no = ?";
+
+			//쿼리문 준비
+			pstmt = con.prepareStatement(query);
+			//쿼리문 세팅
+			pstmt.setString(1, title);
+			pstmt.setString(2,contents);
+			pstmt.setInt(3, selectedNotice.getNo());
+
+			int returnValue = pstmt.executeUpdate();
+
+			if(returnValue != 0) {
+				AlertUtill.showInformationAlert("공지사항 수정 성공","공지사항 수정에 성공하였습니다.","확인버튼을 누르면 창을 닫습니다.");
+			}else {
+				throw new Exception(selectedNotice.getNo()+"번 수정 문제 있음");
+			}
+
+		} catch (Exception e) {
+			// 경고창이 만들어짐
+			AlertUtill.showWarningAlert("공지사항 수정 실패","공지사항 수정에 실패하였습니다.","문제사항 : "+e.getMessage());
+		} finally {
+			try {
+				if(pstmt != null)pstmt.close();
+				if(con != null)con.close();
+
+			} catch (SQLException e) {
+				System.out.println("NoticeDAO noticeUpdate"+e.getMessage());
+			}
+		}
+
+
+		return returnValue;
+	}
 }
