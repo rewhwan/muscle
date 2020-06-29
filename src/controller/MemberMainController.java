@@ -219,24 +219,19 @@ public class MemberMainController implements Initializable {
 		
 		TableColumn colRegDay = new TableColumn("트레이너");
 		colRegDay.setPrefWidth(100);
-		colRegDay.setStyle("-fx-allignment: CENTER");
+		colRegDay.setStyle("-fx-alignment: CENTER");
 		colRegDay.setCellValueFactory(new PropertyValueFactory<>("trainer_id"));
 
 		TableColumn colDate = new TableColumn("날짜");
 		colDate.setPrefWidth(250);
-		colDate.setStyle("-fx-allignment: CENTER");
+		colDate.setStyle("-fx-alignment: CENTER");
 		colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
 		TableColumn colTime = new TableColumn("시간");
 		colTime.setPrefWidth(250);
-		colTime.setStyle("-fx-allignment: CENTER");
+		colTime.setStyle("-fx-alignment: CENTER");
 		colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
 
-		/*TableColumn colCreat = new TableColumn("작성일");
-		colCreat.setPrefWidth(250);
-		colCreat.setStyle("-fx-allignment: CENTER");
-		colCreat.setCellValueFactory(new PropertyValueFactory<>("created_at"));*/
-		
 		tableMemInfo.getColumns().addAll(colRegDay, colDate, colTime);
 		tableMemInfo.setItems(obsListPTInfo);
 		
@@ -652,22 +647,22 @@ public class MemberMainController implements Initializable {
 		
 		TableColumn colName =  new TableColumn("이름");
 		colName.setPrefWidth(100);
-		colName.setStyle("-fx-allignment: CENTER");
+		colName.setStyle("-fx-alignment: CENTER");
 		colName.setCellValueFactory(new PropertyValueFactory("name"));
 
 		TableColumn colGend= new TableColumn("성별");
 		colGend.setPrefWidth(80);
-		colGend.setStyle("-fx-allignment: CENTER");
+		colGend.setStyle("-fx-alignment: CENTER");
 		colGend.setCellValueFactory(new PropertyValueFactory("gender"));
 
 		TableColumn colPositon= new TableColumn("직책");
 		colPositon.setPrefWidth(150);
-		colPositon.setStyle("-fx-allignment: CENTER");
+		colPositon.setStyle("-fx-alignment: CENTER");
 		colPositon.setCellValueFactory(new PropertyValueFactory("position"));
 		
 	    TableColumn colMent= new TableColumn("멘트");
 	    colMent.setPrefWidth(250);
-	    colMent.setStyle("-fx-allignment: CENTER");
+	    colMent.setStyle("-fx-alignment: CENTER");
 	    colMent.setCellValueFactory(new PropertyValueFactory("ment"));
 
 		tablePT.getColumns().addAll(colName, colGend, colPositon, colMent);
@@ -750,22 +745,22 @@ public class MemberMainController implements Initializable {
 	private void tableNoticeColumnInitialize() {
 		TableColumn colNo = new TableColumn("번호");
 		colNo.setPrefWidth(100);
-		colNo.setStyle("-fx-allignment: CENTER");
+		colNo.setStyle("-fx-alignment: CENTER");
 		colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
 
 		TableColumn colTitle = new TableColumn("제목");
 		colTitle.setPrefWidth(250);
-		colTitle.setStyle("-fx-allignment: CENTER");
+		colTitle.setStyle("-fx-alignment: CENTER");
 		colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
 
 		TableColumn colContents = new TableColumn("내용");
 		colContents.setPrefWidth(250);
-		colContents.setStyle("-fx-allignment: CENTER");
+		colContents.setStyle("-fx-alignment: CENTER");
 		colContents.setCellValueFactory(new PropertyValueFactory<>("contents"));
 
 		tableNotice.getColumns().addAll(colNo, colTitle, colContents);
 		tableNotice.setItems(obsListNo);
-
+	
 	}
 
 	//관리자문의 검색 버튼 이벤트 등록 및 핸들러
@@ -794,21 +789,22 @@ public class MemberMainController implements Initializable {
 
 		TableColumn colNo = new TableColumn("번호");
 		colNo.setPrefWidth(50);
+		
 		colNo.setStyle("-fx-alignment: CENTER");
 		colNo.setCellValueFactory(new PropertyValueFactory("no"));
 
 		TableColumn colTitle = new TableColumn("제목");
-		colTitle.setPrefWidth(200);
+		colTitle.setPrefWidth(170);
 		colTitle.setStyle("-fx-alignment: CENTER");
 		colTitle.setCellValueFactory(new PropertyValueFactory("title"));
 
 		TableColumn colContents = new TableColumn("내용");
-		colContents.setPrefWidth(200);
+		colContents.setPrefWidth(350);
 		colContents.setStyle("-fx-alignment: CENTER");
 		colContents.setCellValueFactory(new PropertyValueFactory("contents"));
 
 		TableColumn colCreateBy = new TableColumn("작성자");
-		colCreateBy.setPrefWidth(200);
+		colCreateBy.setPrefWidth(80);
 		colCreateBy.setStyle("-fx-alignment: CENTER");
 		colCreateBy.setCellValueFactory(new PropertyValueFactory("created_by"));
 
@@ -820,6 +816,7 @@ public class MemberMainController implements Initializable {
 		tableQuestion.getColumns().addAll(colNo, colTitle, colContents,
 				colCreateBy, colCreateAt);
 		tableQuestion.setItems(obsList);
+		tableQuestion.setFixedCellSize(50);
 
 	}
 
@@ -870,6 +867,8 @@ public class MemberMainController implements Initializable {
 	
 	//관리자 문의 테이블을 더블 클릭하면 창이 나오게하는 이벤트 및 핸들러
 	private void handleQuestionDoubleClick(MouseEvent event) {
+		tableViewQuestionSelectedIndex =tableQuestion.getSelectionModel().getSelectedIndex();
+		
 		Parent root;
 		try {
 			if (event.getClickCount() != 2) {
@@ -892,6 +891,9 @@ public class MemberMainController implements Initializable {
 			QuestionDAO qd=new QuestionDAO();
 			txtTitle.setText(obsList.get(tableViewQuestionSelectedIndex).getTitle());
 			txtContents.setText(obsList.get(tableViewQuestionSelectedIndex).getContents());
+			
+			txtTitle.setEditable(false);
+			txtContents.setEditable(false);
 			btnCancel.setOnAction(event2 -> {
 				queStage.close();
 			});
