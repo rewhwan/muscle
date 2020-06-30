@@ -49,7 +49,6 @@ public class AdminMainController implements Initializable {
     @FXML TableView tablePT;
     //PT 버튼
     @FXML Button btnPTDelete;
-    @FXML Button btnPTModify;
     //PT신청정보를 저장해서 받아오는 변수
     private ObservableList<PTMember> PTMemberObsList = FXCollections.observableArrayList();
     //PT신청정보 파이챠트

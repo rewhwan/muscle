@@ -805,9 +805,11 @@ public class MemberMainController implements Initializable {
 		colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
 
 		TableColumn colContents = new TableColumn("내용");
-		colContents.setPrefWidth(250);
+		colContents.setPrefWidth(425);
 		colContents.setStyle("-fx-alignment: CENTER");
 		colContents.setCellValueFactory(new PropertyValueFactory<>("contents"));
+
+		tableNotice.setFixedCellSize(50);
 
 		tableNotice.getColumns().addAll(colNo, colTitle, colContents);
 		tableNotice.setItems(obsListNo);
