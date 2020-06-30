@@ -55,7 +55,7 @@
                                                 <content>
                                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="transparentAnchorPane">
                                                          <children>
-                                                            <PieChart fx:id="PTPieChart" prefHeight="624.0" prefWidth="352.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <PieChart fx:id="PTPieChart" prefHeight="624.0" prefWidth="352.0" title="시간별 PT인원 통계 차트" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                 </content>
@@ -64,7 +64,7 @@
                                                 <content>
                                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="transparentAnchorPane">
                                                          <children>
-                                                            <BarChart fx:id="PTBarChart" prefHeight="567.0" prefWidth="352.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <BarChart fx:id="PTBarChart" prefHeight="567.0" prefWidth="352.0" title="회원별 PT 횟수 통계 차트" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                               <xAxis>
                                                                 <CategoryAxis side="BOTTOM" />
                                                               </xAxis>
