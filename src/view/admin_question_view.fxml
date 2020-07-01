@@ -3,14 +3,16 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminQuestionViewController">
+<AnchorPane prefHeight="730.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminQuestionViewController">
    <children>
-      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="1000.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefWidth="1000.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="Question 내용">
                <font>
@@ -41,7 +43,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelContents" prefHeight="300.0" prefWidth="800.0" style="-fx-border-color: black;" text="Label">
+                  <Label fx:id="labelContents" prefHeight="250.0" prefWidth="800.0" style="-fx-border-color: black;" text="Label">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -51,7 +53,23 @@
                   </Label>
                </children>
             </HBox>
-            <Button fx:id="btnExit" mnemonicParsing="false" text="닫기" />
+            <Separator prefHeight="20.0" prefWidth="1000.0" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="답변 :   ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="txtAnswerContents" prefHeight="250.0" prefWidth="800.0" promptText="답변 내용을 입력해주세요." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="25.0">
+               <children>
+                  <Button fx:id="btnAnswerRegist" mnemonicParsing="false" text="답변 등록" />
+                  <Button fx:id="btnExit" mnemonicParsing="false" text="닫기" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

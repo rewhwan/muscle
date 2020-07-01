@@ -64,11 +64,6 @@ public class AdminMainController implements Initializable {
     //Question 테이블에서 선택된 컬럼의 정보를 가져오는 변수
     public static QuestionMember selectedQuestion = null;
 
-    //Answer 버튼
-    @FXML Button btnAnswerRegist;
-    //Answer 텍스트 에어리어
-    @FXML TextArea txtAnswerContents;
-
 
     //기본 스테이지 변수
     public Stage primarystage;
@@ -120,8 +115,6 @@ public class AdminMainController implements Initializable {
         questionTotalList();
         //Question 테이블 선택시 이벤트
         tableQuestion.setOnMousePressed(e -> handleTableQuestionPressAction(e));
-        //Answer 등록 버튼 클릭시 이벤트 함수
-        btnAnswerRegist.setOnAction(e -> handleBtnAnswerRegistAction());
 
         //새로고침 이벤트 함수
         btnRefresh.setOnAction(e -> handleBtnTestAction(e));
@@ -153,21 +146,6 @@ public class AdminMainController implements Initializable {
         PTGetTotalList(memberlogin);
     }
 
-    //답변 등록버튼 클릭시 실행하는 함수
-    private void handleBtnAnswerRegistAction() {
-
-        Optional<ButtonType> result = AlertUtill.showConfirmationAlert("답변등록 확인","정말 "+selectedQuestion.getNo()+"번의 질문에 답변을 등록하시겠습니까?","답변을 등록하시려면 엔터키 혹은 OK버튼을 눌러주세요.");
-        //취소버튼 클릭시 발생하는 이벤트
-        if(result.get() == ButtonType.CANCEL) return;
-
-        int resultValue = answerDAO.answerRegist(selectedQuestion,txtAnswerContents.getText(),memberlogin);
-
-        if(resultValue != 0) {
-            questionObsList.clear();
-            questionTotalList();
-        }
-    }
-
     //Question테이블 클릭시 발생하는 이벤트 함수
     private void handleTableQuestionPressAction(MouseEvent e) {
         selectedQuestion = (QuestionMember) tableQuestion.getSelectionModel().getSelectedItem();
@@ -185,7 +163,7 @@ public class AdminMainController implements Initializable {
         Stage questionModal = new Stage(StageStyle.UTILITY);
         questionModal.setTitle("질문 내용보기");
         questionModal.setScene(scene);
-        questionModal.initModality(Modality.NONE);
+        questionModal.initModality(Modality.WINDOW_MODAL);
         questionModal.initOwner(primarystage);
         questionModal.setResizable(false);
         scene.setFill(Color.TRANSPARENT);
@@ -193,6 +171,13 @@ public class AdminMainController implements Initializable {
         //공지사항 창의 컨트롤러 불러오기
         AdminQuestionViewController adminQuestionViewController = fxmlLoader.getController();
         adminQuestionViewController.primaryStage = questionModal;
+        adminQuestionViewController.selectedQuestion = selectedQuestion;
+        adminQuestionViewController.memberlogin = memberlogin;
+
+        questionModal.setOnHidden(event -> {
+            questionObsList.clear();
+            questionTotalList();
+        });
 
         //공지사항 내용 창 보여주기
         questionModal.show();
@@ -261,12 +246,12 @@ public class AdminMainController implements Initializable {
         colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
 
         TableColumn colTitle = new TableColumn("제목");
-        colTitle.setPrefWidth(162);
+        colTitle.setPrefWidth(252);
         colTitle.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         TableColumn colContents = new TableColumn("내용");
-        colContents.setPrefWidth(320);
+        colContents.setPrefWidth(520);
         colContents.setStyle("-fx-font-size:16px; -fx-alignment: CENTER");
         colContents.setCellValueFactory(new PropertyValueFactory<>("contents"));
 

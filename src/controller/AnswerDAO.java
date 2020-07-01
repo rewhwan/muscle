@@ -44,7 +44,7 @@ public class AnswerDAO {
             returnValue = pstmt.executeUpdate();
 
             if(returnValue != 0) {
-                AlertUtill.showInformationAlert("답변등록 성공","답변등록에 성공하였습니다.","확인을 누르면 로그인 화면으로 돌아갑니다.");
+                AlertUtill.showInformationAlert("답변등록 성공","답변등록에 성공하였습니다.","확인을 누르면 메인 화면으로 돌아갑니다.");
             }else {
                 throw new Exception(question.getNo()+"번 답변 등록 문제 있음");
             }
